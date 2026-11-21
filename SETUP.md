@@ -24,7 +24,7 @@ Siapkan TERTORTOR MUSE di Mac ini. Kamu (Muse) adalah agen proyek ini. Kerjakan 
 
 1. Cek prasyarat dan cetak versinya: brew, git, node (harus 22 atau lebih baru), npm, ffmpeg, ffprobe, yt-dlp, whisper-cli. Kalau brew belum ada, berhenti dan minta saya memasangnya dari https://brew.sh (butuh password). Kalau git belum ada, minta saya menjalankan xcode-select --install. Yang lain yang belum ada atau terlalu lama, pasang dengan: brew install node ffmpeg yt-dlp whisper-cpp. Lalu cek versinya lagi.
 2. Clone https://github.com/Zzzeen2552/tertortor-muse.git ke "$HOME/Documents/TERTORTOR MUSE" (nama folder pakai spasi, selalu beri tanda kutip). Repo-nya public, jadi tidak butuh login. Kalau foldernya sudah ada, cukup git pull.
-3. Di folder itu: npm install, lalu npx hyperframes skills (memasang skill HyperFrames ke ~/.agents/skills). Cek npx hyperframes --version = 0.9.15. npm install juga menyalakan git hook proyek (core.hooksPath = .githooks) dan membuat "TERTORTOR MUSE.app" di Desktop; cek keduanya ada.
+3. Di folder itu: npm install, lalu npx hyperframes skills (memasang skill HyperFrames ke ~/.agents/skills). Cek npx hyperframes --version = 0.9.15. npm install juga menyalakan git hook proyek (core.hooksPath = .githooks) dan membuat "TERTORTOR MUSE.app" di Desktop; cek keduanya ada. Kalau app-nya belum muncul, buat ulang dengan npm run shortcut.
 4. Bangun kit efek suara: node tools/sfx.mjs.
 5. Buat file .env di root folder itu bila belum ada (tidak ikut git) berisi tiga baris kosong: GEMINI_API_KEY=, ELEVENLABS_API_KEY=, dan MUSE4AI_KEY=. Kalau .env sudah ada, jangan diubah. Saya yang mengisi nilainya sendiri.
 6. Uji Studio: jalankan npm run studio di latar dan biarkan tetap hidup, lalu cek http://localhost:4341 menjawab 200 dan http://localhost:4341/api/structure berisi 4 kategori: Video Explainer (Hyperframe, SNAPCN, VOX), Storytelling (Berakit ke Hulu, BumiDiPijak), Advertisement (Flashcut, BRI, App Demo), Cinematic (AWS, Sport Strava). Buka http://localhost:4341 di Chrome supaya saya bisa melihatnya. Catatan: videos/uji-hyperframe di git tidak membawa suara dan footage, jadi npm run check di proyek itu boleh gagal karena file suara tidak ada. Itu bukan error pemasangan.
@@ -45,6 +45,9 @@ Catatan: proyek videos/ lama, footage, suara, key visual, dan video acuan tidak 
 
 Sesudahnya: buka Studio dari **TERTORTOR MUSE.app** di Desktop (menyalakan ulang server Studio folder ini lalu membuka
 http://localhost:4341), atau `npm run studio` dari folder itu. Kerja video dimulai dari Muse.app ("/video-vertikal <slug>", "lanjut", dst.).
+Tombol Chat di Studio menyalin pesan dan membuka Muse.app; tempel dengan ⌘V lalu Enter. Mau terkirim otomatis: tambahkan
+`MUSE_AUTOPASTE=1` ke `.env` dan beri izin **Accessibility** (System Settings → Privacy & Security) ke app yang
+menjalankan Studio.
 
 # Windows
 
@@ -94,3 +97,15 @@ Sesudahnya: buka Studio dari shortcut Desktop **TERTORTOR MUSE** (menyalakan ser
 http://localhost:4341), atau `npm run studio` dari folder itu. Kerja video dimulai dari aplikasi Muse
 ("/video-vertikal <slug>", "lanjut", dst.). Tombol Chat di Studio menyalin pesan dan membuka Muse dari menu Start;
 tempel dengan Ctrl+V lalu Enter (kirim otomatis hanya ada di Mac).
+
+# Memperbarui (Mac dan Windows)
+
+Minta Muse "update TERTORTOR MUSE", atau jalankan sendiri dari folder proyek:
+
+```bash
+git pull
+```
+
+Setiap `git pull` memperbarui shortcut Desktop secara otomatis. Kalau `package.json` atau `package-lock.json` ikut
+berubah, jalankan juga `npm install`. Lalu buka lagi shortcut **TERTORTOR MUSE**: Studio dinyalakan ulang dengan kode
+terbaru. Clone yang dibuat sebelum ada fitur shortcut otomatis cukup menjalankan `npm install` sekali.
