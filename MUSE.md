@@ -140,8 +140,9 @@ berlisensi lewat `npm run stock` (lisensi non-komersial ditolak, kredit ke `cred
 
 **Chat Muse di Studio** (user 2026-11-13, versi MUSE 2026-11-21): tombol bulat kanan bawah membuka laci chat. Muse.app
 tidak punya mode headless, jadi `tools/studio-chat.mjs` menyalin pesan (dengan konteks halaman `[Studio: …]`) ke
-clipboard dan membuka Muse.app; user menempel (⌘V) lalu Enter. `MUSE_AUTOPASTE=1` di `.env` = Studio menempel dan
-mengirim sendiri lewat System Events (butuh izin Accessibility). Jawaban Muse ada di Muse.app. Riwayat yang dikirim di
+clipboard dan membuka Muse (Mac: `open -a Muse`; Windows: aplikasi Muse dari menu Start lewat `Get-StartApps`,
+nama lain lewat `MUSE_APP`); user menempel (⌘V / Ctrl+V) lalu Enter. `MUSE_AUTOPASTE=1` di `.env` = Studio menempel dan
+mengirim sendiri lewat System Events (hanya Mac, butuh izin Accessibility). Jawaban Muse ada di Muse.app. Riwayat yang dikirim di
 `.studio-chat.json` (gitignored; "Baru" mengarsipkan ke `.studio-chat/`). Route `/api/chat*` hanya dari localhost.
 Pesan dari panel ini tetap tunduk pada aturan file ini: commit, push, `tebar.mjs send`, publish, dan menghapus video
 hanya bila user memintanya persis.

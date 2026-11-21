@@ -1,12 +1,13 @@
 // studio-chat.mjs: the Chat panel in TERTORTOR Studio, TERTORTOR MUSE edition. Muse (Meta's agent in Muse.app) is the
 // one who works in this folder, and Muse.app has no headless mode a script can drive. So a message sent from the panel
 // is handed over to Muse.app: the text (with the "[Studio: …]" page line) goes to the clipboard, Muse.app comes to the
-// front, and the user pastes it (⌘V, Enter). With MUSE_AUTOPASTE=1 in .env Studio also pastes and sends it through
+// front (macOS: open -a; Windows: Start menu app), and the user pastes it (⌘V / Ctrl+V, Enter). With MUSE_AUTOPASTE=1 in .env Studio also pastes and sends it through
 // System Events (macOS only; needs Accessibility permission for the app that runs Studio).
 // Muse reads MUSE.md for every workflow here; its answers stay in Muse.app.
 // State in .studio-chat.json (gitignored): { messages: [{ role: user|info|error, text, at }] }.
 import { spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync, renameSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, renameSync, mkdirSync, unlinkSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ROOT } from "./lib.mjs";
 
@@ -30,15 +31,27 @@ export function state() {
   return { sessionId: null, running: false, startedAt: null, queued: [], messages: s.messages, engine: "muse-app" };
 }
 
+// Windows: clip.exe garbles UTF-8 (…, é); PowerShell reads a UTF-8 temp file and sets the clipboard as Unicode
 function copy(text) {
   if (process.platform === "darwin") return spawnSync("pbcopy", [], { input: text }).status === 0;
-  if (process.platform === "win32") return spawnSync("clip", [], { input: text, windowsHide: true }).status === 0;
+  if (process.platform === "win32") {
+    const f = join(tmpdir(), `tertortor-chat-${process.pid}.txt`);
+    writeFileSync(f, text, "utf8");
+    try {
+      return spawnSync("powershell", ["-NoProfile", "-Command", `Get-Content -Raw -Encoding UTF8 -LiteralPath '${f.replace(/'/g, "''")}' | Set-Clipboard`], { windowsHide: true }).status === 0;
+    } finally { try { unlinkSync(f); } catch {} }
+  }
   return spawnSync("xclip", ["-selection", "clipboard"], { input: text }).status === 0;
 }
 
+// macOS: open -a Muse. Windows: Muse from the Start menu by its AppID (Get-StartApps), name in MUSE_APP (default "Muse")
 function openMuse() {
-  if (process.platform !== "darwin") return false;
-  return spawnSync("open", ["-a", APP], {}).status === 0;
+  if (process.platform === "darwin") return spawnSync("open", ["-a", APP], {}).status === 0;
+  if (process.platform === "win32") {
+    const ps = `$a = Get-StartApps | Where-Object { $_.Name -eq '${APP.replace(/'/g, "''")}' } | Select-Object -First 1; if ($a) { Start-Process ('shell:AppsFolder\\' + $a.AppID); exit 0 } else { exit 1 }`;
+    return spawnSync("powershell", ["-NoProfile", "-Command", ps], { windowsHide: true }).status === 0;
+  }
+  return false;
 }
 
 // paste + Enter into the front window (Muse.app, just activated); refused without Accessibility permission
@@ -63,8 +76,8 @@ export function send(text, context = "") {
   if (!copy(full)) { push({ role: "error", text: "Gagal menyalin pesan ke clipboard." }); return state(); }
   const opened = openMuse();
   if (opened && autoPaste()) push({ role: "info", text: "Terkirim ke Muse.app. Jawaban Muse ada di Muse.app." });
-  else if (opened) push({ role: "info", text: "Pesan sudah disalin dan Muse.app dibuka: tempel (⌘V) lalu Enter. Jawaban Muse ada di Muse.app." });
-  else push({ role: "info", text: "Pesan sudah disalin. Buka Muse.app, tempel, lalu Enter." });
+  else if (opened) push({ role: "info", text: `Pesan sudah disalin dan Muse dibuka: tempel (${process.platform === "darwin" ? "⌘V" : "Ctrl+V"}) lalu Enter. Jawaban Muse ada di aplikasi Muse.` });
+  else push({ role: "info", text: "Pesan sudah disalin. Buka aplikasi Muse, tempel, lalu Enter." });
   return state();
 }
 

@@ -17,11 +17,17 @@ npm run studio          # http://localhost:4341 (MOTION 4321, LITE 4331)
 Lalu di **Muse.app** (folder kerja `TERTORTOR MUSE`, Muse membaca [MUSE.md](MUSE.md)) jalankan skill yang ditunjukkan Studio, mis. `/video-vertikal <slug>`,
 `/berakit-ke-hulu <slug>`, `/bumidipijak <slug>`, `/flashcut <slug>`. Aturan lengkap di [MUSE.md](MUSE.md).
 
+## Pasang di Mac
+
+Prompt siap tempel untuk Muse.app ada di [SETUP.md § Mac](SETUP.md#mac): Homebrew dipasang sendiri, sisanya
+(Node 22, ffmpeg, yt-dlp, whisper-cpp, clone, `npm install`, `.env` kosong, uji Studio di port 4341) dikerjakan Muse.
+
 ## Pasang di komputer lain (Windows)
 
-Prompt siap tempel untuk Muse ada di [SETUP.md](SETUP.md). Ringkasnya:
+Prompt siap tempel untuk aplikasi Muse ada di [SETUP.md § Windows](SETUP.md#windows). Ringkasnya:
 
-1. Pasang Git, Node.js 22+, dan ffmpeg (mis. `winget install Git.Git OpenJS.NodeJS Gyan.FFmpeg`), plus Muse.app.
+1. Pasang Git, Node.js 22+, ffmpeg, dan yt-dlp (mis. `winget install Git.Git OpenJS.NodeJS Gyan.FFmpeg yt-dlp.yt-dlp`),
+   plus aplikasi Muse untuk Windows.
 2. Clone repo ini ke `Documents\TERTORTOR MUSE`, lalu `npm install` dan `npx hyperframes skills` (skill HyperFrames ke `~/.agents/skills`).
 3. `node tools/sfx.mjs`.
 4. whisper.cpp untuk transkripsi suara: unduh `whisper-bin-x64.zip` dari github.com/ggml-org/whisper.cpp/releases, ekstrak
