@@ -9,7 +9,9 @@ Claude diganti Muse). Muse membaca file ini di awal setiap percakapan. Cara kerj
   (dan file yang ditunjuknya) lalu ikuti langkahnya. Skill HyperFrames ada di `~/.agents/skills/` (`npx hyperframes skills`).
 - **Agen bantu** (`.muse/agents/*.md`) = instruksi kerja untuk tugas sempit (RunningHub, cek frame); kerjakan sendiri
   mengikuti file itu, atau berikan ke sub-agen Muse bila ada.
-- **Chrome** (Google Flow, AI Studio, RunningHub): pakai kontrol komputer Muse di Chrome user. User login sendiri; Muse
+- **Chrome** (Meta Muse, Google Flow, RunningHub, ChatGPT; user 2026-11-21): satu Chrome dengan **ekstensi Muse**, semua
+  situs itu terbuka dan login di Chrome yang sama. Gambar dan klip Meta Muse dibuat di web Muse lewat ekstensi ini (tidak
+  ada lagi muse4ai, `tools/muse.mjs`, atau `MUSE4AI_KEY`). User login sendiri; Muse
   tidak pernah mengetik password.
 - Setiap kali user menyebut "motion graphic", baca dulu `.muse/skills/motion-design/SKILL.md` sebelum mendesain gerak.
 

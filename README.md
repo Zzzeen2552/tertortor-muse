@@ -33,11 +33,12 @@ Prompt siap tempel untuk aplikasi Muse ada di [SETUP.md § Windows](SETUP.md#win
 4. whisper.cpp untuk transkripsi suara: unduh `whisper-bin-x64.zip` dari github.com/ggml-org/whisper.cpp/releases, ekstrak
    sehingga ada `tools/bin/whisper/Release/whisper-cli.exe` (tidak ikut git).
 5. Buat `.env` sendiri (tidak ikut git): `GEMINI_API_KEY` untuk thumbnail, caption, dan Library Cerita; opsional
-   `ELEVENLABS_API_KEY` (suara ElevenLabs dan clone suara), `MUSE4AI_KEY` (gambar/klip Meta Muse lewat muse4ai). Kunci Tebar ditempel sendiri di panel Tebar halaman sub.
+   `ELEVENLABS_API_KEY` (suara ElevenLabs dan clone suara). Kunci Tebar ditempel sendiri di panel Tebar halaman sub.
 6. Shortcut Desktop dibuat otomatis oleh `npm install` (lihat di bawah); buat ulang dengan `npm run shortcut`.
 7. `npm run studio` → http://localhost:4341.
 
-Di Chrome, login sendiri ke Google Flow, Google AI Studio, dan RunningHub; Muse tidak mengetik password.
+Di Chrome: pasang ekstensi Muse, lalu login sendiri ke Muse, Google Flow, RunningHub, dan ChatGPT di Chrome yang sama
+(gambar dan klip Meta Muse dibuat lewat ekstensi ini); Muse tidak mengetik password.
 
 ## Shortcut Desktop otomatis
 

@@ -141,10 +141,10 @@ dicek manual dulu.
   suara satu take Gemini TTS (style dari `request.json → voiceStyle`) → build → key visual semua shot di **ChatGPT (GPT
   Image)**, lalu laporkan. Klip menunggu keputusan user (skill `/musafo` § 3b, 5).
 - **Default alat BKH (user 2026-11-14):** gambar (key visual + character sheet) dibuat di **ChatGPT**, video (klip per shot)
-  di **Meta Muse** (`node tools/muse.mjs video`, image-to-video dari key visual, satu akun, kuota dicatat di
-  `costs.md`). Flow dan RunningHub H3 jadi cadangan. Aturan Muse lain di MUSE.md tetap (`node tools/muse.mjs status` dulu, `request_id`
-  unik, job `running`/`needs_review` tidak dikirim ulang). Klip Muse keluar 16:9 1280×720 di uji 2026-11-11: cek rasio
-  hasil pertama, dan bila bukan 9:16 laporkan ke user sebelum lanjut.
+  di **Meta Muse di Chrome lewat ekstensi Muse** (image-to-video: unggah key visual, tempel prompt, unduh MP4; web Muse
+  sudah login di Chrome user; kuota dicatat di `costs.md`; `videoTool` = "Meta Muse (Chrome)"). Flow dan RunningHub H3 jadi
+  cadangan. Satu generate per kali; generate yang masih berjalan atau ditahan review tidak dikirim ulang. Klip Muse keluar
+  16:9 1280×720 di uji 2026-11-11: cek rasio hasil pertama, dan bila bukan 9:16 laporkan ke user sebelum lanjut.
 - **Prompt Muse = `node tools/musafo.mjs muse <slug> [s01,s02]`** (user 2026-11-15 "wajahnya terus berubah"): jangan
   menulis prompt Muse sendiri. Satu generate = satu adegan tanpa cut kecuali adegan tanpa orang; gaya tidak ditulis ulang
   (gambarnya yang membawa gaya); identitas tokoh disebut persis; kamera tidak mendekat ke close-up wajah; satu aksi yang

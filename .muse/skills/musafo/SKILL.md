@@ -215,14 +215,15 @@ Hemat: ±6 generate per video 90 detik, bukan ±18. Tampil di TERTORTOR tab Shot
 ## 4. Gambar per shot
 - **Dengan `clips`, gambar cukup untuk shot pertama tiap generate** (`check` menghitung hanya itu); shot berikutnya
   dibuat H3 dari teks dengan gaya yang sama.
-- **Default: Meta Muse lewat muse4ai** (`brand.json → musafo.image`, user 2026-11-11). Prasyarat: Muse4AI terbuka, satu akun
-  siap, `node tools/local-proxy.mjs` hidup; cek kuota dulu dengan `node tools/muse.mjs status`. Per shot:
-  `node tools/muse.mjs image assets/frames/<shot>.muse.webp --prompt-file <prompt> --ref <3 gambar musafo/reference/gambar>`
-  (±1 menit, 1152×2048). Prompt = `image` shot + "Images 1, 2 and 3 are visual style references only: match their matte
+- **Default: Meta Muse di Chrome lewat ekstensi Muse** (`brand.json → musafo.image`, user 2026-11-11; muse4ai diganti
+  2026-11-21). Web Muse sudah terbuka dan login di Chrome user (Chrome yang sama dengan Flow, RunningHub, ChatGPT); Muse
+  tidak login atau memilih akun. Per shot: buat gambar baru, unggah 3 gambar `musafo/reference/gambar` sebagai acuan,
+  tempel prompt, minta "vertical 9:16", tunggu selesai, unduh ke `assets/frames/<shot>.muse.<ext>` (±1 menit). Satu
+  generate per kali; generate yang masih berjalan atau ditahan review tidak dikirim ulang. Prompt = `image` shot + "Images 1, 2 and 3 are visual style references only: match their matte
   clay-like 3D rendering, palette and lighting, not their composition or people." Acuan asli channel (mis. no. 4, 10, 18:
   sosok sendiri, duduk, lanskap) lebih baik daripada KV proyek. Muse menambah detail sendiri: tulis yang dilarang secara
   eksplisit (pose tangan "palms open, no mudra", "plain low stone well, no winch", "no lanterns, no lit lamps" di siang
-  hari) dan cek tiap gambar. Catat tiap generate di `costs.md` sebagai kuota Muse; `imageTool` = "Meta Muse (muse4ai)".
+  hari) dan cek tiap gambar. Catat tiap generate di `costs.md` sebagai kuota Muse; `imageTool` = "Meta Muse (Chrome)".
 - Cadangan pertama: **Google Flow** (`musafo.image.flow`) lewat kontrol komputer Muse (Chrome): proyek baru → Image,
   9:16, Nano Banana, x1; tambahkan 1-3 gambar dari `musafo/reference/gambar` sebagai ingredients supaya gayanya sama.
   Gambar di Flow gratis, tidak perlu izin. Satu prompt per kali, tunggu selesai, unduh. "Unusual activity" → jangan retry,

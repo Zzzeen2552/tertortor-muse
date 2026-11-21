@@ -10,10 +10,11 @@ Muse (Muse.app dari Meta) yang memasang dan menjalankan proyek ini. Pilih bagian
 1. Pasang **Muse.app** dan login dengan akun Meta-mu.
 2. Di Muse.app → Settings:
    - **Files and folders**: izinkan folder `Documents`.
-   - **Computer use**: nyalakan (dipakai untuk Chrome: Google Flow, AI Studio, RunningHub).
+   - **Computer use**: nyalakan (dipakai untuk Chrome).
 3. Pasang **Homebrew** sendiri bila belum ada (butuh password Mac, jadi bukan tugas Muse). Buka Terminal, tempel
    perintah dari https://brew.sh, ikuti sampai selesai. Cek dengan `brew --version`.
-4. Di Chrome: login sendiri ke **Google Flow**, **Google AI Studio**, dan **RunningHub**.
+4. Di Chrome: pasang **ekstensi Muse**, lalu di Chrome yang sama buka dan login sendiri ke **Muse**, **Google Flow**,
+   **RunningHub**, dan **ChatGPT**. Gambar dan klip Meta Muse dibuat Muse lewat ekstensi ini.
 5. Saat Muse minta izin **menjalankan program dari folder di luar folder Hatch**, izinkan untuk folder
    `~/Documents/TERTORTOR MUSE`. Semua perintah proyek (`npm`, `node tools/…`, `npx hyperframes`) jalan dari sana.
 
@@ -26,7 +27,7 @@ Siapkan TERTORTOR MUSE di Mac ini. Kamu (Muse) adalah agen proyek ini. Kerjakan 
 2. Clone https://github.com/Zzzeen2552/tertortor-muse.git ke "$HOME/Documents/TERTORTOR MUSE" (nama folder pakai spasi, selalu beri tanda kutip). Repo-nya public, jadi tidak butuh login. Kalau foldernya sudah ada, cukup git pull.
 3. Di folder itu: npm install, lalu npx hyperframes skills (memasang skill HyperFrames ke ~/.agents/skills). Cek npx hyperframes --version = 0.9.15. npm install juga menyalakan git hook proyek (core.hooksPath = .githooks) dan membuat "TERTORTOR MUSE.app" di Desktop; cek keduanya ada. Kalau app-nya belum muncul, buat ulang dengan npm run shortcut.
 4. Bangun kit efek suara: node tools/sfx.mjs.
-5. Buat file .env di root folder itu bila belum ada (tidak ikut git) berisi tiga baris kosong: GEMINI_API_KEY=, ELEVENLABS_API_KEY=, dan MUSE4AI_KEY=. Kalau .env sudah ada, jangan diubah. Saya yang mengisi nilainya sendiri.
+5. Buat file .env di root folder itu bila belum ada (tidak ikut git) berisi dua baris kosong: GEMINI_API_KEY= dan ELEVENLABS_API_KEY=. Kalau .env sudah ada, jangan diubah. Saya yang mengisi nilainya sendiri.
 6. Uji Studio: jalankan npm run studio di latar dan biarkan tetap hidup, lalu cek http://localhost:4341 menjawab 200 dan http://localhost:4341/api/structure berisi 4 kategori: Video Explainer (Hyperframe, SNAPCN, VOX), Storytelling (Berakit ke Hulu, BumiDiPijak), Advertisement (Flashcut, BRI, App Demo), Cinematic (AWS, Sport Strava). Buka http://localhost:4341 di Chrome supaya saya bisa melihatnya. Catatan: videos/uji-hyperframe di git tidak membawa suara dan footage, jadi npm run check di proyek itu boleh gagal karena file suara tidak ada. Itu bukan error pemasangan.
 7. Baca MUSE.md (aturan utama proyek ini, termasuk cara kerjamu di sini), README.md, lalu .muse/skills/video-vertikal/SKILL.md, .muse/skills/video-vertikal/LESSONS.md, .muse/skills/berakit-ke-hulu/SKILL.md, .muse/skills/bumidipijak/SKILL.md, dan .muse/skills/flashcut/SKILL.md supaya paham alur dan aturannya.
 8. Simpan ke memorimu untuk proyek ini:
@@ -38,7 +39,7 @@ Siapkan TERTORTOR MUSE di Mac ini. Kamu (Muse) adalah agen proyek ini. Kerjakan 
    (f) TERTORTOR MUSE hanya jalan lokal (Studio port 4341). Tidak ada web app/relay: tombol Bagikan dan akses dari HP memang tidak aktif. Jangan deploy apa pun.
    (g) Jangan commit, push, publish, upload, atau kirim ke Tebar/platform mana pun tanpa izin eksplisit saya per kali.
    (h) Jawab saya dalam bahasa Indonesia santai.
-9. Laporkan: versi tiap alat, apa yang terpasang, apa yang gagal, dan apa yang masih harus saya lakukan sendiri (isi .env, login Chrome ke Flow/AI Studio/RunningHub).
+9. Laporkan: versi tiap alat, apa yang terpasang, apa yang gagal, dan apa yang masih harus saya lakukan sendiri (isi .env, ekstensi Muse di Chrome, login Chrome ke Muse/Flow/RunningHub/ChatGPT).
 
 Catatan: proyek videos/ lama, footage, suara, key visual, dan video acuan tidak ada di git. Jangan anggap itu error. Kalau saya butuh proyek lama, saya salin sendiri folder videos/<slug>/ dari laptop utama.
 ```
@@ -56,10 +57,11 @@ menjalankan Studio.
 1. Pasang aplikasi **Muse** untuk Windows dan login dengan akun Meta-mu.
 2. Di Muse → Settings:
    - **File access**: nyalakan, lalu izinkan folder `Documents`.
-   - **Computer use**: nyalakan (dipakai untuk Chrome: Google Flow, AI Studio, RunningHub).
+   - **Computer use**: nyalakan (dipakai untuk Chrome).
 3. Pastikan **winget** ada: buka PowerShell, ketik `winget --version`. Kalau tidak ada, pasang **App Installer** dari
    Microsoft Store.
-4. Di Chrome: login sendiri ke **Google Flow**, **Google AI Studio**, dan **RunningHub**.
+4. Di Chrome: pasang **ekstensi Muse**, lalu di Chrome yang sama buka dan login sendiri ke **Muse**, **Google Flow**,
+   **RunningHub**, dan **ChatGPT**. Gambar dan klip Meta Muse dibuat Muse lewat ekstensi ini.
 5. Saat Muse minta izin **menjalankan program dari folder di luar folder Hatch**, izinkan untuk folder
    `Documents\TERTORTOR MUSE`. Semua perintah proyek (`npm`, `node tools\…`, `npx hyperframes`) jalan dari sana.
 6. Kalau Windows memunculkan jendela **izin admin (UAC)** saat winget memasang sesuatu, klik sendiri. Muse tidak boleh
@@ -75,7 +77,7 @@ Siapkan TERTORTOR MUSE di PC Windows ini. Kamu (Muse) adalah agen proyek ini. Ke
 3. Di folder itu: npm install, lalu npx hyperframes skills (memasang skill HyperFrames ke ~/.agents/skills). Cek npx hyperframes --version = 0.9.15. npm install juga menyalakan git hook proyek (core.hooksPath = .githooks) dan membuat shortcut "TERTORTOR MUSE" di Desktop; cek keduanya ada.
 4. Bangun kit efek suara: node tools/sfx.mjs.
 5. Pasang whisper.cpp untuk transkripsi suara: unduh rilis Windows resmi whisper-bin-x64.zip dari https://github.com/ggml-org/whisper.cpp/releases (rilis terbaru). Sebutkan ukuran filenya dan minta izin saya sebelum mengunduh. Ekstrak sehingga ada tools\bin\whisper\Release\whisper-cli.exe, lalu jalankan whisper-cli.exe --help untuk cek. Folder tools\bin tidak ikut git.
-6. Buat file .env di root folder itu bila belum ada (tidak ikut git) berisi tiga baris kosong: GEMINI_API_KEY=, ELEVENLABS_API_KEY=, dan MUSE4AI_KEY=. Kalau .env sudah ada, jangan diubah. Saya yang mengisi nilainya sendiri.
+6. Buat file .env di root folder itu bila belum ada (tidak ikut git) berisi dua baris kosong: GEMINI_API_KEY= dan ELEVENLABS_API_KEY=. Kalau .env sudah ada, jangan diubah. Saya yang mengisi nilainya sendiri.
 7. Kalau shortcut Desktop belum muncul, buat ulang dengan npm run shortcut.
 8. Uji Studio: jalankan npm run studio di latar dan biarkan tetap hidup, lalu cek http://localhost:4341 menjawab 200 dan http://localhost:4341/api/structure berisi 4 kategori: Video Explainer (Hyperframe, SNAPCN, VOX), Storytelling (Berakit ke Hulu, BumiDiPijak), Advertisement (Flashcut, BRI, App Demo), Cinematic (AWS, Sport Strava). Buka http://localhost:4341 di Chrome supaya saya bisa melihatnya. Catatan: videos/uji-hyperframe di git tidak membawa suara dan footage, jadi npm run check di proyek itu boleh gagal karena file suara tidak ada. Itu bukan error pemasangan.
 9. Baca MUSE.md (aturan utama proyek ini, termasuk cara kerjamu di sini), README.md, lalu .muse/skills/video-vertikal/SKILL.md, .muse/skills/video-vertikal/LESSONS.md, .muse/skills/berakit-ke-hulu/SKILL.md, .muse/skills/bumidipijak/SKILL.md, dan .muse/skills/flashcut/SKILL.md supaya paham alur dan aturannya.
@@ -88,7 +90,7 @@ Siapkan TERTORTOR MUSE di PC Windows ini. Kamu (Muse) adalah agen proyek ini. Ke
    (f) TERTORTOR MUSE hanya jalan lokal (Studio port 4341). Tidak ada web app/relay: tombol Bagikan dan akses dari HP memang tidak aktif. Jangan deploy apa pun.
    (g) Jangan commit, push, publish, upload, atau kirim ke Tebar/platform mana pun tanpa izin eksplisit saya per kali.
    (h) Jawab saya dalam bahasa Indonesia santai.
-11. Laporkan: versi tiap alat, apa yang terpasang, apa yang gagal, dan apa yang masih harus saya lakukan sendiri (isi .env, login Chrome ke Flow/AI Studio/RunningHub).
+11. Laporkan: versi tiap alat, apa yang terpasang, apa yang gagal, dan apa yang masih harus saya lakukan sendiri (isi .env, ekstensi Muse di Chrome, login Chrome ke Muse/Flow/RunningHub/ChatGPT).
 
 Catatan: proyek videos/ lama, footage, suara, key visual, dan video acuan tidak ada di git. Jangan anggap itu error. Kalau saya butuh proyek lama, saya salin sendiri folder videos/<slug>/ dari laptop utama.
 ```
