@@ -34,10 +34,19 @@ Prompt siap tempel untuk aplikasi Muse ada di [SETUP.md § Windows](SETUP.md#win
    sehingga ada `tools/bin/whisper/Release/whisper-cli.exe` (tidak ikut git).
 5. Buat `.env` sendiri (tidak ikut git): `GEMINI_API_KEY` untuk thumbnail, caption, dan Library Cerita; opsional
    `ELEVENLABS_API_KEY` (suara ElevenLabs dan clone suara), `MUSE4AI_KEY` (gambar/klip Meta Muse lewat muse4ai). Kunci Tebar ditempel sendiri di panel Tebar halaman sub.
-6. Opsional shortcut Desktop: `powershell -NoProfile -ExecutionPolicy Bypass -File tools\install-shortcut.ps1`.
+6. Shortcut Desktop dibuat otomatis oleh `npm install` (lihat di bawah); buat ulang dengan `npm run shortcut`.
 7. `npm run studio` → http://localhost:4341.
 
 Di Chrome, login sendiri ke Google Flow, Google AI Studio, dan RunningHub; Muse tidak mengetik password.
+
+## Shortcut Desktop otomatis
+
+`npm install` menyalakan git hook proyek (`core.hooksPath = .githooks`) lalu membuat shortcut **TERTORTOR MUSE** di
+Desktop: `TERTORTOR MUSE.lnk` di Windows, `TERTORTOR MUSE.app` di Mac. Sesudah itu **setiap `git pull`** (biasa atau
+`--rebase`) menjalankan `tools/shortcut.mjs` lewat `.githooks/post-merge` dan `post-rewrite`, jadi shortcut selalu ada
+dan menunjuk ke folder ini. Shortcut menyalakan ulang Studio folder ini (kode terbaru) lalu membuka
+http://localhost:4341; Studio TERTORTOR/LITE lain tidak disentuh. Matikan dengan `TERTORTOR_NO_SHORTCUT=1`.
+Clone lama cukup menjalankan `npm install` sekali untuk menyalakan hook-nya.
 
 ## Yang tidak ikut git
 

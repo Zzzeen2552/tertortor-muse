@@ -1,0 +1,4 @@
+#!/bin/sh
+# TERTORTOR MUSE: after every git pull (merge, fast-forward, or --rebase), refresh the Desktop shortcut.
+# Turned on by `npm install` (tools/setup-hooks.mjs sets core.hooksPath=.githooks). Never blocks the pull.
+node tools/shortcut.mjs || true

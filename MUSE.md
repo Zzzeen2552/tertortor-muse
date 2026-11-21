@@ -104,6 +104,12 @@ di `concepts.json`; user memilih di tab "Konsep" sebelum naskah. Alurnya di `.mu
 - **Bagikan, undangan user, Web Push** butuh relay web, yang tidak dipakai di MUSE. Kodenya masih ada; jangan menyiapkan
   relay tanpa permintaan user. Muse tidak pernah mengisi key dan tidak mengirim/memublikasikan tanpa izin.
 
+**Shortcut Desktop** (user 2026-11-21): `npm install` (postinstall `tools/setup-hooks.mjs`) menyalakan `.githooks` dan membuat
+shortcut lewat `tools/shortcut.mjs`; `.githooks/post-merge` + `post-rewrite` memperbaruinya setiap `git pull`. Mac:
+`~/Desktop/TERTORTOR MUSE.app` (AppleScript, ikon dari `tools/tertortor.ico`, dibangun ulang hanya bila folder/peluncur
+berubah); Windows: `tools/install-shortcut.ps1`. Peluncur Mac hanya menghentikan proses Studio yang folder kerjanya folder
+ini. Jangan menghapus atau mengganti hook ini tanpa permintaan user.
+
 **Pop-up proses**: klik setujui memunculkan apa yang Muse kerjakan dan perkiraan waktunya (`tools/progress.mjs`,
 `.process-times.json`). Langkah baru yang dipicu klik → tambahkan ke `PROCESSES` di `tools/progress.mjs`.
 

@@ -24,7 +24,7 @@ Siapkan TERTORTOR MUSE di Mac ini. Kamu (Muse) adalah agen proyek ini. Kerjakan 
 
 1. Cek prasyarat dan cetak versinya: brew, git, node (harus 22 atau lebih baru), npm, ffmpeg, ffprobe, yt-dlp, whisper-cli. Kalau brew belum ada, berhenti dan minta saya memasangnya dari https://brew.sh (butuh password). Kalau git belum ada, minta saya menjalankan xcode-select --install. Yang lain yang belum ada atau terlalu lama, pasang dengan: brew install node ffmpeg yt-dlp whisper-cpp. Lalu cek versinya lagi.
 2. Clone https://github.com/Zzzeen2552/tertortor-muse.git ke "$HOME/Documents/TERTORTOR MUSE" (nama folder pakai spasi, selalu beri tanda kutip). Repo-nya public, jadi tidak butuh login. Kalau foldernya sudah ada, cukup git pull.
-3. Di folder itu: npm install, lalu npx hyperframes skills (memasang skill HyperFrames ke ~/.agents/skills). Cek npx hyperframes --version = 0.9.15.
+3. Di folder itu: npm install, lalu npx hyperframes skills (memasang skill HyperFrames ke ~/.agents/skills). Cek npx hyperframes --version = 0.9.15. npm install juga menyalakan git hook proyek (core.hooksPath = .githooks) dan membuat "TERTORTOR MUSE.app" di Desktop; cek keduanya ada.
 4. Bangun kit efek suara: node tools/sfx.mjs.
 5. Buat file .env di root folder itu bila belum ada (tidak ikut git) berisi tiga baris kosong: GEMINI_API_KEY=, ELEVENLABS_API_KEY=, dan MUSE4AI_KEY=. Kalau .env sudah ada, jangan diubah. Saya yang mengisi nilainya sendiri.
 6. Uji Studio: jalankan npm run studio di latar dan biarkan tetap hidup, lalu cek http://localhost:4341 menjawab 200 dan http://localhost:4341/api/structure berisi 4 kategori: Video Explainer (Hyperframe, SNAPCN, VOX), Storytelling (Berakit ke Hulu, BumiDiPijak), Advertisement (Flashcut, BRI, App Demo), Cinematic (AWS, Sport Strava). Buka http://localhost:4341 di Chrome supaya saya bisa melihatnya. Catatan: videos/uji-hyperframe di git tidak membawa suara dan footage, jadi npm run check di proyek itu boleh gagal karena file suara tidak ada. Itu bukan error pemasangan.
@@ -43,8 +43,8 @@ Siapkan TERTORTOR MUSE di Mac ini. Kamu (Muse) adalah agen proyek ini. Kerjakan 
 Catatan: proyek videos/ lama, footage, suara, key visual, dan video acuan tidak ada di git. Jangan anggap itu error. Kalau saya butuh proyek lama, saya salin sendiri folder videos/<slug>/ dari laptop utama.
 ```
 
-Sesudahnya: Studio di **http://localhost:4341**. Buka lagi kapan saja dengan `npm run studio` dari folder itu, atau minta
-Muse "jalankan Studio TERTORTOR". Kerja video dimulai dari Muse.app ("/video-vertikal <slug>", "lanjut", dst.).
+Sesudahnya: buka Studio dari **TERTORTOR MUSE.app** di Desktop (menyalakan ulang server Studio folder ini lalu membuka
+http://localhost:4341), atau `npm run studio` dari folder itu. Kerja video dimulai dari Muse.app ("/video-vertikal <slug>", "lanjut", dst.).
 
 # Windows
 
@@ -69,11 +69,11 @@ Siapkan TERTORTOR MUSE di PC Windows ini. Kamu (Muse) adalah agen proyek ini. Ke
 
 1. Cek prasyarat dan cetak versinya: winget, git, node (harus 22 atau lebih baru), npm, ffmpeg, ffprobe, yt-dlp. Kalau winget tidak ada, berhenti dan minta saya memasang App Installer dari Microsoft Store. Yang belum ada atau terlalu lama, pasang dengan winget: Git.Git, OpenJS.NodeJS, Gyan.FFmpeg, yt-dlp.yt-dlp (tambahkan --accept-source-agreements --accept-package-agreements). Setelah memasang, buka shell baru (PATH baru) lalu cek versinya lagi.
 2. Clone https://github.com/Zzzeen2552/tertortor-muse.git ke "%USERPROFILE%\Documents\TERTORTOR MUSE" (nama folder pakai spasi, selalu beri tanda kutip). Repo-nya public, jadi tidak butuh login. Kalau foldernya sudah ada, cukup git pull.
-3. Di folder itu: npm install, lalu npx hyperframes skills (memasang skill HyperFrames ke ~/.agents/skills). Cek npx hyperframes --version = 0.9.15.
+3. Di folder itu: npm install, lalu npx hyperframes skills (memasang skill HyperFrames ke ~/.agents/skills). Cek npx hyperframes --version = 0.9.15. npm install juga menyalakan git hook proyek (core.hooksPath = .githooks) dan membuat shortcut "TERTORTOR MUSE" di Desktop; cek keduanya ada.
 4. Bangun kit efek suara: node tools/sfx.mjs.
 5. Pasang whisper.cpp untuk transkripsi suara: unduh rilis Windows resmi whisper-bin-x64.zip dari https://github.com/ggml-org/whisper.cpp/releases (rilis terbaru). Sebutkan ukuran filenya dan minta izin saya sebelum mengunduh. Ekstrak sehingga ada tools\bin\whisper\Release\whisper-cli.exe, lalu jalankan whisper-cli.exe --help untuk cek. Folder tools\bin tidak ikut git.
 6. Buat file .env di root folder itu bila belum ada (tidak ikut git) berisi tiga baris kosong: GEMINI_API_KEY=, ELEVENLABS_API_KEY=, dan MUSE4AI_KEY=. Kalau .env sudah ada, jangan diubah. Saya yang mengisi nilainya sendiri.
-7. Buat shortcut Desktop "TERTORTOR MUSE": powershell -NoProfile -ExecutionPolicy Bypass -File tools\install-shortcut.ps1
+7. Kalau shortcut Desktop belum muncul, buat ulang dengan npm run shortcut.
 8. Uji Studio: jalankan npm run studio di latar dan biarkan tetap hidup, lalu cek http://localhost:4341 menjawab 200 dan http://localhost:4341/api/structure berisi 4 kategori: Video Explainer (Hyperframe, SNAPCN, VOX), Storytelling (Berakit ke Hulu, BumiDiPijak), Advertisement (Flashcut, BRI, App Demo), Cinematic (AWS, Sport Strava). Buka http://localhost:4341 di Chrome supaya saya bisa melihatnya. Catatan: videos/uji-hyperframe di git tidak membawa suara dan footage, jadi npm run check di proyek itu boleh gagal karena file suara tidak ada. Itu bukan error pemasangan.
 9. Baca MUSE.md (aturan utama proyek ini, termasuk cara kerjamu di sini), README.md, lalu .muse/skills/video-vertikal/SKILL.md, .muse/skills/video-vertikal/LESSONS.md, .muse/skills/berakit-ke-hulu/SKILL.md, .muse/skills/bumidipijak/SKILL.md, dan .muse/skills/flashcut/SKILL.md supaya paham alur dan aturannya.
 10. Simpan ke memorimu untuk proyek ini:

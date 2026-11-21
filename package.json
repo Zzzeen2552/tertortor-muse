@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "postinstall": "node tools/setup-hooks.mjs",
+    "shortcut": "node tools/shortcut.mjs --force",
     "new": "node tools/new.mjs",
     "voice": "node tools/voice.mjs",
     "cues": "node tools/cues.mjs",
