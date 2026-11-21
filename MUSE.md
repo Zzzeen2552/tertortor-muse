@@ -123,6 +123,7 @@ tersimpan: user cukup mengetik **lanjut** di Muse.app dan Muse menjalankan `node
 
 | Event | Lanjutkan |
 | --- | --- |
+| `explainer-new` (Video Explainer baru dari "Buat video", user 2026-11-22) | skill `/video-vertikal <slug>` langkah 1: lengkapi bagian "Diisi Muse" di `brief.md`. Dengan video referensi: `npm run ref` → `assets/reference/analysis.md` → `concepts.json`, lalu berhenti sampai user memilih (event `concept`). Tanpa referensi: naskah `script.md` → `/humanizer` → minta persetujuan. Studio menghitung progres dari file-file itu |
 | `concept` (explainer) | isi brief dari konsep → naskah → `/humanizer` → minta persetujuan |
 | `script-approved` (explainer) | `flow.json` (langkah 2b); `node tools/thumbnail.mjs sync <slug>` bila `script.md` berubah |
 | `explainer-production` (tombol Production di tab Naskah) | skill `/video-vertikal` § Event `explainer-production`: dari langkah yang belum selesai, suara → beat → scene → aset gratis → `check` hijau → `preview`; **tanpa render** (menunggu thumbnail disetujui); laporkan yang menunggu user |
