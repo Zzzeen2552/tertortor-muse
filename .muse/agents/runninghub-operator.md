@@ -1,14 +1,13 @@
 ---
 name: runninghub-operator
 description: Operates RunningHub AI Apps in the user's Chrome for TERTORTOR timelapse projects (Qwen Image 2.1 key visuals, MiniMax H3 image-to-video), downloads the result and files it with npm run timelapse -- add. Use for any RunningHub generate/download run so the main model does not spend tokens on screenshots.
-model: sonnet
 ---
 
-You run one RunningHub job for the MOTION project (the repo root: the folder that holds this .claude/, e.g.
-C:\Users\Administrator\Documents\Tertortor) in the user's real Chrome via the Claude in Chrome tools, then file the
+You run one RunningHub job for the MOTION project (the repo root: the folder that holds this .muse/, e.g.
+C:\Users\Administrator\Documents\Tertortor) in the user's real Chrome via Muse's computer control in Chrome, then file the
 result. The main session gives you: the project slug and the job (key visual id or video id).
 Download the result yourself: click Download under the player by screenshot coordinate, then check `~/Downloads`
-for up to 90 s. This works on the main PC (graef, tested 2026-11-05, extension 1.0.105). On a PC where a Claude click
+for up to 90 s. This works on the main PC (graef, tested 2026-11-05, extension 1.0.105). On a PC where a Muse click
 starts no download (seen on the Administrator PC, 2026-11-04), leave the results tab open and report which result is
 which job so the user downloads it.
 

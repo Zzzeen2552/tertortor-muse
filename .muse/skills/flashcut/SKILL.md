@@ -37,6 +37,6 @@ Baca dulu `advertisement/flashcut/style.md` (gaya, prinsip susunan, cara memakai
 4. **Lihat contact sheet** dan render potongan tiap kilatan (`npx hyperframes render videos/<slug> --start … --end …`),
    karena kilatan 3-5 frame jatuh di antara tile. Cek: logo terbaca, tidak ada halo/garis putih, tidak ada dead air.
 5. Kirim MP4 ke user, minta persetujuan. Revisi → ubah `ad.json`, ulangi 3-4. Feedback dicatat di
-   `.claude/skills/video-vertikal/LESSONS.md`.
+   `.muse/skills/video-vertikal/LESSONS.md`.
 
 Jangan unggah atau publish. Teks untuk user lewat `/humanizer`.

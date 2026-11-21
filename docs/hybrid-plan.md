@@ -10,7 +10,7 @@ dan relay menyimpan jawaban terakhirnya; cache itulah yang dipakai saat laptop o
 ## Tujuan
 
 Studio bisa dibuka dari HP atau laptop lain. Semua pekerjaan berat (new.mjs, ref.mjs, stories.mjs, cues.mjs, ffmpeg,
-render, Claude Code, Chrome yang sudah login) tetap jalan di laptop. Alur gratis lewat UI tidak berubah.
+render, Muse, Chrome yang sudah login) tetap jalan di laptop. Alur gratis lewat UI tidak berubah.
 
 ## Ide utama: web = relay + cache, laptop = Studio yang sekarang
 
@@ -25,7 +25,7 @@ HP / laptop lain ──HTTPS + cookie──▶ Caddy ──▶ relay (VPS, conta
                                  token, long-poll │
                                                   │
                      laptop: tools/worker.mjs ────┘──▶ http://127.0.0.1:4321 (server.mjs yang sekarang)
-                                                         └▶ tools/*.mjs, .events.jsonl, wait-event, Claude
+                                                         └▶ tools/*.mjs, .events.jsonl, wait-event, Muse
 ```
 
 - **Baca (GET `/api/...`)**: diteruskan ke laptop seperti tulis, dan jawabannya disimpan relay. Saat laptop mati,
@@ -33,7 +33,7 @@ HP / laptop lain ──HTTPS + cookie──▶ Caddy ──▶ relay (VPS, conta
 - **Tulis (POST/PUT/DELETE)**: relay menaruhnya di antrean; worker (long-poll) mengambilnya, memutar ulang permintaan
   itu ke `127.0.0.1:4321`, lalu mengirim balik status + body. Relay menahan respons ke browser sampai 20 s, jadi
   bila laptop online, rasanya sama seperti sekarang (±1–2 s).
-- **Event Claude tidak berubah sama sekali**: `server.mjs` di laptop yang menerima permintaan ulang itu, jadi ia sendiri
+- **Event Muse tidak berubah sama sekali**: `server.mjs` di laptop yang menerima permintaan ulang itu, jadi ia sendiri
   yang menulis `.events.jsonl`, dan `wait-event.mjs` + skill `/musafo`, `/berakit-ke-hulu`, `/video-vertikal`,
   `/flashcut` bangun seperti biasa.
 - **Sumber kebenaran tetap folder di laptop** (`videos/`, `musafo/library/`, `library/`, `presets/`). VPS hanya cache
@@ -134,7 +134,7 @@ Studio 4321 + relay 4330 (data di scratchpad) + worker, semuanya di laptop:
   worker nyala lagi → antrean dijalankan (meta.json berubah). `.events.jsonl` tidak tersentuh (17 → 17 baris).
 - `/files/../.env`, `..%2F`, route di luar allowlist → 404; POST lintas origin 403; token worker salah 401.
 - browser pane: login, Ruang Produksi, editor video memutar preview, "Web · laptop online", tanpa error console.
-| `CLAUDE.md` | bagian "TERTORTOR dari web" dengan gaya file itu |
+| `MUSE.md` | bagian "TERTORTOR dari web" dengan gaya file itu |
 
 ## Uji lokal (sebelum menyentuh VPS)
 

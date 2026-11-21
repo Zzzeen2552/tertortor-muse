@@ -70,11 +70,11 @@ npm run library -- add "<Downloads>/<file>.mp4" --source google-flow --model "Om
 npm run flow -- cut <slug> <shotId> <clipId>   # potong per cut (di-snap ke pergantian scene asli) -> assets/footage/<asset>.mp4 + sources.txt
 ```
 
-## 2. Generate di Google Flow (akun user, lewat Claude in Chrome)
+## 2. Generate di Google Flow (akun user, lewat kontrol komputer Muse (Chrome))
 
-User menyetujui cara ini: Claude yang generate dan mengunduh hasilnya sendiri.
+User menyetujui cara ini: Muse yang generate dan mengunduh hasilnya sendiri.
 
-1. Muat tool Claude in Chrome (skill `chrome-browser`), buka tab baru ke `https://labs.google/fx/tools/flow`. User sudah login di Chrome-nya sendiri; jangan pernah login/logout atau mengetik password. Kalau belum login, minta user login dulu.
+1. Pakai kontrol komputer Muse di Chrome, buka tab baru ke `https://labs.google/fx/tools/flow`. User sudah login di Chrome-nya sendiri; jangan pernah login/logout atau mengetik password. Kalau belum login, minta user login dulu.
 2. **Tidak perlu izin kredit** (user 2026-11-06): langsung generate, lalu laporkan jumlah generate dan kredit (tampil di Flow, "Generating will use N credits") dan catat di `costs.md`.
    **Model default: Omni 1.1 Flash** (`brand.json → flow.model`, user 2026-11-06), Video, 9:16, 720p, 10 s (12 kredit).
    Veo 3.1 Fast hanya 8 s dan 20 kredit, jadi prompt 10 s multi-cut tidak muat; pakai hanya bila user minta.

@@ -1,7 +1,7 @@
 // appdemo.mjs: APP DEMO ads (Advertisement, product "appdemo", user 2026-11-12). No narration, $0: the user's own UI
 // screenshots become a demo film in the look of advertisement/appdemo/reference (typed serif headline with an italic
 // accent word, a phone, pieces of UI lifting out, stacked cards, a benefit list, the app icon at the end), in BRI blues.
-// Every piece of UI on screen is a crop of a real screenshot: nothing is redrawn or generated (CLAUDE.md "Jangan pernah
+// Every piece of UI on screen is a crop of a real screenshot: nothing is redrawn or generated (MUSE.md "Jangan pernah
 // memalsukan UI"). The whole film is one composition (compositions/demo.html) written from demo.json.
 //
 //   node tools/appdemo.mjs build <slug>   demo.json -> compositions/demo.html + index.html + music + fx (typing, pops)

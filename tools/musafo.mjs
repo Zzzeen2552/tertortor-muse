@@ -83,7 +83,7 @@ const clip = (id) => `assets/footage/${id}.mp4`;
 const tokens = (s) => s.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w) && !/^\[.*\]$/.test(w));
 
 // draft.md (user 2026-11-07): before any storyline, a story with a source text (Library Cerita → assets/reference/bahan.md)
-// gets a draft: Claude retells the whole story in Indonesian, complete and in the source's order. Studio shows it next to
+// gets a draft: Muse retells the whole story in Indonesian, complete and in the source's order. Studio shows it next to
 // the source text (two columns); the user edits it and approves it. The storyline is drawn from the approved draft, and
 // the user's wording in it is kept.
 const hasSource = (dir) => existsSync(join(dir, "assets", "reference", "bahan.md"));
@@ -102,7 +102,7 @@ export function saveDraft(dir, text) {
   writeFileSync(join(dir, "draft.md"), t + "\n");
   const p = join(dir, "request.json");
   const r = existsSync(p) ? readJSON(p) : {};
-  r.draftEditedAt = new Date().toISOString(); // the user touched it: Claude keeps their words from here on
+  r.draftEditedAt = new Date().toISOString(); // the user touched it: Muse keeps their words from here on
   writeJSON(p, r);
   return draftApproval(dir);
 }
@@ -129,7 +129,7 @@ export function saveStoryline(dir, text) {
 }
 
 // ---------- main characters (user 2026-11-07, Berakit ke Hulu) ----------
-// The user uploads photos of the real person (assets/reference/tokoh/); Claude makes one character sheet per life stage
+// The user uploads photos of the real person (assets/reference/tokoh/); Muse makes one character sheet per life stage
 // in Google Flow with those photos as ingredients (assets/characters/<id>.png, add <slug> character <id> <file>), and
 // every shot image showing that stage uses the sheet as an ingredient and repeats its desc sentence word for word.
 // musafo.json → characters: [{ id, name, age, desc }], shots[].characters: [id, ...]
@@ -188,7 +188,7 @@ export function checkCharacters(dir, m) {
   return { errors, warns };
 }
 
-// storyline.md: the arc Claude draws from the raw material; the user approves it before any script is written.
+// storyline.md: the arc Muse draws from the raw material; the user approves it before any script is written.
 // hooks.json: what keeps people watching, written with the storyline and approved with it:
 //   { "options": [ { "id": "A", "type": "cold open|pertanyaan|kutipan", "line": "first spoken line", "image": "first frame",
 //     "loop": "the question left open", "why": "why it stops the scroll" } ] (3 options), "chosen": "A" (the user's pick),
@@ -246,7 +246,7 @@ export function sourceFlowErrors(dir) {
   return e;
 }
 
-// Miracle of Hajj (user 2026-11-08): the source is a few sentences, so the storyline shows the user what Claude built on
+// Miracle of Hajj (user 2026-11-08): the source is a few sentences, so the storyline shows the user what Muse built on
 // it: the anecdote word for word, everything added, the cause it looked for (a guess, never a verdict), and the verses
 function mohStorylineErrors(dir) {
   if (!existsSync(join(dir, "storyline.md"))) return [];
@@ -292,7 +292,7 @@ export function createMusafo(slug, title, story, source = "", { type = "musafo",
   writeJSON(join(dir, "meta.json"), { ...meta, type, ...(channel ? { channel } : {}), ...(looks ? { look: looks[look] ? look : loadBrand()[type].defaultLook } : {}) });
   const src = source.trim() ? `**Sumber:** ${source.trim()}\n\n` : "";
   const { label, skill } = STORY_TYPES[type];
-  writeFileSync(join(dir, "brief.md"), `# Brief: ${title}\n\n> Proyek ${label} dari TERTORTOR. Claude: ikuti /${skill} ${slug} (bahan mentah → storyline.md → naskah).\n\n## Bahan mentah (dari user, jangan diubah)\n\n${src}${story.trim()}\n`);
+  writeFileSync(join(dir, "brief.md"), `# Brief: ${title}\n\n> Proyek ${label} dari TERTORTOR. Muse: ikuti /${skill} ${slug} (bahan mentah → storyline.md → naskah).\n\n## Bahan mentah (dari user, jangan diubah)\n\n${src}${story.trim()}\n`);
   writeJSON(join(dir, "musafo.json"), { shots: [] });
   writeFileSync(join(dir, "costs.md"), `# Biaya: ${slug}\n\n| Item | Detail | Kredit/USD |\n| --- | --- | --- |\n`);
   return dir;
@@ -454,7 +454,7 @@ const scriptText = (m) => m.shots.map((s) => s.lines.map((l) => l.text.trim()).j
 // edits = [{ id, lines: [{ text, en }] }]: only the spoken text and its English caption change; a line keeps its other
 // fields (rehook, cliffhanger) by position. script.md is rewritten right away, so an earlier approval goes stale and the
 // user approves again; every changed shot is logged in script-edits.json (before/after, whether a voice or clip already
-// existed) so Claude knows which sentences need a new voice (npm run swap) and which clips may no longer match.
+// existed) so Muse knows which sentences need a new voice (npm run swap) and which clips may no longer match.
 // Studio "Edit naskah": a line whose English caption is empty (the editor clears it when the user changes the Indonesian
 // line and leaves the English alone) is translated here in one Gemini call, with the rest of the script as context so
 // names, terms, and tone match the captions already there (user 2026-11-07). Returns the Indonesian lines translated.
@@ -514,7 +514,7 @@ export function editScript(dir, edits, autoEn = []) {
   return { changed: changed.map((c) => c.shot), warns: [...r.errors, ...r.warns].filter((w) => !/^(clip|storyline|suara punya)/.test(w)) };
 }
 
-// ---------- production (user 2026-11-07): one click in the Shot tab → Claude makes the voice, then the key visuals ----------
+// ---------- production (user 2026-11-07): one click in the Shot tab → Muse makes the voice, then the key visuals ----------
 // Ready once the script is approved for the current storyline. Done when voice/words.json is newer than the click and
 // every picture the clips need exists (tools/progress.mjs uses productionDone for the popup and the push).
 export function productionNeeds(dir) {

@@ -1,7 +1,7 @@
 // TERTORTOR: the dashboard of the MOTION video factory. The simplest possible front door.
-// Enter an idea/storyline + a reference video + key visuals -> a new videos/<slug>/ ready for Claude.
+// Enter an idea/storyline + a reference video + key visuals -> a new videos/<slug>/ ready for Muse.
 // Also lists every video's stage and plays finished renders, and browses the reusable footage library.
-//   npm run studio   ->  http://localhost:4331
+//   npm run studio   ->  http://localhost:4341
 import { createServer } from "node:http";
 import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync, readdirSync, statSync, createReadStream, createWriteStream, renameSync, unlinkSync, rmSync } from "node:fs";
 import { join, extname, normalize, basename } from "node:path";
@@ -12,7 +12,7 @@ import { approval, approve, unapprove, checkFlow, loadFlow } from "../flow.mjs";
 import { checkConcepts, pickConcept, refFiles } from "../ref.mjs";
 import { isMusafo, checkMusafo, shotStats, shotWordLimit, createMusafo, STORY_TYPES, storyType, storylineApproval, approveStoryline, loadHooks, checkHooks, editScript, fillEnglish, sourceFlowErrors, draftApproval, saveDraft, approveDraft, productionState, startProduction, saveStoryline, charRefs, charSheet, looksOf, setLook } from "../musafo.mjs";
 import { editScriptMd, scriptParagraphs, pendingEdits } from "../script-edit.mjs";
-import { working, finished, claudeWaiting } from "../progress.mjs";
+import { working, finished, museWaiting } from "../progress.mjs";
 import { state as chatState, send as chatSend, stop as chatStop, reset as chatReset } from "../studio-chat.mjs";
 import { KINDS as FORMAT_KINDS, listFormats, sourceOf as formatSource } from "../formats.mjs";
 import { createVariant, variantsOf } from "../variant.mjs";
@@ -29,7 +29,7 @@ import { writeCaption, saveCaption, captionBy, captionTitle, hasCaption, default
 import { hasKey as tebarKey, keyInfo as tebarKeyInfo, setKey as setTebarKey, removeKey as removeTebarKey, listAccounts as tebarAccounts, subTebar, saveSubTebar, forward as tebarForward, refreshStatus as tebarRefresh, sentLog as tebarLog } from "../tebar.mjs";
 import { seriesDirs as seriesThumbDirs, settings as thumbSettings, backgrounds as thumbBackgrounds, stale as thumbStale, thumbPng, loadThumb, episodeOf, grabFrame as grabThumbFrame } from "../thumbnail.mjs";
 
-const PORT = +(process.env.PORT || 4331);
+const PORT = +(process.env.PORT || 4341);
 const VIDEOS = join(ROOT, "videos");
 const TRASH = join(VIDEOS, ".trash"); // deleted videos (Studio "Hapus video"), gitignored
 // Windows refuses to move a folder while a file inside is open (a video still streaming): retry for ±4 s
@@ -72,7 +72,7 @@ function musafoStage(slug) {
     draftVoice: !!src?.draft,
     // shots written before the current storyline was approved are an old draft, not something to approve
     scriptState: r.data.shots.length ? (!storylineApproval(d).approved ? "old" : ap.approved ? "approved" : ap.stale ? "stale" : "waiting") : "none",
-    // the user's move: approve the storyline Claude drew from the raw material
+    // the user's move: approve the storyline Muse drew from the raw material
     // story with a source text: draft first (user 2026-11-07), then storyline
     waiting: (() => { const dr = draftApproval(d); if (dr.written && !dr.approved) return "Setujui draft"; if (dr.needed && !dr.approved) return null; const sa = storylineApproval(d); return sa.written && !sa.approved ? "Setujui storyline" : null; })(),
   };
@@ -317,7 +317,7 @@ function explainerStage(slug) {
   const flow = ap.approved ? checkFlow(d) : null;
   const req = has("request.json") ? JSON.parse(readFileSync(join(d, "request.json"), "utf8")) : {};
   const oneTake = isOneTake(d);
-  // with a reference video, Claude offers 2-3 concepts and the user picks one before the script
+  // with a reference video, Muse offers 2-3 concepts and the user picks one before the script
   const withRef = refFiles(d).length > 0 || has("concepts.json") || !!req.refLink;
   const concepts = withRef ? checkConcepts(d) : null;
   const steps = [
@@ -368,13 +368,13 @@ function createVideo({ title, idea, duration, voice = "Gemini TTS", voiceSpeaker
   if (r.status !== 0) throw new Error(r.stderr || r.stdout);
   const d = join(VIDEOS, slug);
   for (const sub of ["assets/reference", "assets/keyvisuals"]) mkdirSync(join(d, sub), { recursive: true });
-  const req = { title, idea, duration, voice: String(voiceSpeaker || "").startsWith("clone:") ? voiceLabel(voiceSpeaker) : voice, ...(voiceSpeaker ? { voiceSpeaker } : {}), refLink: refLink || "", created: new Date().toISOString(), status: "menunggu Claude" };
+  const req = { title, idea, duration, voice: String(voiceSpeaker || "").startsWith("clone:") ? voiceLabel(voiceSpeaker) : voice, ...(voiceSpeaker ? { voiceSpeaker } : {}), refLink: refLink || "", created: new Date().toISOString(), status: "menunggu Muse" };
   writeFileSync(join(d, "request.json"), JSON.stringify(req, null, 2));
   writeFileSync(
     join(d, "brief.md"),
     `# Brief: ${title}
 
-> Dibuat dari TERTORTOR. Claude: lengkapi bagian kosong dari ide di bawah, lalu ikuti /video-vertikal.
+> Dibuat dari TERTORTOR. Muse: lengkapi bagian kosong dari ide di bawah, lalu ikuti /video-vertikal.
 
 ## Ide / konsep / storyline (dari user, jangan diubah)
 
@@ -383,10 +383,10 @@ ${idea.trim()}
 ## Masukan
 - **Target durasi:** ${duration} detik (maks 179)
 - **Suara:** ${voice}
-- **Video referensi:** ${refLink ? refLink + " (link)" : "lihat assets/reference/"} — gaya, tempo, dan cara buka hook yang ditiru; bukan isinya. Data terukur di assets/reference/*.ref.md (npm run ref); Claude menawarkan 2-3 konsep (concepts.json) dan user memilih satu sebelum naskah.
+- **Video referensi:** ${refLink ? refLink + " (link)" : "lihat assets/reference/"} — gaya, tempo, dan cara buka hook yang ditiru; bukan isinya. Data terukur di assets/reference/*.ref.md (npm run ref); Muse menawarkan 2-3 konsep (concepts.json) dan user memilih satu sebelum naskah.
 - **Key visual:** assets/keyvisuals/ — wajib muncul / jadi first frame footage / acuan look.
 
-## Diisi Claude
+## Diisi Muse
 - **Penonton:**
 - **Masalah (hook):**
 - **Janji:**
@@ -399,7 +399,7 @@ ${idea.trim()}
   return slug;
 }
 
-// Every user decision in Studio (spot, key visual, concept, script approval) is appended to .events.jsonl. A Claude
+// Every user decision in Studio (spot, key visual, concept, script approval) is appended to .events.jsonl. A Muse
 // session waiting with `node tools/wait-event.mjs` in the background wakes on it and continues that project.
 const EVENTS = join(ROOT, ".events.jsonl");
 
@@ -520,7 +520,7 @@ createServer(async (req, res) => {
         return send(res, r.status, Buffer.from(await r.arrayBuffer()), "application/json");
       } catch (e) { return send(res, 502, { error: `Relay tidak terjangkau: ${e.message}` }); }
     }
-    // Chat panel (user 2026-11-13): Claude Code headless in this folder (tools/studio-chat.mjs). No login here, so only this
+    // Chat panel (user 2026-11-13): Muse headless in this folder (tools/studio-chat.mjs). No login here, so only this
     // page on this machine may use it (the web relay lets admins only through, then replays it here as localhost).
     if (/^\/api\/chat(\/|$)/.test(p)) {
       const host = String(req.headers.host || "");
@@ -571,8 +571,8 @@ createServer(async (req, res) => {
       }
       return send(res, 405, { error: "method" });
     }
-    // what Claude is doing after the user's clicks, with estimates, and whether a Claude session is listening at all
-    if (p === "/api/working" && req.method === "GET") return send(res, 200, { claude: claudeWaiting(), items: working() });
+    // what Muse is doing after the user's clicks, with estimates, and whether a Muse session is listening at all
+    if (p === "/api/working" && req.method === "GET") return send(res, 200, { muse: museWaiting(), items: working() });
     if (p === "/api/videos" && req.method === "GET") {
       const slugs = existsSync(VIDEOS) ? readdirSync(VIDEOS).filter((s) => !s.startsWith(".") && statSync(join(VIDEOS, s)).isDirectory()) : [];
       // buffered: networks that got a post for this video (tebar.json, plus buffer.json from before Buffer was removed), a badge on the card
@@ -635,13 +635,13 @@ createServer(async (req, res) => {
             library = { error: e.message };
           }
         }
-        // photos of the main character follow as uploads (kind=tokoh); then /ready wakes Claude
+        // photos of the main character follow as uploads (kind=tokoh); then /ready wakes Muse
         if (!body.wait) emit(type === "musafo" ? "musafo-new" : `${type}-new`, slug);
         return send(res, 200, { slug, library });
       }
       if (body.type === "cinematic") {
         // Cinematic form: every look follows the AWS workflow (user 2026-11-21). tools/aws.mjs new --look makes the folder,
-        // brief/footage/logo files follow as uploads, then /ready wakes Claude (cinematic-new) to write aws.json and the animatic
+        // brief/footage/logo files follow as uploads, then /ready wakes Muse (cinematic-new) to write aws.json and the animatic
         const look = String(body.look || "aws");
         if (!listLooks().some((l) => l.id === look)) return send(res, 400, { error: "Gaya Cinematic ini tidak ada." });
         const title = String(body.title || "").trim().slice(0, 100), idea = String(body.idea || "").trim().slice(0, 4000);
@@ -656,11 +656,11 @@ createServer(async (req, res) => {
       }
       if (body.type === "advertisement") {
         // Flashcut form: the project is made first, the photos follow (upload ?kind=angle|logo|model|art), then /ready
-        // wakes Claude to write ad.json
+        // wakes Muse to write ad.json
         const product = listProducts().find((x) => x.id === body.product);
         if (!product || product.draft) return send(res, 400, { error: "Product ini belum didesain." });
         if (product.form === "appdemo") {
-          // App Demo: the app's UI screenshots + icon + messages; Claude writes demo.json after /ready (advertisement/appdemo/style.md)
+          // App Demo: the app's UI screenshots + icon + messages; Muse writes demo.json after /ready (advertisement/appdemo/style.md)
           const clip = (k, n) => String(body[k] || "").trim().slice(0, n);
           const title = clip("title", 100), app = clip("app", 60);
           if (!title || !app) return send(res, 400, { error: "Judul dan nama aplikasi wajib diisi." });
@@ -675,7 +675,7 @@ createServer(async (req, res) => {
           return send(res, 200, { slug });
         }
         if (product.form === "kv") {
-          // key-visual product (BRI): the client's KV + texts; Claude follows advertisement/<product>/style.md after /ready
+          // key-visual product (BRI): the client's KV + texts; Muse follows advertisement/<product>/style.md after /ready
           const clip = (k, n) => String(body[k] || "").trim().slice(0, n);
           const title = clip("title", 100), headline = clip("headline", 80);
           if (!title || !headline) return send(res, 400, { error: "Judul dan headline wajib diisi." });
@@ -701,7 +701,7 @@ createServer(async (req, res) => {
       if (body.preset && !listPresets().some((x) => x.id === body.preset)) return send(res, 400, { error: "Preset ini belum didesain." });
       const slug = createVideo(body);
       if (/^https?:\/\//i.test(body.refLink || "")) runRef(slug, body.refLink.trim());
-      // Docucine: the source article is read now; /ready (after the uploads) wakes Claude to write the script
+      // Docucine: the source article is read now; /ready (after the uploads) wakes Muse to write the script
       if (isOneTake(join(VIDEOS, slug))) {
         const link = [String(body.sourceLink || "").trim(), ...(String(body.idea).match(/https?:\/\/\S+/g) ?? [])].find((u) => /^https?:\/\//i.test(u) && !VIDEO_HOST.test(u));
         if (link) {
@@ -781,7 +781,7 @@ createServer(async (req, res) => {
       const dir = join(d, "assets", "reference", "tokoh");
       mkdirSync(dir, { recursive: true });
       await new Promise((ok, bad) => req.pipe(createWriteStream(join(dir, name))).on("finish", ok).on("error", bad));
-      // added later to a project that already has a story: tell a waiting Claude session
+      // added later to a project that already has a story: tell a waiting Muse session
       if (url.searchParams.get("later") === "1") emit("characters", up[1]);
       return send(res, 200, { ok: true });
     }
@@ -933,7 +933,7 @@ createServer(async (req, res) => {
     }
     // category -> preset / channel / product, for the "Buat video" picker and the grouped video list
     if (p === "/api/structure") return send(res, 200, structure());
-    // "+ Tambah" a preset / channel / product: a draft with the user's brief; the waiting Claude session designs it
+    // "+ Tambah" a preset / channel / product: a draft with the user's brief; the waiting Muse session designs it
     if (p === "/api/subs" && req.method === "POST") {
       const body = JSON.parse((await readBody(req)).toString() || "{}");
       try {
@@ -1152,11 +1152,11 @@ createServer(async (req, res) => {
       runRef(rrun[1], refFiles(join(VIDEOS, rrun[1])).length ? undefined : r.refLink || undefined);
       return send(res, 200, { ok: true });
     }
-    // Production (Shot tab): Claude makes the voice, then the key visuals (event production, user 2026-11-07)
+    // Production (Shot tab): Muse makes the voice, then the key visuals (event production, user 2026-11-07)
     const prod = p.match(/^\/api\/videos\/([a-z0-9-]+)\/production$/);
     if (prod && req.method === "POST") {
       const d = join(VIDEOS, prod[1]);
-      // Video Explainer (user 2026-11-20): one click after the script is approved → Claude continues voice, beats, scenes
+      // Video Explainer (user 2026-11-20): one click after the script is approved → Muse continues voice, beats, scenes
       // and the gate (event explainer-production); rendering still waits for the thumbnail approval
       if (!isMusafo(d)) {
         if (!existsSync(d)) return send(res, 404, { error: "video tidak ditemukan" });
@@ -1174,7 +1174,7 @@ createServer(async (req, res) => {
         return send(res, 400, { error: e.message });
       }
     }
-    // story draft (two columns in Studio: source text | Claude's draft): the user edits and approves it before the storyline
+    // story draft (two columns in Studio: source text | Muse's draft): the user edits and approves it before the storyline
     const drf = p.match(/^\/api\/videos\/([a-z0-9-]+)\/(draft|draft-approve)$/);
     if (drf && req.method === "POST") {
       const d = join(VIDEOS, drf[1]);
@@ -1202,7 +1202,7 @@ createServer(async (req, res) => {
         return send(res, 400, { error: e.message });
       }
     }
-    // musafo: the user approves the storyline before Claude writes the shots
+    // musafo: the user approves the storyline before Muse writes the shots
     const sapv = p.match(/^\/api\/videos\/([a-z0-9-]+)\/storyline-approve$/);
     if (sapv && req.method === "POST") {
       const d = join(VIDEOS, sapv[1]);
@@ -1300,7 +1300,7 @@ createServer(async (req, res) => {
       };
       if (req.method === "GET") return send(res, 200, info());
       const body = JSON.parse((await readBody(req)).toString() || "{}");
-      // ratio remakes: one project per ticked ratio, then Claude is woken to remake pictures, clips and layout
+      // ratio remakes: one project per ticked ratio, then Muse is woken to remake pictures, clips and layout
       const want = (Array.isArray(body.ratios) ? body.ratios : []).filter((k) => VARIANT_KINDS[k]);
       if (want.length) {
         const made = [], errors = [];
@@ -1341,7 +1341,7 @@ createServer(async (req, res) => {
         return send(res, 400, { error: e.message });
       }
     }
-    // Docucine beat table (user 2026-11-09): approved in Studio before Claude builds the world
+    // Docucine beat table (user 2026-11-09): approved in Studio before Muse builds the world
     const bapv = p.match(/^\/api\/videos\/([a-z0-9-]+)\/beats-approve$/);
     if (bapv && (req.method === "POST" || req.method === "DELETE")) {
       const d = join(VIDEOS, bapv[1]), rp = join(d, "request.json");
@@ -1383,7 +1383,7 @@ createServer(async (req, res) => {
       return send(res, 200, a);
     }
     // the user edits the script (tools/script-edit.mjs): Storytelling per shot in musafo.json, explainer per paragraph of
-    // script.md; script.md changes, so the approval goes stale and the next "Setujui naskah" wakes Claude as usual
+    // script.md; script.md changes, so the approval goes stale and the next "Setujui naskah" wakes Muse as usual
     const sedit = p.match(/^\/api\/videos\/([a-z0-9-]+)\/script$/);
     if (sedit && req.method === "POST") {
       const d = join(VIDEOS, sedit[1]);
@@ -1394,7 +1394,7 @@ createServer(async (req, res) => {
         // headline + sub headline follow the script (MOTION user 2026-11-16): rewritten in the background after the save
         const thumbSync = () => spawn(process.execPath, [join(ROOT, "tools", "thumbnail.mjs"), "sync", sedit[1]], { cwd: ROOT, stdio: "ignore", windowsHide: true }).on("error", () => {});
         if (!isMusafo(d)) { const r = editScriptMd(d, body.paragraphs); thumbSync(); return send(res, 200, { ok: true, ...r }); }
-        // empty English captions are translated first (Gemini, Claude haiku as fallback)
+        // empty English captions are translated first (Gemini)
         const auto = await fillEnglish(d, body.shots);
         const r = editScript(d, body.shots, auto);
         thumbSync();

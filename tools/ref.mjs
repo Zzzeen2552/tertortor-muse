@@ -1,4 +1,4 @@
-// ref.mjs: reference video -> measured facts Claude can plan from, then 2-3 concepts the user picks from.
+// ref.mjs: reference video -> measured facts Muse can plan from, then 2-3 concepts the user picks from.
 //
 //   node tools/ref.mjs <slug> [url|file] [--force]   download (yt-dlp) or copy the reference, then analyse every
 //                                                    video in assets/reference/ (skips ones already analysed)
@@ -11,7 +11,7 @@
 //   <name>.shots.png   one keyframe per shot, in order (what each shot shows)
 //   <name>.shots/      the keyframes themselves (sNN.jpg, mid-shot)
 //   <name>.ref.json    shots (start/end/motion), speech (words, wpm, hook words, gaps), loudness
-//   <name>.ref.md      the same as a readable table: Claude reads this + the two PNGs, then writes analysis.md
+//   <name>.ref.md      the same as a readable table: Muse reads this + the two PNGs, then writes analysis.md
 // Motion per shot is measured, not guessed: mean pixel change between frames 0.25 s apart inside the shot.
 // The order the skill follows: analyse -> analysis.md (5 aspects) -> concepts.json -> user picks -> script.
 import { existsSync, mkdirSync, readdirSync, copyFileSync, writeFileSync, rmSync } from "node:fs";
@@ -194,7 +194,7 @@ function refMarkdown(r) {
   const lines = [
     `# Data referensi: ${r.file}`,
     "",
-    "> Diukur oleh `npm run ref`. Ini fakta, bukan tafsiran. Tafsiran (5 aspek + untuk video kita) ditulis Claude di `analysis.md`.",
+    "> Diukur oleh `npm run ref`. Ini fakta, bukan tafsiran. Tafsiran (5 aspek + untuk video kita) ditulis Muse di `analysis.md`.",
     "",
     `- **Durasi:** ${r.duration} s, ${r.size} (${r.aspect})`,
     `- **Tempo:** ${p.shotCount} shot, rata-rata ${p.avgShot} s (median ${p.medianShot} s, terpendek ${p.shortest} s, terpanjang ${p.longest} s), ${p.cutsFirst3s} cut di 3 detik pertama`,

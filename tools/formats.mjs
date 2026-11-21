@@ -1,7 +1,7 @@
 // formats.mjs: file conversions of the finished render (user 2026-11-13): ProRes for editors, WebM, a GIF preview, a small
 // 720p MP4. Works from out/<slug>.mp4 with ffmpeg, $0, never re-renders. Results in out/formats/.
 // Other aspect ratios are NOT made here: cropping or a blurred fill is not allowed (user 2026-11-13). A new ratio is a
-// remake in HyperFrames: tools/variant.mjs + event format-new (CLAUDE.md § Ubah format).
+// remake in HyperFrames: tools/variant.mjs + event format-new (MUSE.md § Ubah format).
 //   node tools/formats.mjs <slug> [--only prores,webm,gif,720p]
 //   node tools/formats.mjs list <slug>
 import { spawnSync } from "node:child_process";

@@ -79,7 +79,7 @@ Satu beat = satu hero; blok adalah hero itu atau penopangnya, bukan tambahan dek
 
 ## Hindari
 
-Gaya default Claude yang diam-diam masuk kalau tidak dilarang. Sebut satu per satu, jangan cuma "hindari tampilan AI".
+Gaya default Muse yang diam-diam masuk kalau tidak dilarang. Sebut satu per satu, jangan cuma "hindari tampilan AI".
 
 - **Warna:** gradien ungu-biru/neon, glow berwarna di belakang teks, latar abu terang. Hanya `--ground`, `--card`, `--paper`, kuning, merah.
 - **Latar:** beat dengan latar polos tanpa dunia, dua beat berurutan di dunia yang sama, label sudut berisi angka/timecode palsu.

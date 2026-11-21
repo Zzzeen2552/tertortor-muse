@@ -1,6 +1,6 @@
 // voice-clone.mjs: clone a voice for the voice-over (user 2026-11-17, from @heyartzy's ElevenLabs post: "a voice (yours,
 // cloned)"). ElevenLabs Instant Voice Cloning (POST /v1/voices/add) turns 1-25 clean recordings (best: 1-3 minutes of one
-// speaker, no music, no echo) into a voice id on the user's ElevenLabs account. TERTORTOR LITE then reads the whole script in that
+// speaker, no music, no echo) into a voice id on the user's ElevenLabs account. TERTORTOR MUSE then reads the whole script in that
 // voice as ONE take with word timestamps (tools/tts.mjs elevenlabs, eleven_v3), exactly like any other ElevenLabs take, and
 // `npm run swap` remakes single sentences in the same voice.
 //
@@ -63,7 +63,7 @@ export async function addClone(name, files, { consent = false, desc = "" } = {})
   const keep = join(DIR, "clones", id);
   mkdirSync(keep, { recursive: true });
   const form = new FormData();
-  form.append("name", `TERTORTOR LITE · ${label}`);
+  form.append("name", `TERTORTOR MUSE · ${label}`);
   form.append("remove_background_noise", "true");
   form.append("description", desc || "Dibuat dari TERTORTOR untuk voice-over");
   form.append("labels", JSON.stringify({ language: "id", source: "tertortor" }));

@@ -157,12 +157,7 @@
       "gemini-3.7-flash",
       "gemini-3.5-flash",
       "gemini-2.5-flash"
-    ],
-    "claudeFallback": {
-      "cli": "claude",
-      "model": "haiku",
-      "note": "User 2026-11-04: bila Gemini gagal (tanpa key, semua model 429/503), permintaan yang sama dikirim ke Claude Haiku lewat Claude Code CLI (claude -p, login langganan user). enabled: false untuk mematikan"
-    }
+    ]
   },
   "musafo": {
     "note": "Proyek Musafo (user 2026-11-03): cerita -> narasi Gemini TTS -> satu klip image-to-video per shot -> caption ID+EN. Referensi gaya: musafo/reference/",
@@ -211,7 +206,7 @@
       "fps": 12,
       "note": "User 2026-11-07: efek grainy. Lapisan noise di scene tiap shot (tools/musafo.mjs scene), karena klip AI menghaluskan grain dari gambar awal."
     },
-    "promptSkill": "musafo-prompt (.claude/skills/musafo-prompt, dari user 2026-11-07): tiap image = 'Create a vertical 9:16 image of …' 80-140 kata, kalimat naratif, styleAnchor di akhir verbatim; wajah dan pakaian ditulis di adegan (mode Hajj / mode sirah)",
+    "promptSkill": "musafo-prompt (.muse/skills/musafo-prompt, dari user 2026-11-07): tiap image = 'Create a vertical 9:16 image of …' 80-140 kata, kalimat naratif, styleAnchor di akhir verbatim; wajah dan pakaian ditulis di adegan (mode Hajj / mode sirah)",
     "orb": {
       "color": "#5d6b70",
       "note": "User 2026-11-07: kaligrafi jangan hitam pekat; abu-abu kebiruan yang menyatu dengan bayangan teal (PNG dipakai sebagai mask)."
@@ -253,7 +248,7 @@
         "note": "Acuan user 2026-11-08 (gambar/PRESET 2, video/PRESET2): kota tua Vietnam dengan bendera Vietnam. Di BKH diterjemahkan ke Indonesia tempo dulu: ruko dan kampung Indonesia, tidak ada bendera Vietnam atau bendera lain; merah putih hanya bila ceritanya menyebut.",
         "image": {
           "tool": "GPT Image",
-          "note": "User 2026-11-08: PRESET2 dibuat dengan GPT Image, sementara manual oleh user satu per satu. Image 1-3 = gambar acuan gaya dari refs (hanya gaya, bukan isi). Claude menulis prompt dan menunjukkannya di chat untuk disalin."
+          "note": "User 2026-11-08: PRESET2 dibuat dengan GPT Image, sementara manual oleh user satu per satu. Image 1-3 = gambar acuan gaya dari refs (hanya gaya, bukan isi). Muse menulis prompt dan menunjukkannya di chat untuk disalin."
         }
       }
     },

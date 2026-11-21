@@ -1,6 +1,6 @@
 # autostart.ps1: keeps TERTORTOR reachable from the web without anyone typing a command (user 2026-11-09).
 # Started at Windows login by "TERTORTOR.vbs" in the Startup folder (shell:startup), which runs this hidden.
-# Every 30 s: Studio listening on 4331? if not, start it. tools/worker.mjs running? if not, start it.
+# Every 30 s: Studio listening on 4341? if not, start it. tools/worker.mjs running? if not, start it.
 # One watchdog at a time (named mutex). Logs: %LOCALAPPDATA%\TERTORTOR\.
 $ErrorActionPreference = "SilentlyContinue"
 $root = Split-Path -Parent $PSScriptRoot
@@ -21,7 +21,7 @@ function Running($pattern) {
 
 Note "watchdog up ($root)"
 while ($true) {
-  if (-not (Get-NetTCPConnection -LocalPort 4331 -State Listen)) { Start-Node "tools/studio/server.mjs" "studio"; Start-Sleep 5 }
+  if (-not (Get-NetTCPConnection -LocalPort 4341 -State Listen)) { Start-Node "tools/studio/server.mjs" "studio"; Start-Sleep 5 }
   if (-not (Running "tools[\\/]worker\.mjs")) { Start-Node "tools/worker.mjs" "worker" }
   Start-Sleep 30
 }

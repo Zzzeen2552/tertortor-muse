@@ -1,10 +1,10 @@
 // script-edit.mjs: the user edits a script in Studio (user 2026-11-06, every project type that has a script).
 // Explainer: the spoken paragraphs of script.md (comment lines # > <!-- in a paragraph are kept). Storytelling
 // (Musafo, Berakit ke Hulu): musafo.json → editScript in musafo.mjs. Either way script.md changes, so an earlier
-// approval goes stale (flow.mjs scriptHash) and the user approves again; that approval wakes Claude as usual.
+// approval goes stale (flow.mjs scriptHash) and the user approves again; that approval wakes Muse as usual.
 // Every change is logged in script-edits.json → pending[] { at, shot|para, before, after, voiced, clip, spoken } so
-// Claude knows which sentences need a new voice (npm run swap, never a whole new take for a few lines) and which
-// clips/scenes may no longer match. Claude moves handled entries to done[] (node tools/script-edit.mjs done <slug>).
+// Muse knows which sentences need a new voice (npm run swap, never a whole new take for a few lines) and which
+// clips/scenes may no longer match. Muse moves handled entries to done[] (node tools/script-edit.mjs done <slug>).
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT, readJSON, writeJSON } from "./lib.mjs";
@@ -62,7 +62,7 @@ export function editScriptMd(dir, paragraphs) {
   return { changed: changed.map((c) => c.para), warns };
 }
 
-// CLI for Claude: list what the user changed, and mark it handled once voice/scenes follow
+// CLI for Muse: list what the user changed, and mark it handled once voice/scenes follow
 //   node tools/script-edit.mjs list <slug>
 //   node tools/script-edit.mjs done <slug>
 if (process.argv[1]?.endsWith("script-edit.mjs")) {

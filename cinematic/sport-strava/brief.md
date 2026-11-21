@@ -1,7 +1,7 @@
 # Brief gaya baru: Sport Strava
 
 > Dibuat dari TERTORTOR 2026-11-21 di kategori Cinematic. Status: **belum didesain** (draft).
-> Claude: baca brief ini dan acuan di `cinematic/sport-strava/reference/` (video: `npm run ref` + `/reverse-video-v2`), tanya user
+> Muse: baca brief ini dan acuan di `cinematic/sport-strava/reference/` (video: `npm run ref` + `/reverse-video-v2`), tanya user
 > yang belum jelas, lalu rancang gaya (alur, grade, grafis, edit/mix) dan hapus `draft`. Jangan mengarang gaya yang tidak ada di brief atau acuan.
 
 ## Deskripsi singkat

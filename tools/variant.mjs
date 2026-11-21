@@ -1,8 +1,8 @@
 // variant.mjs: "Ubah format" (user 2026-11-13). The user ticks the ratios they need under the video in Studio; only those
 // are made. Each ratio becomes its own project, videos/<slug>-<kind>/ (4x5, 1x1, 16x9, 9x16), a copy of the original's
 // script, voice, music, assets and scenes with meta.json "format" set to the new frame. Nothing is cropped or blurred:
-// Studio sends the event `format-new` and Claude remakes the pictures for the new ratio (calm areas where logos, headline
-// and footer sit), the clips, and the layout of every scene, then renders (CLAUDE.md § Ubah format).
+// Studio sends the event `format-new` and Muse remakes the pictures for the new ratio (calm areas where logos, headline
+// and footer sit), the clips, and the layout of every scene, then renders (MUSE.md § Ubah format).
 //   node tools/variant.mjs <slug> <4x5|1x1|16x9|9x16>
 import { cpSync, existsSync, readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { join, relative, sep } from "node:path";
@@ -37,10 +37,10 @@ export function createVariant(slug, kind) {
 
   writeFileSync(join(dst, "meta.json"), JSON.stringify({ ...meta, id: out, name: `${meta.name ?? slug} (${KIND_LABEL[kind]})`, format: fmt, variantOf: slug, variantKind: kind }, null, 2));
   const req = readJSON(join(dst, "request.json"), null);
-  if (req) writeFileSync(join(dst, "request.json"), JSON.stringify({ ...req, title: `${req.title ?? meta.name ?? slug} (${KIND_LABEL[kind]})`, variantOf: slug, created: new Date().toISOString(), status: `menunggu Claude: ubah format ke ${KIND_LABEL[kind]}` }, null, 2));
+  if (req) writeFileSync(join(dst, "request.json"), JSON.stringify({ ...req, title: `${req.title ?? meta.name ?? slug} (${KIND_LABEL[kind]})`, variantOf: slug, created: new Date().toISOString(), status: `menunggu Muse: ubah format ke ${KIND_LABEL[kind]}` }, null, 2));
 
   // frame size in the HTML: index.html (page, root, every host) and the root of every scene; the layout inside the
-  // scenes is Claude's job (event format-new), these numbers only make the canvas the right size
+  // scenes is Muse's job (event format-new), these numbers only make the canvas the right size
   const swap = (s) => s
     .replace(/data-resolution="\w+"/g, `data-resolution="${to.resolution}"`)
     .replaceAll(`width=${from.w}, height=${from.h}`, `width=${to.w}, height=${to.h}`)
@@ -57,7 +57,7 @@ Dibuat dari tombol "Ubah format" di Studio (${new Date().toISOString().slice(0, 
 Disalin dari video asli: naskah, suara, musik, aset, dan scene. Ukuran kanvas sudah ${to.w}×${to.h}, tapi isi scene masih
 tata letak ${from.w}×${from.h}.
 
-Yang harus dibuat ulang (CLAUDE.md § Ubah format):
+Yang harus dibuat ulang (MUSE.md § Ubah format):
 - Gambar/key visual dibuat ulang di rasio ${KIND_LABEL[kind]}, bukan dipotong atau diberi latar blur, dengan area tenang
   (langit/lantai/latar polos) di tempat logo, judul, dan footer.
 - Klip dari gambar baru (Flow), lalu potongan orang/penutup per frame bila scene memakainya.

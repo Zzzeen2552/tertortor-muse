@@ -139,7 +139,7 @@ export function storyMusic(slug, { off = false, moodId, vol } = {}) {
   const seed = [...slug].reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 7);
   writeWav(join(dir, "assets", "music.wav"), compose({ total, cuts, words, mood, seed, cliff }));
   writeJSON(mj, { mode: "story", mood: id, key: mood.key, scale: mood.mode, bpm: mood.bpm, volume: mood.vol, cliff, at: new Date().toISOString() });
-  // provenance line (CLAUDE.md: every media file has one)
+  // provenance line (MUSE.md: every media file has one)
   const src = join(dir, "sources.txt"), line = "assets/music.wav\tdikomposisi dari matematika oleh tools/story-music.mjs (seeded), bebas lisensi, $0";
   const cur = existsSync(src) ? readFileSync(src, "utf8") : "";
   if (!cur.includes("assets/music.wav")) writeFileSync(src, cur.replace(/\s*$/, "\n") + line + "\n");

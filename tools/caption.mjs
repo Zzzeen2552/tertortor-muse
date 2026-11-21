@@ -2,15 +2,15 @@
 // Buffer was removed (user 2026-11-16 "hapus aja buffer"): caption.md = marker comment, "# title", caption; credits.md
 // is appended on load.
 //
-//   node tools/caption.mjs <slug>     the agent writes caption.md (Gemini, Claude haiku as backup)
+//   node tools/caption.mjs <slug>     the agent writes caption.md (Gemini)
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { readJSON, die, videoDir } from "./lib.mjs";
 import { material } from "./thumbnail.mjs";
 import { gemini } from "./gemini-api.mjs";
 
-// the caption the user starts from: caption.md if Claude wrote one, else the title; credits.md is always appended
-// (CLAUDE.md: credits of Commons / stock media must go with the post)
+// the caption the user starts from: caption.md if Muse wrote one, else the title; credits.md is always appended
+// (MUSE.md: credits of Commons / stock media must go with the post)
 // (only "# heading" lines are dropped: hashtags have no space after #)
 const heading = /^#+\s.*(\r?\n|$)/gm;
 const captionFile = (dir) => join(dir, "caption.md");
@@ -33,7 +33,7 @@ export function defaultText(dir) {
 export const captionTitle = (dir) => (hasCaption(dir) ? readFileSync(captionFile(dir), "utf8").match(/^#\s+(.+)$/m)?.[1].trim() || null : null);
 
 // (user 2026-11-12): the agent writes the posting caption + YouTube title from what the video says
-// (tools/thumbnail.mjs material: hook, script, idea), Gemini with Claude haiku as backup; the user edits it in the dialog
+// (tools/thumbnail.mjs material: hook, script, idea), Gemini; the user edits it in the dialog
 // before anything is sent. Written to caption.md (# title, then the caption); credits.md is appended by defaultText.
 const CAPTION_SYSTEM = `Kamu menulis caption posting untuk video vertikal pendek berbahasa Indonesia (TikTok, Instagram Reels, YouTube Shorts,
 Facebook Reels), plus judul YouTube. Caption dibaca setelah orang menonton atau saat video baru mulai: tugasnya membuat orang
@@ -70,7 +70,7 @@ export async function writeCaption(dir) {
   extra.push(`ATURAN FOLLOW: ${sr && sr.part < sr.total ? "Follow untuk nonton sambungannya." : "Follow untuk cerita berikutnya."}`);
   const out = await gemini({ json: true, soft: true, system: CAPTION_SYSTEM, text: `${material(dir)}\n\n${extra.join("\n\n")}\n\nJawab JSON: {"mechanism":"<nama mekanisme hook yang dipakai>","caption":"...","title":"..."}` });
   const caption = clean(out?.caption), title = clean(out?.title).replace(/^#+\s*/, "").slice(0, 100);
-  if (!caption) throw new Error("Caption tidak terbaca dari Gemini/Claude; coba lagi.");
+  if (!caption) throw new Error("Caption tidak terbaca dari Gemini; coba lagi.");
   // no "Visual dibuat dengan bantuan AI." line (user 2026-11-13 asked to drop it); a line the model adds anyway is removed
   const body = caption.replace(/^.*\b(dibuat|dibikin)\b.*\bAI\b.*$\n?/gim, "").replace(/\n{3,}/g, "\n\n").trim();
   writeFileSync(captionFile(dir), `<!-- caption agent ${CAPTION_RULES} -->\n${title ? `# ${title}\n\n` : ""}${body}\n`);

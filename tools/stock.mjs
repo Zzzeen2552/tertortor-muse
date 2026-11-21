@@ -1,5 +1,5 @@
 // stock.mjs: free stock video, music and sound effects from outside sources, each with its licence on record.
-// What each source allows (checked 2026-11-05, see .claude/skills/video-vertikal/footage.md § Stok gratis):
+// What each source allows (checked 2026-11-05, see .muse/skills/video-vertikal/footage.md § Stok gratis):
 //   coverr     API (key by email to team@coverr.co -> COVERR_API_KEY in .env). Free for commercial work and ads, no credit
 //              required; never re-upload the file as is; logos in the footage are not licensed.
 //   mixkit     no API, and its terms forbid scripted/bot downloads: the user downloads the item on mixkit.co and `add`s it.

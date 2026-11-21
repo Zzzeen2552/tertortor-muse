@@ -117,12 +117,12 @@ gambar (latar + 1-3 potongan), dan cut tiap 2-4 s. Tanyakan dulu ke user gambar 
 daftar per beat, sebelum generate.
 
 **Urutan kerja** untuk mode ini (di atas alur explainer biasa):
-1. Ide dan sudut cerita dari user. Claude tidak memilih ide sendiri karena ide yang dipilih AI dipakai banyak orang (`/paket-ide`).
+1. Ide dan sudut cerita dari user. Muse tidak memilih ide sendiri karena ide yang dipilih AI dipakai banyak orang (`/paket-ide`).
 2. Suara satu take dulu. Semua scene ditimbang dari `words.json`.
 3. Daftar gambar per beat → generate → `cutout`.
 4. **Storyboard sebelum render.** Ambil still tiap beat di +0,3 s dan di akhir beat (`npm run preview`), lalu tunjukkan ke user.
 5. **Render draf murah dulu.** Pakai `npx hyperframes render videos/<slug> --start <s> --end <s> -o …` per potongan, baru render penuh.
-6. Bila ada yang terasa salah, taruh frame kita di samping frame acuan dan tanyakan "apa bedanya, apa yang kurang?". Claude
+6. Bila ada yang terasa salah, taruh frame kita di samping frame acuan dan tanyakan "apa bedanya, apa yang kurang?". Muse
    melihat video per frame, jadi gerak yang terasa salah harus dijelaskan user dengan kata-kata.
 
 ## Footage
@@ -134,7 +134,7 @@ daftar per beat, sebelum generate.
 
 ## Hindari
 
-Gaya default Claude yang diam-diam masuk kalau tidak dilarang. Sebut satu per satu, jangan cuma "hindari tampilan AI".
+Gaya default Muse yang diam-diam masuk kalau tidak dilarang. Sebut satu per satu, jangan cuma "hindari tampilan AI".
 
 - **Halus digital:** easing mulus pada objek (objek selalu `steps()`, hanya kamera yang eased), fade-in, blur masuk, scale-pop `back.out`.
 - **Bentuk:** kartu putih rapi bersudut bulat, bayangan lembut buram (bayangan selalu keras dan offset), garis tepi rapi, glassmorphism.

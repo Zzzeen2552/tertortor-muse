@@ -7,7 +7,7 @@ description: Berakit ke Hulu (user menyingkatnya BKH) di proyek MOTION/TERTORTOR
 
 **BKH** = singkatan user untuk Berakit ke Hulu (2026-11-07); nama di Studio tetap "Berakit ke Hulu". Jenis proyek keempat di TERTORTOR (user 2026-11-05): **channel sendiri**, bukan bagian dari Musafo. Alur produksinya
 sama persis dengan Musafo dan memakai engine yang sama (`tools/musafo.mjs`, state `videos/<slug>/musafo.json`), jadi
-**ikuti langkah 0-6 di `.claude/skills/musafo/SKILL.md`** dengan perbedaan di bawah. Yang beda hanya isi cerita dan gaya
+**ikuti langkah 0-6 di `.muse/skills/musafo/SKILL.md`** dengan perbedaan di bawah. Yang beda hanya isi cerita dan gaya
 gambar. Bahasa jawaban: Indonesia santai.
 
 ## Alur Berakit ke Hulu (user 2026-11-07)
@@ -78,7 +78,7 @@ dicek manual dulu.
   - **PRESET1 · 3D sinematik**: gaya awal (Kapal Api, Liem/BCA, Sosro). Semua aturan di bawah berlaku apa adanya.
   - **PRESET2 · 3D cerah**: render 3D bersih ala tanah liat pahat (subsurface scattering di kulit, tanpa garis tinta),
     cahaya volumetrik sore keemasan, jalanan tropis padat detail, oker-terakota-hijau jenuh di bawah langit biru, wajah
-    lembut dan ramah. **Gambar dibuat di GPT Image, sementara manual oleh user** (user 2026-11-08): Claude menulis prompt
+    lembut dan ramah. **Gambar dibuat di GPT Image, sementara manual oleh user** (user 2026-11-08): Muse menulis prompt
     lengkap dan menampilkannya di chat dalam satu blok untuk disalin; user mengunggah 3 gambar acuan sebagai Image 1-3
     (styleAnchor menutup dengan "Image 1, 2 and 3 as visual style reference only."), lalu menyimpan hasilnya untuk
     `add <slug> image`. Kata kunci styleAnchor dari user, jangan diubah. Acuan:
@@ -141,8 +141,8 @@ dicek manual dulu.
   suara satu take Gemini TTS (style dari `request.json → voiceStyle`) → build → key visual semua shot di **ChatGPT (GPT
   Image)**, lalu laporkan. Klip menunggu keputusan user (skill `/musafo` § 3b, 5).
 - **Default alat BKH (user 2026-11-14):** gambar (key visual + character sheet) dibuat di **ChatGPT**, video (klip per shot)
-  di **Meta Muse** (`node tools/muse.mjs video` / MCP `muse4ai`, image-to-video dari key visual, satu akun, kuota dicatat di
-  `costs.md`). Flow dan RunningHub H3 jadi cadangan. Aturan Muse lain di CLAUDE.md tetap (`muse_status` dulu, `request_id`
+  di **Meta Muse** (`node tools/muse.mjs video`, image-to-video dari key visual, satu akun, kuota dicatat di
+  `costs.md`). Flow dan RunningHub H3 jadi cadangan. Aturan Muse lain di MUSE.md tetap (`node tools/muse.mjs status` dulu, `request_id`
   unik, job `running`/`needs_review` tidak dikirim ulang). Klip Muse keluar 16:9 1280×720 di uji 2026-11-11: cek rasio
   hasil pertama, dan bila bukan 9:16 laporkan ke user sebelum lanjut.
 - **Prompt Muse = `node tools/musafo.mjs muse <slug> [s01,s02]`** (user 2026-11-15 "wajahnya terus berubah"): jangan
@@ -159,4 +159,4 @@ dicek manual dulu.
   (character sheet bila ada foto, lalu `series` bila perlu, lalu naskah), `script-approved`, `production`.
 
 ## Feedback
-Setiap koreksi user → satu baris di `.claude/skills/video-vertikal/LESSONS.md` dengan asal `berakitkehulu/<slug>`.
+Setiap koreksi user → satu baris di `.muse/skills/video-vertikal/LESSONS.md` dengan asal `berakitkehulu/<slug>`.

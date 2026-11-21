@@ -79,7 +79,7 @@ gradien. Tanpa logo merek.
 
 ## Hindari
 
-Gaya default Claude yang diam-diam masuk kalau tidak dilarang. Sebut satu per satu, jangan cuma "hindari tampilan AI".
+Gaya default Muse yang diam-diam masuk kalau tidak dilarang. Sebut satu per satu, jangan cuma "hindari tampilan AI".
 
 - **Warna:** gradien ungu-biru atau pelangi, glow/neon, aksen kedua selain biru (merah `--alert` hanya untuk peringatan nyata), latar abu dingin (#F5F5F5 dsb., latar selalu putih hangat).
 - **Bentuk:** glassmorphism, kartu dengan bayangan tebal/gelap, garis tepi berwarna, gradient border, sudut berbeda-beda di satu frame (kartu 28, chip pil, ponsel 66).

@@ -8,7 +8,7 @@ film, lalu motion graphic data di atasnya. Semua dari `aws.json` lewat `tools/aw
 
 1. Studio `#/baru/cinematic/aws` (judul, brief, format master, file brief/footage/logo) → `node tools/aws.mjs new` → event
    `cinematic-new` (look `aws`). Lewat CLI: `node tools/aws.mjs new <slug> "Judul" --format horizontal --idea "…"`.
-2. Claude (skill `/aws`): baca brief + `assets/reference/`, jalankan `/paket-ide` untuk sudut dan hook, tulis `aws.json`
+2. Muse (skill `/aws`): baca brief + `assets/reference/`, jalankan `/paket-ide` untuk sudut dan hook, tulis `aws.json`
    (data + adegan), teks Thai lewat terjemahan yang hati-hati + Inggris lewat `/humanizer`.
 3. `node tools/aws.mjs check <slug>` → animatic: slot footage berlabel (slate), angka yang belum ada = kotak "TBC".
    Snapshot (`npx hyperframes snapshot videos/<slug> --at …`) tiap adegan, perbaiki, laporkan ke user dengan daftar slot
@@ -61,7 +61,7 @@ di sela adegan data, dan ledakan kata satu per ketukan. Grid titik halus di atas
   grade`: deep-contrast 0,55, bayangan biru-tosca, sorot amber, vignette, grain), **tidak pernah** filter CSS.
 - Teks ≥ 28 px; angka terbesar di layar; satu angka dihitung pada satu waktu (bukan dashboard).
 - Musik sementara dari kode (`anim-music`, bebas lisensi) sampai lagu berlisensi dipilih; energi naik ke Top 20 lalu turun.
-- Teks Thai ditulis Claude: minta native speaker klien memeriksa sebelum final, dan catat di laporan.
+- Teks Thai ditulis Muse: minta native speaker klien memeriksa sebelum final, dan catat di laporan.
 - `finish --no-thumbnail` (video klien, tanpa thumbnail di depan, tanpa watermark channel).
 
 ## Hindari

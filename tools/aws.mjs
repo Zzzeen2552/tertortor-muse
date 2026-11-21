@@ -64,7 +64,7 @@ export function create(slug, title, { format = "horizontal", idea = "", look = "
   writeJSON(join(dir, "request.json"), { type: "cinematic", look, title, idea, format, created: new Date().toISOString() });
   writeJSON(join(dir, "aws.json"), { title, source: { th: "", en: "" }, music: { vol: 0.8 }, data: {}, scenes: [] });
   writeFileSync(join(dir, "sources.txt"), "");
-  writeFileSync(join(dir, "brief.md"), `# Brief: ${title}\n\n> Cinematic · ${look === "aws" ? "AWS" : `${look} (alur AWS)`}. Claude: baca ${existsSync(join(ROOT, "cinematic", look, "style.md")) ? `cinematic/${look}/style.md` : "cinematic/aws/style.md"}${look === "aws" ? "" : " (gaya look ini; aturan alur tetap dari cinematic/aws/style.md)"}, tulis aws.json (data + adegan), lalu node tools/aws.mjs check ${slug}.\n\n## Ide / brief (dari user)\n\n${idea || "(kosong)"}\n`);
+  writeFileSync(join(dir, "brief.md"), `# Brief: ${title}\n\n> Cinematic · ${look === "aws" ? "AWS" : `${look} (alur AWS)`}. Muse: baca ${existsSync(join(ROOT, "cinematic", look, "style.md")) ? `cinematic/${look}/style.md` : "cinematic/aws/style.md"}${look === "aws" ? "" : " (gaya look ini; aturan alur tetap dari cinematic/aws/style.md)"}, tulis aws.json (data + adegan), lalu node tools/aws.mjs check ${slug}.\n\n## Ide / brief (dari user)\n\n${idea || "(kosong)"}\n`);
   return dir;
 }
 

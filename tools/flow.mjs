@@ -11,8 +11,8 @@
 // After download: library add, then `flow cut` trims each cut (snapped to the real scene change) into
 // assets/footage/<asset>.mp4 for its beat.
 //
-// Order is the point: Claude writes the script -> the user approves it (Studio button or in chat) -> only then
-// Claude writes flow.json, one entry per shot, written FOR that approved text. If script.md changes afterwards,
+// Order is the point: Muse writes the script -> the user approves it (Studio button or in chat) -> only then
+// Muse writes flow.json, one entry per shot, written FOR that approved text. If script.md changes afterwards,
 // the approval and the prompts are stale and must be redone.
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";

@@ -15,7 +15,7 @@
 //   npm run stories -- recheck [<book>...] [--fix]   find each story's quoted text in the pages; report (or fix) wrong ranges
 //
 // Book text stays local (musafo/library/*/pages.json and musafo/sumber/ are not in git). Gemini reads the book, not
-// Claude: one call per ~20 pages, so a 500-page book costs ~25 cheap calls instead of Claude tokens.
+// Muse: one call per ~20 pages, so a 500-page book costs ~25 cheap calls instead of Muse tokens.
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync, appendFileSync } from "node:fs";
 import { join, basename, extname, resolve } from "node:path";
 import { ROOT, readJSON, writeJSON, die, run, norm } from "./lib.mjs";
@@ -207,7 +207,7 @@ const SCHEMA_BTJ = `Jawab JSON: {"stories":[{"title":"judul pendek","pages":["P1
 "figures":[{"name":"...","sacred":false}],"place":"...","era":"Majapahit/Demak/Pajang/Mataram/...","quotes":[{"text":"kutipan persis","id":"terjemahan","who":"...","page":"P12"}],
 "emotion":1,"visual":1,"clarity":1,"estSeconds":60,"notes":"catatan sensitif / konteks yang perlu"}]}. Tanpa kisah: {"stories":[]}.`;
 // Miracle of Hajj (user 2026-11-08): pilgrims' experiences, usually only a few sentences each (a thread, a comment, a
-// story told by a tour leader). Each one is a story; Claude finds the cause and the verse later, not the scanner.
+// story told by a tour leader). Each one is a story; Muse finds the cause and the verse later, not the scanner.
 const SYSTEM_MOH = `Kamu editor konten untuk channel "Miracle of Hajj": video vertikal pendek (Reels/TikTok, maksimal 150 detik) tentang
 pengalaman nyata jamaah haji dan umrah di tanah suci: kejadian ajaib, aneh, atau mistis yang dialami seseorang.
 Tugasmu membaca teks (thread, artikel, kumpulan cerita) dan mencatat SETIAP pengalaman yang berdiri sendiri, walaupun hanya

@@ -38,7 +38,7 @@ presets/*/reference/
 videos/*/.thumbnails/
 videos/*/.waveform-cache/
 
-# Studio -> Claude event queue (local)
+# Studio -> Muse event queue (local)
 .events.jsonl
 .events.seen
 
@@ -67,7 +67,7 @@ advertisement/*/products/
 # TERTORTOR Cloudflare Tunnel token
 deploy/studio/cf.env
 
-# Studio progress: Claude session heartbeat and measured process times (tools/progress.mjs)
+# Studio progress: Muse session heartbeat and measured process times (tools/progress.mjs)
 .waiting
 .process-times.json
 videos/*/share.json

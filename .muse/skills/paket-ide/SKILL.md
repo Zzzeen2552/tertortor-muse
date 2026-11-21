@@ -11,7 +11,7 @@ sendiri, untuk video panjang dengan judul + thumbnail. Di bawah ini prinsipnya d
 vertikal MOTION, di mana "kemasan" = kalimat hook + gambar pertama + judul layar/cover + caption posting.
 
 Skill ini **tidak** menggantikan alur `/musafo`, `/berakit-ke-hulu`, atau `/video-vertikal`. Ia dijalankan di dalam
-langkah mereka (lihat "Kapan dipakai"). Kalau ada yang bertentangan dengan CLAUDE.md atau skill alur, aturan proyek
+langkah mereka (lihat "Kapan dipakai"). Kalau ada yang bertentangan dengan MUSE.md atau skill alur, aturan proyek
 menang (lihat "Konflik").
 
 ## Kapan dipakai
@@ -47,7 +47,7 @@ sederhanakan terus.
 
 Ukuran yang dipakai (dari artikel, disesuaikan ke 9:16):
 - **Gambar pertama** (`image` hook / frame 0): 1-3 titik fokus saja. Tokoh/benda utama terbaca dalam 0,3 s (sama dengan
-  aturan hero CLAUDE.md). Cek interaksinya: subjek tidak tenggelam di latar, sepertiga bawah tetap kosong untuk caption.
+  aturan hero MUSE.md). Cek interaksinya: subjek tidak tenggelam di latar, sepertiga bawah tetap kosong untuk caption.
 - **Teks di cover / judul layar hook**: ≤ 5 kata (contoh acuan BKH "MALU ATAU MAJU" sudah lolos).
 - **Judul posting**: ≤ 60 karakter. Lebih panjang hanya kalau memang perlu.
 - **Satu kalimat**: tulis di `paket.md` satu kalimat "video ini tentang ___, dan kamu peduli karena ___". Kalau kalimat
@@ -92,7 +92,7 @@ Saat user bilang video sepi atau minta revisi karena performa:
 - Diagnosis dalam bahasa perilaku penonton: berhenti di frame pertama? (prinsip 2, kemasan) Pergi di detik ke berapa?
   (re-hook, taruhan) Tidak paham apa videonya? (satu kalimat di prinsip 2).
 - Minta angka retensi dari user bila ada; jangan menebak angka.
-- Catat pelajarannya ke `.claude/skills/video-vertikal/LESSONS.md` sebagai perilaku penonton, bukan mitos algoritma.
+- Catat pelajarannya ke `.muse/skills/video-vertikal/LESSONS.md` sebagai perilaku penonton, bukan mitos algoritma.
 
 ## Konflik dengan aturan proyek (aturan proyek menang)
 

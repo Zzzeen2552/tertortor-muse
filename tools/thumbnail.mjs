@@ -2,7 +2,7 @@
 // headline, a sub headline, the episode of a series, and the channel logo. finish.mjs puts it in front of the video for
 // thumbnail.json → seconds (default 1 s) so TikTok / Reels / Shorts take it as the cover, and keeps out/thumbnail.png.
 //
-//   node tools/thumbnail.mjs options <slug>   Gemini (Claude haiku as backup) writes 5 headline + sub headline pairs
+//   node tools/thumbnail.mjs options <slug>   Gemini writes 5 headline + sub headline pairs
 //   node tools/thumbnail.mjs render <slug>    out/thumbnail.png from thumbnail.json (missing fields get defaults)
 //   node tools/thumbnail.mjs sync <slug>      options again only when the script changed since the last options (after every script write)
 //   node tools/thumbnail.mjs auto <slug>      options when there are none, pick the first, render (finish.mjs uses it)
@@ -129,7 +129,7 @@ Aturan:
 export async function writeOptions(dir) {
   const out = await gemini({ json: true, system: SYSTEM, text: `${material(dir)}\n\nJawab JSON: {"options":[{"headline":"...","sub":"..."}]} dengan tepat 5 pasangan.` });
   const options = (out?.options ?? []).map((o) => ({ headline: String(o.headline ?? "").trim(), sub: String(o.sub ?? "").trim() })).filter((o) => o.headline).slice(0, 5);
-  if (!options.length) throw new Error("Opsi headline tidak terbaca dari Gemini/Claude; coba lagi.");
+  if (!options.length) throw new Error("Opsi headline tidak terbaca dari Gemini; coba lagi.");
   const t = loadThumb(dir);
   // a headline the user typed (not one of the previous options) is kept; an earlier auto pick follows the new options
   const auto = !t.headline || (t.options ?? []).some((o) => o.headline === t.headline);

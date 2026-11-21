@@ -96,14 +96,14 @@ dengan Y, kita buka dengan Z").
 - Biaya per baris, angka sungguhan dari `costs.md` dan `brand.json`; gambar Flow gratis, Commons gratis, register
   type/drawn/screen gratis. Kalau tidak tahu harganya, tulis perkiraan dan sebut di `honest`.
 - Tepat satu `recommended: true`, dengan alasan di `honest`.
-- Semua aturan naskah CLAUDE.md tetap berlaku (hook di dalam masalah, ≤ 179 s, satu CTA, angka diucapkan).
+- Semua aturan naskah MUSE.md tetap berlaku (hook di dalam masalah, ≤ 179 s, satu CTA, angka diucapkan).
 
 `npm run ref -- check <slug>` sampai hijau. Tampilkan ke user ringkas (judul, ditiru, diubah, biaya, rekomendasi),
 lalu **berhenti**. User memilih di tab "Konsep" TERTORTOR, atau bilang di chat → `npm run ref -- pick <slug> <id>`.
 
 ## 5. Sesudah dipilih
 
-Isi bagian "Diisi Claude" di `brief.md` dari konsep terpilih, lalu lanjut ke naskah (langkah 2 SKILL.md). Tempo
+Isi bagian "Diisi Muse" di `brief.md` dari konsep terpilih, lalu lanjut ke naskah (langkah 2 SKILL.md). Tempo
 referensi (rata-rata shot, kata/menit) jadi acuan di rencana beat: catat di brief, misalnya "beat 1,8-2,5 s seperti
 referensi". Data referensi tetap menjadi acuan sampai render; cocokkan contact sheet akhir dengan `sheet.png`
 referensi.

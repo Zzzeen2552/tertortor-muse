@@ -7,7 +7,7 @@
 //
 // A new sub made in TERTORTOR ("+ Tambah") is a draft with the user's brief: name, workflow, visual style, references.
 // It lives in subDir(): presets/<id>/ (explainer), musafo/channels/<id>/ (storytelling), advertisement/<id>/
-// (advertisement), as brief.md + reference/. Claude designs it from that brief and removes "draft"; until then it
+// (advertisement), as brief.md + reference/. Muse designs it from that brief and removes "draft"; until then it
 // cannot make a project.
 import { existsSync, readFileSync, writeFileSync, mkdirSync, rmSync, statSync, readdirSync, copyFileSync } from "node:fs";
 import { join, relative } from "node:path";
@@ -38,7 +38,7 @@ export function structure() {
   const channels = listChannels().map((c) => ({ id: c.id, label: c.label, description: c.description, type: c.type ?? "musafo", draft: !!c.draft }));
   const products = listProducts().map(({ id, label, description, draft, form }) => ({ id, label, description, form: form ?? "photos", draft: !!draft }));
   // Cinematic: setiap gaya langsung bisa dipakai dengan alur AWS (user 2026-11-21); "styled: false" = gaya visual masih AWS
-  // sampai Claude menyesuaikannya dari brief
+  // sampai Muse menyesuaikannya dari brief
   const looks = listLooks().map(({ id, label, description, draft }) => ({ id, label, description: draft ? "Alur kerja AWS. Gaya visual masih AWS sampai disesuaikan dari brief." : description, draft: false, styled: !draft }));
   const subs = { explainer: presets, storytelling: channels, advertisement: products, cinematic: looks };
   // logo: the watermark of every video in that sub (tools/brandmark.mjs), as a cache-busting version number
@@ -64,7 +64,7 @@ export function clipPlaces(clip) {
   return all.filter((p, i) => all.findIndex((q) => q.category === p.category && q.sub === p.sub) === i);
 }
 
-// "+ Tambah" in TERTORTOR: a new preset / channel / product as a draft, with the user's brief for Claude.
+// "+ Tambah" in TERTORTOR: a new preset / channel / product as a draft, with the user's brief for Muse.
 // Channel ids have no dashes (same as stories.mjs addChannel); preset and product ids are kebab-case.
 export function addSub(category, { label, description = "", workflow = "", visual = "", refLink = "" }) {
   const cat = CATEGORIES.find((c) => c.id === category);
@@ -85,7 +85,7 @@ export function addSub(category, { label, description = "", workflow = "", visua
   writeFileSync(join(dir, "brief.md"), `# Brief ${cat.subLabel.toLowerCase()} baru: ${label}
 
 > Dibuat dari TERTORTOR ${new Date().toISOString().slice(0, 10)} di kategori ${cat.label}. Status: **belum didesain** (draft).
-> Claude: baca brief ini dan acuan di \`${rel(dir)}/reference/\` (video: \`npm run ref\` + \`/reverse-video-v2\`), tanya user
+> Muse: baca brief ini dan acuan di \`${rel(dir)}/reference/\` (video: \`npm run ref\` + \`/reverse-video-v2\`), tanya user
 > yang belum jelas, lalu rancang ${design} dan hapus \`draft\`. Jangan mengarang gaya yang tidak ada di brief atau acuan.
 
 ## Deskripsi singkat

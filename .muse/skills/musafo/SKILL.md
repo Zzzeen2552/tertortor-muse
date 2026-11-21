@@ -3,7 +3,7 @@ name: musafo
 description: Musafo di proyek MOTION/TERTORTOR. Video vertikal 9:16 kisah islami untuk media sosial dari bahan mentah user (ide kasar, artikel, kutipan buku) → storyline → narasi lisan (Gemini TTS) → satu ilustrasi 3D golden hour + satu klip image-to-video per shot → caption Indonesia + Inggris. Pakai untuk "/musafo <slug>", "bikin video Musafo", atau proyek dengan meta.json type "musafo".
 ---
 
-> **TERTORTOR LITE:** channel Musafo tidak ada di sini. Skill ini disimpan hanya sebagai manual teknis engine `tools/musafo.mjs` yang dipakai Berakit ke Hulu dan BumiDiPijak (langkah 0-6). Jangan membuat proyek `type: "musafo"`.
+> **TERTORTOR MUSE:** channel Musafo tidak ada di sini. Skill ini disimpan hanya sebagai manual teknis engine `tools/musafo.mjs` yang dipakai Berakit ke Hulu dan BumiDiPijak (langkah 0-6). Jangan membuat proyek `type: "musafo"`.
 
 
 # /musafo <slug>
@@ -20,7 +20,7 @@ Gerbang: `node tools/musafo.mjs check <slug>` sampai tanpa ✖, lalu `npm run ch
 - **Dari Library Cerita** (buku panjang): user mengunggah PDF di TERTORTOR → Library Cerita (atau
   `npm run stories -- ingest <file.pdf> --title … --author …`). `tools/stories.mjs` mengambil teks per halaman (pdftotext),
   Gemini membaca per 20 halaman dan mencatat tiap kisah ke `musafo/library/<buku>/stories.json` (ringkasan, alur, tokoh,
-  dalil yang dikutip persis + dicek kata per kata ke teks halaman, skor, perkiraan durasi). Claude **tidak** membaca buku
+  dalil yang dikutip persis + dicek kata per kata ke teks halaman, skor, perkiraan durasi). Muse **tidak** membaca buku
   utuh. Tombol "Jadikan video" (atau `npm run stories -- use <buku> <id>`) membuat proyek: ringkasan di `brief.md`, teks
   asli halamannya di `assets/reference/bahan.md` (tidak masuk git). Storyline ditulis dari `bahan.md`, bukan dari
   ringkasan Gemini. Dalil bertanda ⚠ (belum cocok dengan teks) dicek manual di `bahan.md` sebelum dipakai.
@@ -223,11 +223,11 @@ Hemat: ±6 generate per video 90 detik, bukan ±18. Tampil di TERTORTOR tab Shot
   sosok sendiri, duduk, lanskap) lebih baik daripada KV proyek. Muse menambah detail sendiri: tulis yang dilarang secara
   eksplisit (pose tangan "palms open, no mudra", "plain low stone well, no winch", "no lanterns, no lit lamps" di siang
   hari) dan cek tiap gambar. Catat tiap generate di `costs.md` sebagai kuota Muse; `imageTool` = "Meta Muse (muse4ai)".
-- Cadangan pertama: **Google Flow** (`musafo.image.flow`) lewat Claude in Chrome: proyek baru → Image,
+- Cadangan pertama: **Google Flow** (`musafo.image.flow`) lewat kontrol komputer Muse (Chrome): proyek baru → Image,
   9:16, Nano Banana, x1; tambahkan 1-3 gambar dari `musafo/reference/gambar` sebagai ingredients supaya gayanya sama.
   Gambar di Flow gratis, tidak perlu izin. Satu prompt per kali, tunggu selesai, unduh. "Unusual activity" → jangan retry,
   minta user klik Retry. Halaman "Layanan Tidak Diizinkan" = akun Chrome adalah akun Workspace yang Flow-nya dimatikan:
-  minta user mengganti akun sendiri (Claude tidak memilih akun Google).
+  minta user mengganti akun sendiri (Muse tidak memilih akun Google).
 - Cadangan bila Flow tidak bisa dipakai: `musafo.image.fallback` lewat agen `runninghub-operator` (Qwen Image 2.1 dengan
   gambar referensi di LOAD IMAGE, 9:16; bila gagal start setelah 1 reload + 1 retry, zimage3.0 teks saja). Catat koin.
 - Set `musafo.json → imageTool` sesuai alat yang benar-benar dipakai.
@@ -258,5 +258,5 @@ Hemat: ±6 generate per video 90 detik, bukan ±18. Tampil di TERTORTOR tab Shot
 "Ilustrasi dibuat dengan AI". Jangan unggah ke platform tanpa izin.
 
 ## Feedback
-Koreksi user → satu baris di `.claude/skills/video-vertikal/LESSONS.md` dengan asal `musafo/<slug>`; aturan yang bisa dicek
+Koreksi user → satu baris di `.muse/skills/video-vertikal/LESSONS.md` dengan asal `musafo/<slug>`; aturan yang bisa dicek
 mesin masuk ke `checkMusafo` di `tools/musafo.mjs`.

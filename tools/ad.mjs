@@ -60,7 +60,7 @@ export function create(slug, title, { product = "flashcut", from, name = "", cta
   writeFileSync(join(dir, "sources.txt"), lines.join("\n") + (lines.length ? "\n" : ""));
   for (const f of ["beats.json", "script.md"]) rmSync(join(dir, f), { force: true }); // explainer files, not used here
   writeJSON(join(dir, "ad.json"), { product, name, cta, shots: [] });
-  writeFileSync(join(dir, "brief.md"), `# Brief iklan: ${title}\n\n> Advertisement · ${product}. Claude: tulis ad.json (shot, label, SFX) dari foto di assets/products/, lalu node tools/ad.mjs check ${slug}.\n`);
+  writeFileSync(join(dir, "brief.md"), `# Brief iklan: ${title}\n\n> Advertisement · ${product}. Muse: tulis ad.json (shot, label, SFX) dari foto di assets/products/, lalu node tools/ad.mjs check ${slug}.\n`);
   return dir;
 }
 

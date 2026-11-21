@@ -19,7 +19,7 @@ gayanya milik BDP. Bahasa jawaban: Indonesia santai.
    arahan user di chat bila ada; kata-kata user didahulukan), lengkap dengan `## Alur asli`, `## Beda dari alur asli`, dan
    `## Tokoh`. Jalankan `/paket-ide` dulu (sudut, 10 calon hook, uji sekilas, taruhan).
 3. **Lebih dari 2 menit = series** (user 2026-11-08, `brand.json → bumidipijak.maxSeconds` 120): `## Bagian k`, tiap bagian
-   < 120 s, berdiri sendiri, berakhir di titik tegang. Batas episode yang user sebutkan menang atas pembagian Claude. Hook,
+   < 120 s, berdiri sendiri, berakhir di titik tegang. Batas episode yang user sebutkan menang atas pembagian Muse. Hook,
    re-hook, cliffhanger bagian 2 dst. di `hooks.json → parts`.
 4. **User mengedit storyline di Studio** (tab Storyline, teks buku di kiri) lalu menyetujuinya (`storyline-approved`). Setelah
    `request.json → storylineEditedAt` ada, storyline itu kata-kata user.
@@ -66,4 +66,4 @@ gayanya milik BDP. Bahasa jawaban: Indonesia santai.
 `script-approved` (`node tools/script-edit.mjs list <slug>` lalu berhenti), `production` (suara → key visual, laporkan).
 
 ## Feedback
-Setiap koreksi user → satu baris di `.claude/skills/video-vertikal/LESSONS.md` dengan asal `bumidipijak/<slug>`.
+Setiap koreksi user → satu baris di `.muse/skills/video-vertikal/LESSONS.md` dengan asal `bumidipijak/<slug>`.

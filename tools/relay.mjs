@@ -1,5 +1,5 @@
 // relay.mjs: TERTORTOR on the web. Runs on the VPS (or locally for testing); never spawns anything and imports nothing
-// from tools/. The real Studio keeps running on the laptop (npm run studio, 127.0.0.1:4331); tools/worker.mjs on the
+// from tools/. The real Studio keeps running on the laptop (npm run studio, 127.0.0.1:4341); tools/worker.mjs on the
 // laptop long-polls this relay over HTTPS, replays each browser request against the local Studio and posts the answer
 // back. So every write still lands in the laptop's videos/ and .events.jsonl, and wait-event + the skills don't change.
 //   node tools/relay.mjs                 serve (env below)
@@ -520,8 +520,8 @@ createServer(async (req, res) => {
     if (p === "/api/relay/push-test" && m === "POST") return send(res, 200, await pushAll({ title: "TERTORTOR", body: "Tes notifikasi: kalau ini muncul, notifikasi proses selesai juga akan muncul.", url: "/" }));
     if (!allowed(m, p)) return send(res, 404, { error: "not found" });
     // accounts live here, not on the laptop: answered by the relay itself (also with the laptop off), admins only
-    // Chat panel = Claude Code running on the laptop: admins only (user 2026-11-13)
-    if (/^\/api\/chat(\/|$)/.test(p) && me.role !== "admin") return send(res, 403, { error: "Chat Claude hanya untuk admin." });
+    // Chat panel = Muse running on the laptop: admins only (user 2026-11-13)
+    if (/^\/api\/chat(\/|$)/.test(p) && me.role !== "admin") return send(res, 403, { error: "Chat Muse hanya untuk admin." });
     if (p.startsWith("/api/users")) return me.role === "admin" ? answer(res, await usersApi(m, p.slice(4), req, me.email)) : send(res, 403, { error: "Hanya admin yang bisa mengelola user." });
 
     const path = p + url.search;
@@ -564,7 +564,7 @@ createServer(async (req, res) => {
       queued.set([...queued.get(), { id: newId(), method: m, path, type, body, queuedAt: new Date().toISOString() }]);
       return send(res, 202, { ok: true, queued: true });
     }
-    const r = await relay({ id: newId(), method: m, path, type, body, at: Date.now() }, /\/(script|buffer-caption)$/.test(p) ? 6 * 60e3 : /\/(share|buffer)$/.test(p) ? 15 * 60e3 : 60e3); // saving a script / writing a Buffer caption may need Gemini, then Claude; sending to Buffer may upload the share link first
+    const r = await relay({ id: newId(), method: m, path, type, body, at: Date.now() }, /\/(script|buffer-caption)$/.test(p) ? 6 * 60e3 : /\/(share|buffer)$/.test(p) ? 15 * 60e3 : 60e3); // saving a script / writing a Buffer caption may need Gemini, then Muse; sending to Buffer may upload the share link first
     return send(res, r.status, r.body, r.type);
   } catch (e) {
     console.error(e);

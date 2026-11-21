@@ -1,4 +1,4 @@
-// Meta Muse lewat muse4ai (REST lokal 127.0.0.1:47821). Kunci = header MCP muse4ai di ~/.claude.json (tidak dicetak).
+// Meta Muse lewat muse4ai (REST lokal 127.0.0.1:47821). Kunci = MUSE4AI_KEY di .env (tidak dicetak).
 // Prasyarat: Muse4AI terbuka, satu akun siap, `node tools/local-proxy.mjs` hidup.
 //   node tools/muse.mjs image|video <out> --prompt-file <txt> [--ref <img>]... [--id <request_id>]
 //   node tools/muse.mjs status
@@ -6,17 +6,16 @@
 // Job needs_review/running tidak pernah dikirim ulang; request_id yang sama = job yang sama (aman di-retry).
 import fs from "node:fs";
 import path from "node:path";
+import { ROOT } from "./lib.mjs"; // loads .env
 
 const API = process.env.MUSE4AI_URL || "http://127.0.0.1:47821";
 const sleep = (ms) => new Promise((ok) => setTimeout(ok, ms));
 
+// the key lives in .env (MUSE4AI_KEY, the muse4ai Authorization value)
 function authHeader() {
-  const cfg = JSON.parse(fs.readFileSync(path.join(process.env.USERPROFILE || process.env.HOME, ".claude.json"), "utf8"));
-  for (const [k, p] of Object.entries(cfg.projects || {})) {
-    const h = /MOTION$/i.test(k) && p.mcpServers?.muse4ai?.headers?.Authorization;
-    if (h) return h;
-  }
-  throw new Error("Kunci muse4ai tidak ditemukan: daftarkan MCP muse4ai dengan header Authorization dulu");
+  const k = (process.env.MUSE4AI_KEY || "").trim();
+  if (k) return /^(Bearer|Basic) /i.test(k) ? k : `Bearer ${k}`;
+  throw new Error(`Kunci muse4ai belum ada: isi MUSE4AI_KEY di ${path.join(ROOT, ".env")} (nilai header Authorization dari Muse4AI)`);
 }
 const AUTH = authHeader();
 

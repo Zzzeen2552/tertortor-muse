@@ -3,7 +3,7 @@
 > Nama awal "Babad Tanah Jawa"; diganti user 2026-11-07 jadi **BumiDiPijak** (id `bumidipijak`). Isinya tetap kisah Babad Tanah Jawa.
 
 > Dibuat dari TERTORTOR 2026-11-07 di kategori Storytelling. Status: **didesain 2026-11-07** (skill `/babad-tanah-jawa-prompt`, `brand.json → bumidipijak`).
-> Claude: baca brief ini dan acuan di `musafo/channels/bumidipijak/reference/` (video: `npm run ref` + `/reverse-video-v2`), tanya user
+> Muse: baca brief ini dan acuan di `musafo/channels/bumidipijak/reference/` (video: `npm run ref` + `/reverse-video-v2`), tanya user
 > yang belum jelas, lalu rancang channel (aturan, gaya gambar, prompt Library Cerita; tipe proyek sendiri bila alurnya beda dari Musafo) dan hapus `draft`. Jangan mengarang gaya yang tidak ada di brief atau acuan.
 
 ## Deskripsi singkat

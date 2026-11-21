@@ -52,7 +52,7 @@ export function probeDuration(file) {
 }
 
 // Look presets live in presets/<id>/ (preset.json = colors, fonts, captions, extra css; scenes/ = stub per register;
-// style.md = the rules Claude designs scenes by). brand.json holds everything that is not look (voice, limits, sfx...).
+// style.md = the rules Muse designs scenes by). brand.json holds everything that is not look (voice, limits, sfx...).
 // A preset with "draft": true is a placeholder (only style.md notes, no colours/fonts/scenes yet): shown in TERTORTOR as
 // "belum didesain" but never usable, so listPresets() leaves it out unless asked.
 export const PRESETS = join(ROOT, "presets");

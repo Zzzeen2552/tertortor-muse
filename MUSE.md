@@ -1,7 +1,20 @@
-# TERTORTOR LITE — mesin video vertikal versi ramping (Claude Code + HyperFrames)
+# TERTORTOR MUSE — mesin video vertikal versi ramping (Muse + HyperFrames)
+
+**Muse (Meta, Muse.app di Mac ini) adalah agen proyek ini** (user 2026-11-21: duplikat TERTORTOR LITE, semua peran
+Claude diganti Muse). Muse membaca file ini di awal setiap percakapan. Cara kerja Muse di sini:
+- **Folder kerja** = folder repo ini. Baca/tulis/edit file dengan alat file Muse; perintah (`npm run …`, `node tools/…`,
+  `npx hyperframes …`, `ffmpeg`, `git status`) dijalankan dengan alat run program Muse dari folder ini. Saat diminta,
+  user mengizinkan Muse menjalankan program di luar folder Hatch.
+- **Skill** = `.muse/skills/<nama>/SKILL.md`. Bila user atau tabel di bawah menyebut `/<nama> <slug>`, baca SKILL.md itu
+  (dan file yang ditunjuknya) lalu ikuti langkahnya. Skill HyperFrames ada di `~/.agents/skills/` (`npx hyperframes skills`).
+- **Agen bantu** (`.muse/agents/*.md`) = instruksi kerja untuk tugas sempit (RunningHub, cek frame); kerjakan sendiri
+  mengikuti file itu, atau berikan ke sub-agen Muse bila ada.
+- **Chrome** (Google Flow, AI Studio, RunningHub): pakai kontrol komputer Muse di Chrome user. User login sendiri; Muse
+  tidak pernah mengetik password.
+- Setiap kali user menyebut "motion graphic", baca dulu `.muse/skills/motion-design/SKILL.md` sebelum mendesain gerak.
 
 Duplikat ramping dari MOTION (`Documents/MOTION`), dibuat 2026-11-12. Folder, git, Studio, dan antrean event-nya
-**terpisah total** dari MOTION: jangan menyalin balik ke MOTION, jangan menyentuh `.events.jsonl` MOTION. Studio LITE
+**terpisah total** dari MOTION: jangan menyalin balik ke MOTION, jangan menyentuh `.events.jsonl` MOTION. Studio MUSE
 dijalankan **lokal** di tiap komputer; repo GitHub hanya untuk memasangnya di komputer lain (README). **Tidak ada web
 app/relay** (user 2026-11-12): jangan deploy apa pun dan jangan menyentuh VPS.
 
@@ -9,11 +22,11 @@ Pabrik video 9:16 (1080×1920, 30 fps, 30–179 s). Prinsipnya: **AI menulis kod
 timeline GSAP yang dirender HyperFrames ke MP4. Uang hanya dikeluarkan untuk suara dan beberapa detik footage/klip.
 
 Skill resmi HyperFrames (`/hyperframes`, `/hyperframes-cli`, `/hyperframes-registry`, `/media-use`) ada di
-`~/.claude/skills` dan menjadi acuan format komposisi; aturan di file ini menimpa default mereka (selalu 1080×1920).
+`~/.agents/skills` dan menjadi acuan format komposisi; aturan di file ini menimpa default mereka (selalu 1080×1920).
 Default `media-use` (HeyGen, katalog musik/stok) tidak berlaku: suara Gemini TTS, SFX dari `library/sfx/`, biaya di `costs.md`.
 HyperFrames dipin di `package.json` (0.9.15). `npx hyperframes render videos/<slug> --start <s> --end <s> -o …` merender satu potongan.
 
-## Isi LITE
+## Isi MUSE
 
 | Kategori | `type` | Sub | Isi |
 | --- | --- | --- | --- |
@@ -22,23 +35,23 @@ HyperFrames dipin di `package.json` (0.9.15). `npx hyperframes render videos/<sl
 | **Advertisement** | `advertisement` | product `advertisement/products.json` | **Flashcut**, **BRI** (`form: "kv"`), **App Demo** (`form: "appdemo"`) |
 | **Cinematic** | `cinematic` | gaya (`look`) `cinematic/looks.json` | **Setiap gaya memakai alur kerja AWS** (user 2026-11-21): gaya baru dari "+ Tambah gaya" mendapat `presets/<look>/` (salinan preset AWS tanpa font Ember) dan `cinematic/<look>/style.md` (salinan aturan AWS) lalu langsung bisa dipakai di "Buat video"; `tools/aws.mjs` membaca preset look-nya dan memakai `presets/aws` untuk berkas yang tidak ada; `draft: true` di `looks.json` = gaya visual masih AWS sampai disesuaikan dari `cinematic/<look>/brief.md` (event `channel-new`). Gaya pertama: **AWS** (skill `/aws`, engine `tools/aws.mjs`, aturan `cinematic/aws/style.md`, preset `presets/aws`): rekap sinematik + motion graphic **visualisasi data** dari brief klien (rekap acara klien): **footage asli** klien di-grade lewat `media-treatment`, angka besar dihitung naik, funnel, titik/kurva, papan Top 20, timeline, kartu logo; teks **Thai + Inggris** (font OFL Inter + IBM Plex Sans Thai, `unicode-range` di `fontFaces`) + `out/<slug>.en.srt`; tanpa narasi, HyperFrames. `aws.json` → satu `compositions/film.html`; slot footage kosong = slate berlabel, angka `null` = kotak TBC (animatic sebelum bahan klien datang). **Master 16:9 + 9:16 + 1:1** dari data yang sama (`node tools/aws.mjs formats <slug>` → proyek `<slug>-9x16`/`-1x1`). **Paket After Effects** (`node tools/aws-ae.mjs <slug>` → `out/ae/`: plate ProRes 422 HQ, grafis alpha ProRes 4444, stem audio, `.jsx` dengan setiap teks dan angka sebagai text layer yang bisa diedit). Tab **AWS** di editor: angka/TBC, unggah footage per slot (`upload?kind=footage&slot=<adegan>:<n>`), logo, lagu, tombol Render / 9:16 + 1:1 / Paket After Effects (`/api/videos/<slug>/aws-render|formats|ae`). Formulir `#/baru/cinematic/aws`. File Amazon Ember berlisensi hanya di laptop (`presets/aws/fonts/ember/`), **tidak pernah di-commit** (repo publik); begitu juga footage, logo, musik, dan brief klien. |
 
-Tidak ada di LITE: preset explainer lain (Kolase, Berkas, Docucine), channel Musafo dan Miracle of Hajj, gaya
+Tidak ada di MUSE: preset explainer lain (Kolase, Berkas, Docucine), channel Musafo dan Miracle of Hajj, gaya
 Cinematic selain AWS (Escapement, Sandekala), Cinema Clone, Animation, dan City timelapse/stok Adobe (STOKER). Bila user memintanya, arahkan ke MOTION.
 
 **Mesin bersama Storytelling.** BKH dan BDP memakai engine Musafo: `tools/musafo.mjs` (state `musafo.json`), blok dasar
 `brand.json → musafo` (suara, klip, caption), preset `presets/musafo` (caption BKH), dan langkah teknis 0–6 di skill
-`/musafo`. Di LITE skill `/musafo` hanya manual teknis engine itu; jangan membuat proyek `type: "musafo"`.
+`/musafo`. Di MUSE skill `/musafo` hanya manual teknis engine itu; jangan membuat proyek `type: "musafo"`.
 
-## Pintu masuk: Studio LITE
+## Pintu masuk: Studio MUSE
 
-`npm run studio` → **http://localhost:4331** (MOTION memakai 4321; keduanya boleh jalan bersamaan).
+`npm run studio` → **http://localhost:4341** (MOTION 4321, LITE 4331; semuanya boleh jalan bersamaan).
 "Buat video" memilih kategori, lalu sub (`#/baru/<kategori>/<sub>`), lalu formulirnya; Studio membuat `videos/<slug>/`
-dan menampilkan perintah untuk Claude. Ruang Produksi dan sidebar mengelompokkan video per kategori. Pohon kategori dari
+dan menampilkan perintah untuk Muse. Ruang Produksi dan sidebar mengelompokkan video per kategori. Pohon kategori dari
 `tools/categories.mjs` (`/api/structure`). Halaman `#/s/<kategori>/<sub>` punya tab Video, Library footage, dan
 (Storytelling) Library cerita. Footage: `npm run library -- add … --for <kategori>/<sub>` (selalu isi `--for`).
 **Tampilan** (user 2026-11-21, acuan editor video Clideo): **tema gelap default** (`tt_theme` di localStorage, tombol bulan
 untuk terang), panel membulat lembut (radius 12-22 px), tombol pil, tombol utama gradasi teal `#19C2CD → #2BDDB0`, ikon rel
-editor dalam lingkaran (aktif = gradasi), logo tulisan tangan "Tertortor." (user 2026-11-21: mask PNG transparen di `.ttlogo`, warnanya ikut tema, plus label kecil LITE). Token di `:root` /
+editor dalam lingkaran (aktif = gradasi), logo tulisan tangan "Tertortor." (user 2026-11-21: mask PNG transparen di `.ttlogo`, warnanya ikut tema, plus label kecil MUSE). Token di `:root` /
 `[data-theme="dark"]` dan blok "Gaya Clideo" di akhir `<style>` `tools/studio/index.html` (menimpa gaya Swiss lama di atasnya); komponen baru ikut token itu. Kartu video mengikuti rasio videonya (`ratio`
 dari server → `--ar`), kartu tanpa thumbnail memakai `poster.jpg` kecil (bukan `<video preload>`). `/api/videos` di-cache
 per folder (berubah = dihitung ulang) dan pindah menu menggambar dari daftar yang sudah dimuat lalu menyegarkan di belakang.
@@ -51,8 +64,8 @@ dan Publikasi masing-masing panel sendiri. Tombol **Production** juga muncul di 
 (Storytelling: event `production`; Explainer: event `explainer-production`). Di bawah video selalu ada
 HyperFrames Studio proyek itu dalam iframe (`/api/videos/<slug>/hf-preview`, GET status / POST nyalakan `npx hyperframes preview --background`).
 
-**Video referensi** dianalisis `npm run ref` (yt-dlp, shot, gerak, transkrip). Claude menulis `analysis.md` dan 2-3 konsep
-di `concepts.json`; user memilih di tab "Konsep" sebelum naskah. Alurnya di `.claude/skills/video-vertikal/reference.md`.
+**Video referensi** dianalisis `npm run ref` (yt-dlp, shot, gerak, transkrip). Muse menulis `analysis.md` dan 2-3 konsep
+di `concepts.json`; user memilih di tab "Konsep" sebelum naskah. Alurnya di `.muse/skills/video-vertikal/reference.md`.
 
 **Watermark, thumbnail** (semua kategori):
 - **Watermark**: `<subDir>/logo.png` per channel/preset/product, kiri atas tiap video (`tools/brandmark.mjs`, `brand.json → watermark`).
@@ -69,7 +82,7 @@ di `concepts.json`; user memilih di tab "Konsep" sebelum naskah. Alurnya di `.cl
   ulang di latar), `""` = bagian itu sengaja default. Label episode melanjutkan label bagian sebelumnya. Jangan render video
   sebelum user menyetujui thumbnail lewat tombol **Setujui & render video** di tab Thumbnail.
 - **Cover gaya**: `<subDir>/cover.jpg`, `node tools/sub-covers.mjs [--force|<sub>]`, tidak pernah dari media acuan pihak ketiga.
-- **Hapus video**: dipindah ke `videos/.trash/`, dipulihkan dari menu **Sampah**. Claude tidak menghapus video user tanpa izin.
+- **Hapus video**: dipindah ke `videos/.trash/`, dipulihkan dari menu **Sampah**. Muse tidak menghapus video user tanpa izin.
 - **Ubah format** (user 2026-11-13): tombol "Ubah format" di bawah video editor. **Tidak pernah otomatis**: hanya rasio yang
   user centang yang dibuat (4:5 1080×1350, 1:1 1080×1080, 16:9; 9:16 untuk video lebar), **dibuat ulang di HyperFrames,
   tidak pernah dipotong dari render lama atau diberi latar blur**. `tools/variant.mjs` menyalin proyek ke
@@ -81,22 +94,24 @@ di `concepts.json`; user memilih di tab "Konsep" sebelum naskah. Alurnya di `.cl
   (gitignored, ditempel user di panel Tebar halaman sub) atau `.env TEBAR_API_KEY_<SUB>`; akun tujuan + label AI per sub di
   `<subDir>/tebar.json` (belum disimpan = semua akun dicentang); daftar akun diingat 5 menit. Tombol "Kirim ke Tebar" di
   editor: caption, judul YouTube, sekarang/jadwal, "untuk anak", label konten AI (default nyala); kirim berjalan sebagai job
-  di laptop dengan progres unggah, log `videos/<slug>/tebar.json` (badge PUBLISHED di kartu). Claude tidak pernah mengisi
+  di laptop dengan progres unggah, log `videos/<slug>/tebar.json` (badge PUBLISHED di kartu). Muse tidak pernah mengisi
   key dan tidak mengirim tanpa izin eksplisit per video.
 - **Caption posting** (`tools/caption.mjs`, `node tools/caption.mjs <slug>`): saat naskah disetujui (di latar) dan saat
-  dialog Tebar dibuka tanpa caption, agen menulis caption + judul YouTube ke `caption.md` (Gemini, cadangan Claude haiku;
-  100-220 karakter, hook dari 6 mekanisme, dua baris ajakan: follow + "Colek temanmu…", 3-5 hashtag, tanpa baris "dibuat
+  dialog Tebar dibuka tanpa caption, agen menulis caption + judul YouTube ke `caption.md` (Gemini saja; bila Gemini gagal, minta
+  Muse menulisnya di Muse.app; 100-220 karakter, hook dari 6 mekanisme, dua baris ajakan: follow + "Colek temanmu…", 3-5 hashtag, tanpa baris "dibuat
   dengan AI"); `credits.md` ditempel di bawahnya. Caption yang disimpan user tidak ditimpa. `videos/<slug>/buffer.json` lama
   hanya dibaca untuk badge PUBLISHED.
-- **Bagikan, undangan user, Web Push** butuh relay web, yang tidak dipakai di LITE. Kodenya masih ada; jangan menyiapkan
-  relay tanpa permintaan user. Claude tidak pernah mengisi key dan tidak mengirim/memublikasikan tanpa izin.
+- **Bagikan, undangan user, Web Push** butuh relay web, yang tidak dipakai di MUSE. Kodenya masih ada; jangan menyiapkan
+  relay tanpa permintaan user. Muse tidak pernah mengisi key dan tidak mengirim/memublikasikan tanpa izin.
 
-**Pop-up proses**: klik setujui memunculkan apa yang Claude kerjakan dan perkiraan waktunya (`tools/progress.mjs`,
+**Pop-up proses**: klik setujui memunculkan apa yang Muse kerjakan dan perkiraan waktunya (`tools/progress.mjs`,
 `.process-times.json`). Langkah baru yang dipicu klik → tambahkan ke `PROCESSES` di `tools/progress.mjs`.
 
-**Pemicu dari Studio.** Klik user ditulis ke `.events.jsonl` **di folder LITE ini**. Setiap kali sesi menunggu keputusan
-user, jalankan `node tools/wait-event.mjs` di background (run_in_background); saat bangun, tangani tiap event lalu jalankan
-lagi penunggunya. Timeout (4 jam, exit 2) = jalankan lagi bila masih menunggu.
+**Pemicu dari Studio.** Klik user ditulis ke `.events.jsonl` **di folder MUSE ini**. Setiap kali sesi menunggu keputusan
+user, jalankan `node tools/wait-event.mjs` (berhenti saat ada klik baru dan mencetak event-nya; bila alat run program
+Muse punya batas waktu, pakai `--timeout <detik>` lebih pendek dan ulangi); tangani tiap event lalu jalankan lagi
+penunggunya. Timeout (exit 2) = jalankan lagi bila masih menunggu. Bila tidak ada sesi Muse yang menunggu, klik tetap
+tersimpan: user cukup mengetik **lanjut** di Muse.app dan Muse menjalankan `node tools/wait-event.mjs --timeout 1`.
 
 | Event | Lanjutkan |
 | --- | --- |
@@ -121,19 +136,20 @@ Caption Inggris kosong diterjemahkan otomatis (`autoEn`): periksa ejaan nama dan
 
 Footage generate disimpan sekali di `library/` lalu dipakai ulang (`npm run library -- search|use|add|export`). Stok gratis
 berlisensi lewat `npm run stock` (lisensi non-komersial ditolak, kredit ke `credits.md`). Feedback user dicatat ke
-`.claude/skills/video-vertikal/LESSONS.md`.
+`.muse/skills/video-vertikal/LESSONS.md`.
 
-**Chat Claude di Studio** (user 2026-11-13): tombol bulat kanan bawah membuka laci chat. Tiap pesan menjalankan Claude Code
-headless di folder ini (`tools/studio-chat.mjs`: `claude -p --output-format stream-json`, lanjut dengan `--resume`, satu
-proses sekaligus, pesan berikutnya antre), riwayat di `.studio-chat.json` (gitignored; "Baru" mengarsipkan ke `.studio-chat/`).
-Konteks halaman (slug video, tab) ikut di awal pesan. Tanpa jendela izin, jadi alatnya dibatasi: edit file (acceptEdits),
-baca/cari, `npm run`, `node tools/`, `npx hyperframes`, git hanya baca; commit/push/`tebar.mjs send`/publish/`wait-event`
-ditolak. Butuh Claude Code CLI terpasang dan sudah login di PC ini (`claude --version`). Route `/api/chat*` hanya dari localhost.
+**Chat Muse di Studio** (user 2026-11-13, versi MUSE 2026-11-21): tombol bulat kanan bawah membuka laci chat. Muse.app
+tidak punya mode headless, jadi `tools/studio-chat.mjs` menyalin pesan (dengan konteks halaman `[Studio: …]`) ke
+clipboard dan membuka Muse.app; user menempel (⌘V) lalu Enter. `MUSE_AUTOPASTE=1` di `.env` = Studio menempel dan
+mengirim sendiri lewat System Events (butuh izin Accessibility). Jawaban Muse ada di Muse.app. Riwayat yang dikirim di
+`.studio-chat.json` (gitignored; "Baru" mengarsipkan ke `.studio-chat/`). Route `/api/chat*` hanya dari localhost.
+Pesan dari panel ini tetap tunduk pada aturan file ini: commit, push, `tebar.mjs send`, publish, dan menghapus video
+hanya bila user memintanya persis.
 
 ## Jenis proyek
 
 - **Kerangka** (`"draft": true`) tampil sebagai "belum didesain" dan tidak bisa membuat proyek, **kecuali gaya Cinematic**:
-  setiap gaya Cinematic baru langsung memakai **alur kerja AWS** (user 2026-11-21; lihat Isi LITE → Cinematic). Jangan diisi warna, font,
+  setiap gaya Cinematic baru langsung memakai **alur kerja AWS** (user 2026-11-21; lihat Isi MUSE → Cinematic). Jangan diisi warna, font,
   atau alur tebakan: tunggu acuan dianalisis (`npm run ref` + `/reverse-video-v2`) dan keputusan user.
 - **Tambah sub baru dari Studio** (`#/tambah/<kategori>`): draft di `presets/<id>/`, `musafo/channels/<id>/`, atau
   `advertisement/<id>/` berisi `brief.md` (kata-kata user, jangan diubah) + `reference/`, plus event `channel-new`.
@@ -176,7 +192,7 @@ ditolak. Butuh Claude Code CLI terpasang dan sudah login di PC ini (`claude --ve
     <slug>` (`style.md` langkah 6). Thumbnail default gambar KV saja, tidak di depan video.
   - **App Demo** (`advertisement/appdemo/style.md`, `tools/appdemo.mjs`, preset `presets/appdemo`): demo aplikasi dari
     **screenshot UI asli** (crop, tidak pernah digambar ulang), headline Lora, shade biru BRI, musik + SFX dari kode, $0.
-- Agen `runninghub-operator` dan `frame-checker` (`.claude/agents/`) menghemat token untuk RunningHub dan pengecekan frame.
+- Agen `runninghub-operator` dan `frame-checker` (`.muse/agents/`) menghemat token untuk RunningHub dan pengecekan frame.
 
 ## Alur video explainer (satu video = satu folder `videos/<slug>/`)
 
@@ -264,9 +280,8 @@ Biaya di `costs.md`. Footage dinormalkan lewat `node tools/prep-footage.mjs` (ot
 - Tidak ada `Date.now()`, `Math.random()`, fetch, timer, `repeat: -1`; jangan tween `display`/`visibility`.
 - `index.html` dan `captions.html` dikelola tool. Warna/font hanya lewat variabel CSS preset.
 - Gerak (timing, easing, koreografi, stagger, prinsip Disney): skill `/motion-design` (LottieFiles, MIT,
-  `.claude/skills/motion-design/`) sebagai acuan saat menulis timeline GSAP scene; batas durasi dan bagian Hindari di
-  `style.md` preset tetap menang. Hook `UserPromptSubmit` (`.claude/settings.json` → `tools/hooks/motion-graphic.mjs`)
-  mengingatkan Claude memuat skill itu setiap kali prompt menyebut "motion graphic".
+  `.muse/skills/motion-design/`) sebagai acuan saat menulis timeline GSAP scene; batas durasi dan bagian Hindari di
+  `style.md` preset tetap menang. Setiap kali user menyebut "motion graphic", Muse membaca skill itu dulu.
 
 ## Gerbang
 

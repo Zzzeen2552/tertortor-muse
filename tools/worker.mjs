@@ -1,7 +1,7 @@
 // worker.mjs: the laptop half of TERTORTOR-on-the-web (see tools/relay.mjs, docs/hybrid-plan.md). Long-polls the relay
 // over outgoing HTTPS (the laptop is never opened to the internet), replays each browser request against the Studio
-// that already runs here (npm run studio, 127.0.0.1:4331) and posts the answer back. Everything the Studio does
-// (new.mjs, ref.mjs, stories.mjs, cues.mjs, .events.jsonl for wait-event and Claude) keeps happening on this laptop.
+// that already runs here (npm run studio, 127.0.0.1:4341) and posts the answer back. Everything the Studio does
+// (new.mjs, ref.mjs, stories.mjs, cues.mjs, .events.jsonl for wait-event and Muse) keeps happening on this laptop.
 //   npm run worker            (.env: RELAY_URL, RELAY_WORKER_TOKEN; optional STUDIO_URL)
 // /files/… are answered from disk here: a video over 8 MB goes up as a small preview (540 px wide, ±1.2 Mbps, made
 // once per file version in .preview/), never the full render; the full file stays on the laptop. An image over 400 KB
@@ -14,7 +14,7 @@ import { spawn } from "node:child_process";
 import { ROOT } from "./lib.mjs";
 
 const RELAY = (process.env.RELAY_URL || "").replace(/\/$/, ""), TOKEN = process.env.RELAY_WORKER_TOKEN || "";
-const STUDIO = (process.env.STUDIO_URL || "http://127.0.0.1:4331").replace(/\/$/, "");
+const STUDIO = (process.env.STUDIO_URL || "http://127.0.0.1:4341").replace(/\/$/, "");
 if (!RELAY || !TOKEN) { console.error("worker: isi RELAY_URL dan RELAY_WORKER_TOKEN di .env"); process.exit(1); }
 const AUTH = { authorization: `Bearer ${TOKEN}` };
 const LOOPS = 4; // parallel requests (a page load fires several fetches + images at once)
