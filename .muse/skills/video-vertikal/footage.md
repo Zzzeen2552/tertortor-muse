@@ -1,4 +1,7 @@
-# Footage: library dulu, lalu Wikimedia Commons, lalu Google Flow, lalu stock gratis
+# Footage: library dulu, lalu Wikimedia Commons, lalu Meta Muse (Google Flow cadangan), lalu stock gratis
+
+> User 2026-11-22: generator AI default di semua preset dan channel = **Meta Muse** lewat ekstensi Muse di Chrome;
+> Google Flow jadi cadangan. Kecuali **Cinematic** (AWS dan gaya lain): Flow default, Muse cadangan (`cinematic/aws/style.md`).
 
 Footage hanya untuk beat register `footage` (ancaman, kejadian nyata, momen yang harus terasa). Total ≤ 20 s per video.
 
@@ -22,12 +25,15 @@ npm run commons -- use <slug> <beat> "File:<judul>" [--start s] [--dur s]   # 10
 
 Hanya domain publik, CC0, CC BY. Kredit di `credits.md` wajib ikut di caption posting.
 
-## Prompt Flow (`flow.json`), ditulis setelah naskah disetujui
+## Prompt footage (`flow.json`), ditulis setelah naskah disetujui
 
 **Satu generate = sampai 10 detik** (`brand.json → flow.maxClipSeconds`). Pakai seluruhnya: satu prompt berisi
 **beberapa cut bertimecode** yang melayani beberapa beat sekaligus (misal hook shot A, B, C). Lebih murah per detik
 terpakai, dan cut-nya otomatis satu dunia (malam, cahaya, grain, pakaian yang sama). Prompt ditulis untuk naskah yang
-sudah disetujui (hash-nya dicatat); kalau naskah berubah, prompt basi dan ditulis ulang. Tampil di Studio, tab "Prompt Flow".
+sudah disetujui (hash-nya dicatat); kalau naskah berubah, prompt basi dan ditulis ulang. Tampil di Studio, tab "Prompt footage".
+Nama file dan perintahnya tetap `flow.json` / `npm run flow` (sejarah), tapi prompt ditulis untuk **Meta Muse**; `model`
+= "Meta Muse". Adegan **berorang = satu adegan per generate** (Muse mengganti wajah di tiap cut, pelajaran BKH
+2026-11-15); multi-cut bertimecode hanya untuk adegan tanpa orang.
 
 ```json
 {
@@ -70,7 +76,30 @@ npm run library -- add "<Downloads>/<file>.mp4" --source google-flow --model "Om
 npm run flow -- cut <slug> <shotId> <clipId>   # potong per cut (di-snap ke pergantian scene asli) -> assets/footage/<asset>.mp4 + sources.txt
 ```
 
-## 2. Generate di Google Flow (akun user, lewat kontrol komputer Muse (Chrome))
+## 2. Generate di Meta Muse (default, lewat ekstensi Muse di Chrome)
+
+1. Web Muse di Chrome user (ekstensi Muse), sudah login oleh user. Jangan login/logout atau memilih akun.
+2. Per shot di `flow.json`:
+   - Ada key visual / first frame (`assets/keyvisuals/`, `assets/frames/`) → unggah sebagai gambar awal, image-to-video.
+   - Tidak ada → buat dulu satu gambar 9:16 di Muse dari isi adegan (cek: tanpa teks, tanpa UI, wajah tidak teridentifikasi),
+     lalu image-to-video dengan prompt gerak.
+   - ±10 s, 9:16. Cek rasio hasil pertama: uji 2026-11-11 keluar 16:9 1280×720; bila bukan 9:16, crop tengah bila subjek
+     muat, kalau tidak laporkan dulu.
+   - Satu generate per kali; generate yang masih berjalan atau ditahan review tidak dikirim ulang.
+3. **Klip Muse dibuka dengan morphing ±0,5 s.** Masukkan ke library dengan sumber Muse, maka `npm run flow -- cut` membuang
+   0,5 s awal otomatis (`--head <detik>` bila lebih lama):
+
+```bash
+npm run library -- add "<Downloads>/<file>.mp4" --source meta-muse --model "Meta Muse" --prompt "<prompt persis>" --tags "malam,hp,tangan" --for explainer/<preset video>
+npm run flow -- cut <slug> <shotId> <clipId>
+```
+
+4. Catat tiap generate di `costs.md` sebagai kuota Muse.
+5. Pindah ke **Google Flow (§ 2b)** bila Muse menolak/menahan adegan, wajah atau benda terus berubah, layar HP atau teks
+   tetap muncul setelah prompt diperbaiki, atau user minta Flow. Tulis di `flow.json → shots[].tool` = "Google Flow" untuk
+   shot itu.
+
+## 2b. Cadangan: Google Flow (akun user, lewat kontrol komputer Muse di Chrome)
 
 User menyetujui cara ini: Muse yang generate dan mengunduh hasilnya sendiri.
 
@@ -113,7 +142,7 @@ Tag: 4-8 kata benda/suasana dalam bahasa Indonesia + Inggris bila perlu (untuk d
 
 ## 3. Stock gratis (cadangan)
 
-Bila Flow tidak tersedia atau user minta: cari di Pexels, Pixabay, atau Mixkit lewat browser (portrait, ≥ 720p). Simpan dengan `--source stock --license "<nama lisensi>" --url "<halaman sumber>"`. Clip stock **tidak pernah** diekspor untuk dijual.
+Bila Muse dan Flow tidak tersedia atau user minta: cari di Pexels, Pixabay, atau Mixkit lewat browser (portrait, ≥ 720p). Simpan dengan `--source stock --license "<nama lisensi>" --url "<halaman sumber>"`. Clip stock **tidak pernah** diekspor untuk dijual.
 
 ## 4. Jual sebagai stock video
 

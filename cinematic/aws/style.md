@@ -78,8 +78,9 @@ di sela adegan data, dan ledakan kata satu per ketukan. Grid titik halus di atas
 - **Warna AWS**: aksen oranye `#FF9900`, kartu gelap dan kartu penutup = gradien biru → ungu → magenta.
 - **Musik**: lagu berlisensi dari user di `assets/music/` (`aws.json → music.track`) boleh disambung jadi panjang film tepat di
   awal bar; lisensinya dicatat di `aws.json → music.license` sampai dikonfirmasi untuk klien.
-- **Previz AI**: footage Google Flow (key visual dulu, gratis; video Omni 1.1 Flash multi-cut 15 kredit) dan Meta Muse **di
-  Chrome lewat ekstensi Muse**. Tiap slot punya `origin` → `sources.txt` menulis "AI-generated …
+- **Previz AI** (user 2026-11-22: di Cinematic **Google Flow default, Meta Muse cadangan**, kebalikan preset dan channel
+  lain): footage Google Flow (key visual dulu, gratis; video Omni 1.1 Flash multi-cut 15 kredit). Cadangan: Meta Muse **di
+  Chrome lewat ekstensi Muse** (buang 0,5 s morphing awal). Tiap slot punya `origin` → `sources.txt` menulis "AI-generated …
   previz". Diganti footage asli klien sebelum final kecuali klien setuju.
 - **Angka dummy**: `data.<key>.placeholder: true` untuk preview; HUD menampilkan "ANGKA SEMENTARA · DUMMY DATA" di setiap
   frame dan `check` memperingatkan sampai angka klien masuk.

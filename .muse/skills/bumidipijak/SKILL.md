@@ -24,7 +24,7 @@ gayanya milik BDP. Bahasa jawaban: Indonesia santai.
 4. **User mengedit storyline di Studio** (tab Storyline, teks buku di kiri) lalu menyetujuinya (`storyline-approved`). Setelah
    `request.json → storylineEditedAt` ada, storyline itu kata-kata user.
 5. `node tools/musafo.mjs series <slug> <n>` bila series, lalu naskah per bagian (`musafo.json`), `build`, `check`,
-   persetujuan naskah, tombol Production (suara satu take → key visual di Flow), klip, render. Detail teknis: skill `/musafo` § 2-6.
+   persetujuan naskah, tombol Production (suara satu take → key visual di Meta Muse, Flow cadangan), klip, render. Detail teknis: skill `/musafo` § 2-6.
 
 ## Cerita
 - **Struktur cerita: skill `/struktur-babad`** (user 2026-11-16): hanya dari babad, pelan jadi series, dan tabel
@@ -48,9 +48,9 @@ gayanya milik BDP. Bahasa jawaban: Indonesia santai.
   skill itu. Bentuk `image`: "Create a vertical 9:16 dark oil painting of …" → subjek → aksi → tempat → komposisi (sepertiga
   bawah tenang untuk caption) → `bumidipijak.era` → `bumidipijak.styleAnchor` **persis** (`check` menolak tanpa itu) →
   "No text, no signature.".
-- Di Flow: grid acuan sebagai satu-satunya ingredient, prompt diawali "Match the painting style, palette and mood of the
-  reference image (do not copy its subjects or layout)." Gambar gratis; generate pelan-pelan (satu per satu) karena
-  antrean cepat memicu "unusual activity".
+- Di Meta Muse (default) atau Flow (cadangan): grid acuan sebagai satu-satunya gambar acuan/ingredient, prompt diawali "Match the painting style, palette and mood of the
+  reference image (do not copy its subjects or layout)." Generate pelan-pelan (satu per satu); di Flow antrean cepat memicu
+  "unusual activity".
 - Tokoh kecil dan tenang; wajah kecil, menunduk atau berpaling, tidak pernah potret. Dewa dan raja sebagai arketipe tanpa
   nama di prompt; dewa tidak digambar sebagai sosok (singgasana kosong, cahaya, benda). Wali hanya dari belakang/jauh. Nabi
   dan malaikat tidak digambar. Tidak ada orb, kaligrafi, atau `shots[].orb`. Grain bergerak mati.

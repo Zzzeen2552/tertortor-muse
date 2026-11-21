@@ -1384,7 +1384,7 @@ function viewNewMusafo(channelId) {
           ${bkh ? `<li><b>Tokoh</b>: dari fotomu Muse membuat character sheet per usia, dipakai di setiap shot.</li>` : ""}
           <li><b>Muse</b> memecah storyline jadi kalimat lisan + terjemahan Inggris per shot. <b>Kamu</b> setujui naskahnya.</li>
           <li><b>Suara</b> satu take penuh di Google AI Studio (Gemini TTS).</li>
-          <li><b>Gambar</b> ${bkh ? "satu adegan Indonesia tempo dulu dengan gaya visual pilihanmu (PRESET1 3D sinematik amber-teal, atau PRESET2 lukisan cerah keemasan; wajah tokoh terlihat)" : bdp ? "satu lukisan arang, pastel, dan cat air di kertas cokelat muda" : "satu ilustrasi 3D golden hour"} per shot di Google Flow (gratis), gaya dari <span class="mono">${bkh ? "berakitkehulu/reference" : bdp ? "musafo/channels/bumidipijak/reference" : "musafo/reference"}</span>.</li>
+          <li><b>Gambar</b> ${bkh ? "satu adegan Indonesia tempo dulu dengan gaya visual pilihanmu (PRESET1 3D sinematik amber-teal, atau PRESET2 lukisan cerah keemasan; wajah tokoh terlihat)" : bdp ? "satu lukisan arang, pastel, dan cat air di kertas cokelat muda" : "satu ilustrasi 3D golden hour"} per shot di Meta Muse (Flow cadangan), gaya dari <span class="mono">${bkh ? "berakitkehulu/reference" : bdp ? "musafo/channels/bumidipijak/reference" : "musafo/reference"}</span>.</li>
           <li><b>Klip</b> tiap gambar jadi video image-to-video di RunningHub (koin, dilaporkan).</li>
           <li><b>Render</b> MP4 9:16 dengan caption dua bahasa, ${series ? "tiap bagian di bawah 2 menit" : moh ? "satu cerita satu video, maksimal 2,5 menit, ditutup Wallahu a'lam bishawab" : "satu video utuh sampai 179 detik. Kamu yang memendekkannya lewat Edit naskah"}.</li>
         </ol>
@@ -1644,7 +1644,7 @@ function viewNewClone(modelId) {
         <ol class="pad tips" style="margin:0;padding-left:34px">
           <li><b>Kode</b> mengukur acuannya: cut, panjang tiap shot, gerak kamera, keyframe, suara.</li>
           <li><b>Muse</b> membedah tiap shot (isi, kamera, cahaya, transisi, perannya) dan menulis versi klonnya: prompt gambar, gerak, dan suara. Kamu lihat dan setujui di tab Clone.</li>
-          <li><b>Generate</b>: key visual di Google Flow (gratis), lalu klip multi-shot H3 di RunningHub, ≤ 15 s per generate. Koin dicatat di costs.md. Acuan 30 detik ≈ 3 generate.</li>
+          <li><b>Generate</b>: key visual di Meta Muse (Flow cadangan), lalu klip multi-shot H3 di RunningHub, ≤ 15 s per generate. Koin dicatat di costs.md. Acuan 30 detik ≈ 3 generate.</li>
           <li><b>Rakit</b>: tiap shot dipotong ke panjang acuannya, −14 LUFS, contact sheet, dan perbandingan acuan vs klon per shot.</li>
         </ol>
       </div>
@@ -1709,7 +1709,7 @@ function viewNewKvAd(cat, pr) {
         <div class="panel-h">Alurnya</div>
         <ol class="pad tips" style="margin:0;padding-left:34px">
           <li><b>Kamu</b> mengisi teks dan artwork dari KV di sini. Logo Danantara, 131, BRI, dan kartu QR BRImo sudah tersimpan.</li>
-          <li><b>Muse</b> menggerakkan key visual di Flow (kredit dilaporkan), lalu menyusun teks kinetik di belakang orang, angka promo, dan end frame persis KV.</li>
+          <li><b>Muse</b> menggerakkan key visual di Meta Muse (Flow cadangan; kuota/kredit dilaporkan), lalu menyusun teks kinetik di belakang orang, angka promo, dan end frame persis KV.</li>
           <li><b>Musik</b> dibuat dari kode, jatuh di ketukan, bebas lisensi.</li>
           <li><b>Render</b> MP4 9:16 sekitar 13 detik, −14 LUFS, contact sheet dibaca sebelum diserahkan.</li>
         </ol>
@@ -1949,7 +1949,7 @@ async function viewEditor(slug, startTab) {
           ${v.clone ? `<button data-t="clone">Clone <span>${v.cloneData?.shots.length || "–"}${v.cloneData?.approval?.approved ? " ✓" : ""}</span></button>` : ""}
           ${hasRef ? `<button data-t="konsep">Konsep <span>${v.concept ? esc(v.concept.id) : v.concepts.concepts.length || "–"}</span></button>` : ""}
           ${isA ? "" : `<button data-t="naskah">Naskah</button>`}
-          ${isA || v.oneTake ? "" : `<button data-t="flow">Prompt Flow <span>${v.flowCheck.shots.length}</span></button>`}
+          ${isA || v.oneTake ? "" : `<button data-t="flow">Prompt footage <span>${v.flowCheck.shots.length}</span></button>`}
 `}
         </div>
         <div id="tabBody"></div>
@@ -2025,7 +2025,7 @@ async function viewEditor(slug, startTab) {
         ? `<div class="notice"><span><b>Ini naskah lama.</b> Storyline belum disetujui${v.musafo?.draftApproval?.needed && !v.musafo.draftApproval.approved ? " (draft cerita juga belum)" : ""}, jadi naskah ini belum bisa disetujui. Muse menulis naskah baru dari storyline yang kamu setujui.</span></div>`
         : a.approved
         ? `<div class="notice ok"><span><b>Naskah disetujui</b> · ${new Date(a.at).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}</span><span class="sp"><button class="btn sm" id="unapprove">Batalkan</button></span></div>`
-        : `<div class="notice"><span>${a.stale ? (STORY[v.type] ? "<b>Naskah berubah setelah disetujui.</b> Setujui lagi supaya Muse melanjutkan suara, gambar, dan klip." : "<b>Naskah berubah setelah disetujui.</b> Prompt Flow yang lama tidak berlaku.") : (STORY[v.type] ? "<b>Naskah menunggu persetujuanmu.</b> Setelah disetujui, Muse membuat suara, lalu gambar dan klip per shot." : v.oneTake ? "<b>Naskah menunggu persetujuanmu.</b> Setelah disetujui, Muse membuat suara lalu beat table (waktu, narasi, hero, teks layar) untuk kamu setujui." : "<b>Naskah menunggu persetujuanmu.</b> Setelah disetujui, Muse menulis prompt Google Flow.")}</span><span class="sp"><button class="btn pri sm" id="approve">Setujui naskah</button></span></div>`;
+        : `<div class="notice"><span>${a.stale ? (STORY[v.type] ? "<b>Naskah berubah setelah disetujui.</b> Setujui lagi supaya Muse melanjutkan suara, gambar, dan klip." : "<b>Naskah berubah setelah disetujui.</b> Prompt footage yang lama tidak berlaku.") : (STORY[v.type] ? "<b>Naskah menunggu persetujuanmu.</b> Setelah disetujui, Muse membuat suara, lalu gambar dan klip per shot." : v.oneTake ? "<b>Naskah menunggu persetujuanmu.</b> Setelah disetujui, Muse membuat suara lalu beat table (waktu, narasi, hero, teks layar) untuk kamu setujui." : "<b>Naskah menunggu persetujuanmu.</b> Setelah disetujui, Muse menulis prompt footage (Meta Muse).")}</span><span class="sp"><button class="btn pri sm" id="approve">Setujui naskah</button></span></div>`;
       // the user's own edits (tools/script-edit.mjs): Storytelling per shot (Indonesian + English), explainer per paragraph
       const shots = isM ? v.musafo.shots : [];
       const voiced = !!v.voice?.seconds;
@@ -2094,8 +2094,8 @@ async function viewEditor(slug, startTab) {
     },
     flow: () => {
       const f = v.flowCheck;
-      if (!v.approval.approved) return `<div class="pad"><div class="empty"><b>Setujui naskah dulu</b>Prompt Flow ditulis untuk naskah yang sudah kamu setujui, supaya tidak ada kredit terbuang untuk naskah yang masih berubah.<br><button class="btn pri" data-goto="naskah">Buka naskah</button></div></div>`;
-      if (!f.shots.length) return `<div class="pad"><div class="empty"><b>Naskah sudah disetujui</b>Muse menulis prompt Flow dari naskah ini; hasilnya muncul di sini.<br><br><small class="muted">Muse mengerjakannya otomatis. Kalau lama tidak muncul, ketik “lanjut” di Muse.app.</small></div></div>`;
+      if (!v.approval.approved) return `<div class="pad"><div class="empty"><b>Setujui naskah dulu</b>Prompt footage ditulis untuk naskah yang sudah kamu setujui, supaya tidak ada kredit terbuang untuk naskah yang masih berubah.<br><button class="btn pri" data-goto="naskah">Buka naskah</button></div></div>`;
+      if (!f.shots.length) return `<div class="pad"><div class="empty"><b>Naskah sudah disetujui</b>Muse menulis prompt footage dari naskah ini (Meta Muse; Flow cadangan); hasilnya muncul di sini.<br><br><small class="muted">Muse mengerjakannya otomatis. Kalau lama tidak muncul, ketik “lanjut” di Muse.app.</small></div></div>`;
       const issues = f.errors.map((e) => `<li class="e">✗ ${esc(e)}</li>`).join("") + f.warns.map((w) => `<li class="w">⚠ ${esc(w)}</li>`).join("");
       const st = { draft: "Draft", generated: "Sudah dibuat", library: "Di library" };
       return `<div class="pad">
@@ -2320,7 +2320,7 @@ async function viewEditor(slug, startTab) {
       const ready = !c.errors.length && c.look;
       const bar = ap.approved
         ? `<div class="notice ok"><span><b>Breakdown disetujui</b> · ${new Date(ap.at).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}${run ? ` · Muse membuat key visual dan klip sejak ${hhmm(run.since)}` : ""}</span><span class="sp"><button class="btn sm" id="clUnapprove">Batalkan</button></span></div>`
-        : `<div class="notice"><span>${ap.stale ? "<b>Breakdown berubah setelah disetujui.</b> Setujui lagi sebelum generate." : ready ? `<b>Breakdown menunggu persetujuanmu.</b> Setelah disetujui, Muse membuat ${c.clips.length} key visual di Flow lalu ${c.clips.length} generate H3 (koin RunningHub), lalu merakitnya.` : "<b>Muse sedang menulis breakdown.</b> Tombol setujui aktif setelah semua shot punya analisis dan prompt."}</span><span class="sp"><button class="btn pri sm" id="clApprove" ${ready ? "" : "disabled"}>Setujui breakdown</button></span></div>`;
+        : `<div class="notice"><span>${ap.stale ? "<b>Breakdown berubah setelah disetujui.</b> Setujui lagi sebelum generate." : ready ? `<b>Breakdown menunggu persetujuanmu.</b> Setelah disetujui, Muse membuat ${c.clips.length} key visual di Meta Muse lalu ${c.clips.length} generate H3 (koin RunningHub), lalu merakitnya.` : "<b>Muse sedang menulis breakdown.</b> Tombol setujui aktif setelah semua shot punya analisis dan prompt."}</span><span class="sp"><button class="btn pri sm" id="clApprove" ${ready ? "" : "disabled"}>Setujui breakdown</button></span></div>`;
       const issues = c.errors.slice(0, 12).map((e) => `<li class="e">✗ ${esc(e)}</li>`).join("") + (c.errors.length > 12 ? `<li class="e">… ${c.errors.length - 12} lagi</li>` : "") + c.warns.map((w) => `<li class="w">⚠ ${esc(w)}</li>`).join("");
       const A = c.analysis ?? {}, rf = c.reference;
       const total = c.shots.reduce((a, s) => a + s.seconds, 0);
@@ -2341,7 +2341,7 @@ async function viewEditor(slug, startTab) {
               ${media(s.clipUrl, true, "belum ada klip")}
               <dl class="kv" style="font-size:12.5px;margin:0;${wide ? "grid-column:1/-1" : ""}"><dt>Isi</dt><dd>${esc(s.ref?.what || "–")}</dd><dt>Kamera</dt><dd>${esc(s.ref?.camera || "–")}</dd><dt>Cahaya</dt><dd>${esc(s.ref?.light || "–")}</dd><dt>Transisi</dt><dd>${esc(s.ref?.transition || "–")}</dd>${s.said ? `<dt>Ucapan</dt><dd><i>${esc(s.said)}</i></dd>` : ""}</dl>
             </div>
-            ${s.needsImage && s.kv ? `<div class="prompt"><span class="lb">Key visual (Flow, ${esc(c.format.aspect)})</span><button class="btn sm" data-copy="${esc(s.kv)}">Salin</button>${esc(s.kv)}</div>` : ""}
+            ${s.needsImage && s.kv ? `<div class="prompt"><span class="lb">Key visual (Meta Muse, ${esc(c.format.aspect)})</span><button class="btn sm" data-copy="${esc(s.kv)}">Salin</button>${esc(s.kv)}</div>` : ""}
             <div class="prompt"><span class="lb">Adegan klon</span>${esc(s.image || "–")}</div>
             <div class="prompt"><span class="lb">Gerak</span>${esc(s.motion || "–")}</div>
             ${c.audio !== "mute" ? `<div class="prompt"><span class="lb">Suara</span>${esc(s.sound || "–")}</div>` : ""}
@@ -3218,7 +3218,7 @@ async function viewLibrary(place, host = $("#main")) {
   const loose = place ? all.filter((c) => !c.places.length) : [];
   host.innerHTML = `
     ${place ? "" : `<div class="vh"><div><div class="eyebrow">Database footage</div><h1>Semua footage</h1></div></div>`}
-    <div class="meta-row" style="margin-bottom:12px"><span class="muted" style="font-size:13px">Footage dari Google Flow dan stock gratis. Dibuat sekali, dipakai berkali-kali, dan bisa diekspor sebagai stock video. Tambah langsung ke sini: <span class="mono">npm run library -- add … --for ${esc(place ? place.category + "/" + place.sub : "<kategori>/<sub>")}</span></span>
+    <div class="meta-row" style="margin-bottom:12px"><span class="muted" style="font-size:13px">Footage dari Meta Muse, Google Flow, dan stock gratis. Dibuat sekali, dipakai berkali-kali, dan bisa diekspor sebagai stock video. Tambah langsung ke sini: <span class="mono">npm run library -- add … --for ${esc(place ? place.category + "/" + place.sub : "<kategori>/<sub>")}</span></span>
       <span class="sp"></span><span class="pill">${clips.length} clip</span><span class="pill acc">${clips.filter((c) => /flow|ai|wavespeed/i.test(c.source)).length} milikmu</span></div>
     ${loose.length ? `<div class="notice"><span><b>${loose.length} clip belum punya channel</b> (belum dipakai dan tanpa --for). Ditampilkan di bawah supaya tetap bisa dipakai.</span></div>` : ""}
     <input type="text" class="search" id="q" placeholder="Cari: malam, tangan, hp, cctv…">

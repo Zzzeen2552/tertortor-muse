@@ -136,7 +136,7 @@ Tulis `shots` dari storyline yang disetujui. Aturan isi:
 - **Prompt klip satu shot = multi-scene, cut to cut** (user 2026-11-07). Shot dengan lebih dari satu kalimat wajib punya
   `scenes: [{ "line": n, "scene": "…", "motion": "…" }]`: adegan berikutnya mulai di kalimat ke-n shot itu (indeks mulai 0,
   naik), `scene` ditulis seperti bagian adegan `image` (bahasa Inggris, bisa berdiri sendiri), maks 4 adegan per shot,
-  tiap adegan ≥ 1,5 s. Adegan pertama = `image` shot (satu-satunya gambar yang dibuat di Flow). `clips` lalu membuat satu
+  tiap adegan ≥ 1,5 s. Adegan pertama = `image` shot (satu-satunya gambar yang dibuat, di Meta Muse; Flow cadangan). `clips` lalu membuat satu
   generate per shot dengan `[Shot 1]…[Shot n]` dan timecode cut dari waktu kalimat di suara (`sceneCuts`). Ilustrasinya harfiah dari kalimat itu; kalimat
   abstrak → benda simbolik (tetes air mata dalam sorot cahaya, ponsel menyala, mangkuk makanan, sapu dan debu, rumah kampung).
 - `framing` bergantian wide/medium/close; dua shot berurutan tidak boleh sama. `hero` = apa yang tampak (pendek).

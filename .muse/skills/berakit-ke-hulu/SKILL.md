@@ -27,7 +27,8 @@ gambar. Bahasa jawaban: Indonesia santai.
 ## Tokoh: foto asli → character sheet per usia (user 2026-11-07)
 - Usia tokoh utama dari `## Tokoh` di storyline (mis. anak 9-12, remaja, pemuda, dewasa, tua). Catat di
   `musafo.json → characters: [{ "id": "eka-anak", "name": "Eka Tjipta", "age": "9-12 tahun", "desc": "<satu kalimat Inggris>" }]`.
-- **Satu character sheet per usia di Google Flow** (Nano Banana, gratis): ingredients = foto asli dari
+- **Satu character sheet per usia di Meta Muse** (ekstensi Muse di Chrome; Google Flow Nano Banana cadangan, user
+  2026-11-22): gambar acuan = foto asli dari
   `assets/reference/tokoh/` (pilih yang paling dekat usianya) + 1 adegan gaya dari `berakitkehulu/reference/gambar/`.
   Prompt: "Create a character reference sheet, 16:9, of <desc>: front view, three-quarter view, side profile and full
   body standing, plus three facial expressions (worried, determined, smiling), on a plain warm grey background, same face
@@ -103,7 +104,7 @@ dicek manual dulu.
 - Satu warna aksen per frame pada benda ceritanya; cahaya mengikuti suasana (mendung untuk susah, bohlam/jendela untuk
   interior, blue hour + lampion untuk pasar malam, golden hour untuk harapan/menang). Perang: kelangkaan dan antrean, bukan darah.
 - Gambar acuan di `berakitkehulu/reference/gambar/` (PRESET1, file di akar folder) dan `gambar/PRESET 2/` (PRESET2), video acuan di `berakitkehulu/reference/video/`,
-  `berakitkehulu/reference/analysis.md`. Ingredients di Google Flow: 1-3 adegan dari folder `refs` gaya proyek (bukan thumbnail
+  `berakitkehulu/reference/analysis.md`. Gambar acuan di Meta Muse (atau ingredients di Flow cadangan): 1-3 adegan dari folder `refs` gaya proyek (bukan thumbnail
   ber-teks); tokoh yang sama di shot lain: gambar shot sebelumnya ikut sebagai ingredient supaya wajah dan baju konsisten.
 - `scenes[].scene` (multi-scene dalam satu klip) ditulis dengan urutan yang sama tanpa style block; prompt klip memakai
   `clipLook`/`clipKeep` dari gaya proyek (`brand.json → berakitkehulu.looks.<look>`) otomatis.
@@ -149,7 +150,7 @@ dicek manual dulu.
   menulis prompt Muse sendiri. Satu generate = satu adegan tanpa cut kecuali adegan tanpa orang; gaya tidak ditulis ulang
   (gambarnya yang membawa gaya); identitas tokoh disebut persis; kamera tidak mendekat ke close-up wajah; satu aksi yang
   berhenti. Adegan berorang sesudah cut = gambar sendiri `assets/frames/<shot>-b.png` + generate sendiri, lalu
-  `node tools/musafo.mjs join <slug> <shot> a.mp4 b.mp4` (mengisi `clipAt`). Wajah masih berubah → buat klip itu di Flow;
+  `node tools/musafo.mjs join <slug> <shot> a.mp4 b.mp4` (mengisi `clipAt`). Wajah masih berubah → buat klip itu di Flow (cadangan);
   adegan kena sensor/review Muse → RunningHub H3.
 - **Potong morphing awal klip Muse** (user 2026-11-19): setiap klip Muse dibuka dengan morphing ±0,5 s (key visual berubah
   jadi versi Muse). `add clip` dan `join` memotongnya otomatis (0,5 s per generate, `--head <s>` bila lebih lama,

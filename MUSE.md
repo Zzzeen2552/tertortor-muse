@@ -10,7 +10,8 @@ Claude diganti Muse). Muse membaca file ini di awal setiap percakapan. Cara kerj
 - **Agen bantu** (`.muse/agents/*.md`) = instruksi kerja untuk tugas sempit (RunningHub, cek frame); kerjakan sendiri
   mengikuti file itu, atau berikan ke sub-agen Muse bila ada.
 - **Chrome** (Meta Muse, Google Flow, RunningHub, ChatGPT; user 2026-11-21): satu Chrome dengan **ekstensi Muse**, semua
-  situs itu terbuka dan login di Chrome yang sama. Gambar dan klip Meta Muse dibuat di web Muse lewat ekstensi ini (tidak
+  situs itu terbuka dan login di Chrome yang sama. **Generator AI (user 2026-11-22): Meta Muse default di semua preset dan channel, Google Flow cadangan; khusus
+  Cinematic: Flow default, Muse cadangan.** Gambar dan klip Meta Muse dibuat di web Muse lewat ekstensi ini (tidak
   ada lagi muse4ai, `tools/muse.mjs`, atau `MUSE4AI_KEY`). User login sendiri; Muse
   tidak pernah mengetik password.
 - Setiap kali user menyebut "motion graphic", baca dulu `.muse/skills/motion-design/SKILL.md` sebelum mendesain gerak.
@@ -125,14 +126,14 @@ tersimpan: user cukup mengetik **lanjut** di Muse.app dan Muse menjalankan `node
 | --- | --- |
 | `explainer-new` (Video Explainer baru dari "Buat video", user 2026-11-22) | skill `/video-vertikal <slug>` langkah 1: lengkapi bagian "Diisi Muse" di `brief.md`. Dengan video referensi: `npm run ref` → `assets/reference/analysis.md` → `concepts.json`, lalu berhenti sampai user memilih (event `concept`). Tanpa referensi: naskah `script.md` → `/humanizer` → minta persetujuan. Studio menghitung progres dari file-file itu |
 | `concept` (explainer) | isi brief dari konsep → naskah → `/humanizer` → minta persetujuan |
-| `script-approved` (explainer) | `flow.json` (langkah 2b); `node tools/thumbnail.mjs sync <slug>` bila `script.md` berubah |
+| `script-approved` (explainer) | `flow.json` = prompt footage Meta Muse, Flow cadangan (langkah 2b); `node tools/thumbnail.mjs sync <slug>` bila `script.md` berubah |
 | `explainer-production` (tombol Production di tab Naskah) | skill `/video-vertikal` § Event `explainer-production`: dari langkah yang belum selesai, suara → beat → scene → aset gratis → `check` hijau → `preview`; **tanpa render** (menunggu thumbnail disetujui); laporkan yang menunggu user |
 | `berakitkehulu-new` | skill `/berakit-ke-hulu <slug>`: tanpa draft, langsung `storyline.md` (series bila > 2 menit) → user mengedit dan menyetujui storyline |
 | `bumidipijak-new` | skill `/bumidipijak <slug>`: tanpa draft, langsung `storyline.md` series → user mengedit dan menyetujui storyline |
 | `storyline-approved` (BKH/BDP) | BKH: character sheet per usia bila ada foto tokoh; `series` bila perlu; `musafo.json` (naskah per shot) → build → minta persetujuan naskah |
 | `script-approved` (BKH/BDP) | `node tools/script-edit.mjs list <slug>`, lalu berhenti: suara dan gambar menunggu tombol Production |
 | `production` (BKH/BDP) | 1. suara Gemini TTS satu take, 2. key visual per shot, lalu laporkan; klip menunggu keputusan user |
-| `format-new` (versi rasio lain, `of`, `kind`) | **master plate dulu**: satu gambar lebar 16:9 (subjek di tengah, area tenang di semua sisi), satu klip 16:9 (Flow, unduh upscale 1080p; upscale lagi di RunningHub bila jendela 9:16/4:5 butuh lebih tajam) di `videos/<asli>/assets/master/`; tiap rasio = jendela potong dari master itu (Flow video hanya 16:9 dan 9:16). Area tenang di tempat judul dan footer, potongan orang/penutup per frame bila dipakai, tata letak tiap scene disusun ulang → `check` → still → `finish` → contact sheet → laporkan |
+| `format-new` (versi rasio lain, `of`, `kind`) | **master plate dulu**: satu gambar lebar 16:9 (subjek di tengah, area tenang di semua sisi), satu klip 16:9 (Meta Muse, keluar 16:9; Flow cadangan, unduh upscale 1080p; upscale lagi di RunningHub bila jendela 9:16/4:5 butuh lebih tajam) di `videos/<asli>/assets/master/`; tiap rasio = jendela potong dari master itu (Flow video hanya 16:9 dan 9:16). Area tenang di tempat judul dan footer, potongan orang/penutup per frame bila dipakai, tata letak tiap scene disusun ulang → `check` → still → `finish` → contact sheet → laporkan |
 | `characters` (BKH) | foto tokoh baru di tab Tokoh: buat/ulang character sheet usia yang terdampak, laporkan |
 | `channel-new` (sub baru, `category` + `dir`) | baca `<dir>/brief.md` + `<dir>/reference/`, tanya user yang belum jelas, desain sub itu, hapus `draft`. **Cinematic**: alurnya sudah alur AWS; yang didesain hanya gaya (grade, warna, font, grafis, jenis adegan) di `presets/<look>/` dan `cinematic/<look>/style.md`, sisanya tetap `tools/aws.mjs` |
 | `ad-new` (advertisement) | `flashcut`: skill `/flashcut <slug>` (`ad.json` → `node tools/ad.mjs check` → `finish`). `bri`: `advertisement/bri/style.md`. `appdemo`: `advertisement/appdemo/style.md` (`node tools/appdemo.mjs info|check`, `finish --no-thumbnail`). Selalu baca contact sheet, kirim MP4, minta persetujuan |
@@ -210,7 +211,7 @@ hanya bila user memintanya persis.
 | --- | --- | --- | --- |
 | 1 | Brief | `npm run new -- <slug> "Topik" [--preset vox]` | `brief.md`, `script.md`, `beats.json`, `index.html` |
 | 2 | Naskah lisan → **disetujui user** | `script.md`; user klik "Setujui naskah" (atau `npm run flow -- approve <slug>`) | ±150 kata/menit |
-| 2b | Prompt Google Flow | `flow.json`, `npm run flow -- check <slug>` | generate ≤ 10 s, multi-cut; setelah unduh: `npm run flow -- cut` |
+| 2b | Prompt footage (Meta Muse; Flow cadangan) | `flow.json`, `npm run flow -- check <slug>` | generate ≤ 10 s, multi-cut; setelah unduh: `npm run flow -- cut` |
 | 3 | Suara + timestamp kata | Gemini TTS → `npm run voice -- <slug> --audio <wav> --source gemini-tts` | **satu take** → `voice.wav` + `words.json` |
 | 4 | Rencana beat | `beats.json` | job, hero, register, framing, cue kata |
 | 5 | Scene | `npm run cues -- <slug>` lalu edit `compositions/<beat>.html` | stub per register + SFX otomatis |

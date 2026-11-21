@@ -144,6 +144,9 @@
     }
   },
   "flow": {
+    "note": "Footage AI Video Explainer (flow.json, nama lama). User 2026-11-22: default Meta Muse lewat ekstensi Muse di Chrome, Google Flow (model di bawah) cadangan; Cinematic kebalikannya (Flow default, Muse cadangan). Klip Muse: 0,5 s awal dibuang (flow cut).",
+    "tool": "Meta Muse (Chrome)",
+    "fallbackTool": "Google Flow",
     "maxClipSeconds": 10,
     "model": "Omni 1.1 Flash",
     "resolution": "720p",
@@ -259,7 +262,7 @@
       "model": "Nano Banana",
       "ratio": "9:16",
       "outputs": 1,
-      "note": "Default: gambar di Google Flow (gratis), 1-3 adegan dari berakitkehulu/reference/gambar (bukan thumbnail ber-teks) sebagai ingredients; tokoh yang sama di shot lain: gambar shot sebelumnya ikut sebagai ingredient. Cadangan bila Flow tidak bisa dibuka: RunningHub Qwen Image 2.1, lalu zimage3.0",
+      "note": "User 2026-11-14: key visual + character sheet BKH dibuat di ChatGPT; bila memakai generator lain (2026-11-22): Meta Muse dulu, Google Flow (di bawah) cadangan. 1-3 adegan dari berakitkehulu/reference/gambar (bukan thumbnail ber-teks) sebagai ingredients; tokoh yang sama di shot lain: gambar shot sebelumnya ikut sebagai ingredient. Cadangan bila Flow tidak bisa dibuka: RunningHub Qwen Image 2.1, lalu zimage3.0",
       "fallback": [
         "https://www.runninghub.ai/ai-detail/2117411725430489089",
         "https://www.runninghub.ai/ai-detail/2047494615414083586"

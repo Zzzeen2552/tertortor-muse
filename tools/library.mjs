@@ -1,4 +1,4 @@
-// library.mjs: reusable footage database (generated on Google Flow, free stock, or any other source).
+// library.mjs: reusable footage database (generated on Meta Muse or Google Flow, free stock, or any other source).
 // Every clip is generated once, reused in many videos, and exportable as stock-video metadata.
 //
 //   node tools/library.mjs add <file.mp4> --prompt "..." --tags "malam,hp,tangan" --source google-flow [--model veo-3] [--license "..."] [--for storytelling/musafo]

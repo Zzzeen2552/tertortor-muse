@@ -7,7 +7,7 @@ musiknya di `template/score.mjs`. Iklan BRI baru = salin template itu, ganti isi
 
 | File di `assets/products/` | Isi | Dipakai |
 | --- | --- | --- |
-| `kv-1.png` | foto key visual **tanpa teks** (orang + latar), 9:16 | frame awal klip Flow, latar adegan teks |
+| `kv-1.png` | foto key visual **tanpa teks** (orang + latar), 9:16 | frame awal klip (Meta Muse; Flow cadangan), latar adegan teks |
 | `endframe-N.png` | KV jadi dari klien (dengan teks/logo, boleh ada watermark DRAFT) | **acuan tata letak saja**, tidak pernah dirender |
 | `bg-1.png` | latar kosong untuk end frame mitra (opsional) | latar end frame 2 |
 | `footer-1.png` | artwork footer kiri bawah (URL promo, periode, tagline, kontak, legal), PNG transparan | ditempel apa adanya |
@@ -19,7 +19,7 @@ versi baru.
 
 ## Struktur (13 s, 100 BPM, ketukan di 0,55 + 0,6 n)
 
-1. **0–2,65 s · teks kinetik di atas klip.** Klip Flow penuh layar, push-in pelan 1,0→1,1, hentakan kamera kecil di tiap
+1. **0–2,65 s · teks kinetik di atas klip.** Klip KV bergerak penuh layar, push-in pelan 1,0→1,1, hentakan kamera kecil di tiap
    hit. Headline dipecah per beat 2–3 kata ("Healing" / "Tanpa Drama" / "Kantong Jebol" / "Pakai / BRI Debit /
    Virtual VISA"), **tanpa kotak**, Inter 700 biru BRI 200–260 px, di langit **di belakang orang**: potongan orang per frame
    (`scripts/cutouts.mjs`) ditumpuk di atas teks. Huruf naik dari belakang kepala (yPercent 70 → 0, blur 12 → 0, stagger
@@ -68,9 +68,11 @@ versi baru.
 ## Alur kerja (event `ad-new` dengan product `bri`)
 
 1. Lihat semua file input. Bila `endframe` ada dua (promo + mitra), ikuti strukturnya; bila satu, end frame 2 dilewati.
-2. Klip: Flow, Frames (frame awal = `kv-1`), Omni 1.1 Flash 720p 10 s 9:16, prompt kamera **completely locked off**,
-   gerak kecil orang, latar hidup, tanpa teks/logo (prompt contoh di `costs.md` proyek contoh). Kredit Flow dilaporkan
-   dan dicatat di `costs.md`. Normalkan ke `assets/footage/family.mp4` (1080×1920, 30 fps, tanpa audio) + frame terakhir
+2. Klip (user 2026-11-22: **Meta Muse default, Flow cadangan**): Meta Muse di Chrome lewat ekstensi Muse, image-to-video
+   dengan gambar awal `kv-1`, ±10 s 9:16, prompt kamera **completely locked off**, gerak kecil orang, latar hidup, tanpa
+   teks/logo (prompt contoh di `costs.md` proyek contoh). Buang 0,5 s awal (morphing Muse:
+   `node tools/prep-footage.mjs <in> <out> --start 0.5`). Wajah atau KV berubah, atau Muse menolak → Flow, Frames (frame
+   awal = `kv-1`), Omni 1.1 Flash 720p 10 s 9:16. Kuota Muse / kredit Flow dicatat di `costs.md`. Normalkan ke `assets/footage/family.mp4` (1080×1920, 30 fps, tanpa audio) + frame terakhir
    `family-last.jpg`.
 3. Salin `template/kv.html` → `compositions/kv.html`, ganti teks (format judul), angka, nama file logo/partner/latar,
    lalu ukur ulang: posisi bingkai dan slot angka dari KV, `cutouts.mjs --test` lalu `cutouts.mjs`, `occluders.mjs`
@@ -98,7 +100,7 @@ dari situ. Diubah di tab **Beat** Studio (Simpan / Simpan & render ulang) atau m
 teks), celah bingkai (jendela end frame 1), SFX, musik (`score.mjs`), dan `build/timeline.json` (daftar beat di Studio).
 Cut dibulatkan ke ketukan 100 BPM: beat pertama 0,55 + 0,3k, lainnya kelipatan 0,3; penutup bebas. Minimum: teks 0,3
 (Pakai 0,6), angka 0,9, end frame 1,5/1,8, penutup 1,2. Geometri dibaca dari `kv.html` tiap proyek, jadi versi 1:1, 4:5,
-16:9 ikut. Klip Flow 10 s: bila end frame mitra mulai sesudahnya, frame terakhir klip ditahan (skrip memberi peringatan).
+16:9 ikut. Klip 10 s: bila end frame mitra mulai sesudahnya, frame terakhir klip ditahan (skrip memberi peringatan).
 
 ## Thumbnail (user 2026-11-13)
 

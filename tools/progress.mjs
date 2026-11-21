@@ -51,10 +51,10 @@ export const PROCESSES = {
   "script-approved": {
     // Storytelling (user 2026-11-07): approving the script starts nothing; voice and images wait for the Production button
     skip: (d) => isStory(d),
-    label: (d) => (isStory(d) ? "Muse membuat suara (Gemini TTS)" : isOneTake(d) ? "Muse membuat suara (Gemini TTS), lalu beat table" : "Muse menulis prompt Google Flow"),
+    label: (d) => (isStory(d) ? "Muse membuat suara (Gemini TTS)" : isOneTake(d) ? "Muse membuat suara (Gemini TTS), lalu beat table" : "Muse menulis prompt footage (Meta Muse)"),
     eta: (d) => (isStory(d) ? [10, 20] : isOneTake(d) ? [12, 25] : [5, 10]),
     out: (d) => (isStory(d) ? "voice/words.json" : isOneTake(d) ? "build/timeline.json" : "flow.json"),
-    next: (d) => (isStory(d) ? "suara selesai; gambar dan klip menyusul" : isOneTake(d) ? "beat table siap kamu setujui" : "prompt Flow siap"),
+    next: (d) => (isStory(d) ? "suara selesai; gambar dan klip menyusul" : isOneTake(d) ? "beat table siap kamu setujui" : "prompt footage siap"),
   },
   // done(d, at) → end time in ms (0 = not yet), for processes with more than one output file
   // Video Explainer (user 2026-11-20): tombol Production di tab Naskah → suara, beat, scene, gerbang check; render menunggu thumbnail

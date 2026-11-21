@@ -3,8 +3,12 @@
 //   node tools/flow.mjs approve <slug>     record that the user approved script.md (as it is now)
 //   node tools/flow.mjs status  <slug>     approval + prompt check
 //   node tools/flow.mjs check   <slug>     validate flow.json (exit 1 on errors)
-//   node tools/flow.mjs cut     <slug> <shotId> <libraryClipId>
-//                                          split one downloaded multi-cut clip into its beats
+//   node tools/flow.mjs cut     <slug> <shotId> <libraryClipId> [--head <s>]
+//                                          split one downloaded clip into its beats
+//
+// Generator (user 2026-11-22): Meta Muse via the Muse extension in Chrome is the default, Google Flow the fallback
+// (Cinematic: the other way round). A Muse clip opens with a ±0.5 s morph: `cut` drops it when the library clip's
+// source/model says Muse (--head overrides, --head 0 keeps it).
 //
 // One Flow generation is up to 10 s (brand.json flow.maxClipSeconds). Use the whole length: write ONE prompt
 // with several timecoded cuts that serve several beats (hook shot A, B, C...), in one consistent world.
@@ -49,7 +53,8 @@ export const cutsOf = (s) => (s.cuts?.length ? s.cuts : s.beat ? [{ from: 0, to:
 
 // Split a downloaded generation into its cuts. Planned boundaries are scaled to the real clip length, then
 // snapped to the nearest real scene change within 0.8 s (models drift a few frames off the timecodes).
-export async function cutClip(dir, shotId, clipId) {
+export const MUSE_HEAD = 0.5;
+export async function cutClip(dir, shotId, clipId, headOpt = null) {
   const { LIB, useClip } = await import("./library.mjs");
   const flow = loadFlow(dir);
   const s = flow?.shots?.find((x) => x.id === shotId);
@@ -59,12 +64,14 @@ export async function cutClip(dir, shotId, clipId) {
   if (!clip) die(`clip ${clipId} not in library (npm run library -- add ... first)`);
   const file = join(LIB, clip.file);
   const len = probeDuration(file);
-  const scale = len / s.seconds;
+  // Muse morph at the start: skip it, and plan the cuts on what is left
+  const head = Math.min(len / 2, headOpt != null ? headOpt : /muse/i.test(`${clip.source ?? ""} ${clip.model ?? ""}`) ? MUSE_HEAD : 0);
+  const scale = (len - head) / s.seconds;
   const sc = run("ffmpeg", ["-hide_banner", "-i", file, "-vf", "select='gt(scene,0.25)',showinfo", "-an", "-f", "null", "-"]);
   const changes = [...sc.stderr.matchAll(/pts_time:([\d.]+)/g)].map((m) => +m[1]);
   const cuts = cutsOf(s);
-  const snap = (t) => { const near = changes.filter((c) => Math.abs(c - t) <= 0.8).sort((a, b) => Math.abs(a - t) - Math.abs(b - t))[0]; return near ?? t; };
-  const bounds = [0, ...cuts.slice(0, -1).map((c) => snap(c.to * scale)), len];
+  const snap = (t) => { const near = changes.filter((c) => c > head && Math.abs(c - t) <= 0.8).sort((a, b) => Math.abs(a - t) - Math.abs(b - t))[0]; return near ?? t; };
+  const bounds = [head, ...cuts.slice(0, -1).map((c) => snap(head + c.to * scale)), len];
   const count = {};
   const out = [];
   cuts.forEach((c, i) => {
@@ -79,7 +86,7 @@ export async function cutClip(dir, shotId, clipId) {
   s.status = "library";
   s.clipId = clipId;
   writeJSON(join(dir, "flow.json"), flow);
-  return { out, changes, scale };
+  return { out, changes, scale, head };
 }
 
 export const loadFlow = (dir) => (existsSync(join(dir, "flow.json")) ? readJSON(join(dir, "flow.json")) : null);
@@ -140,7 +147,7 @@ export function checkFlow(dir) {
   if (!(flow.shots ?? []).length) warns.push("no shots: fine only if no beat needs real-world footage");
   if (total > brand.limits.maxFootageSeconds) warns.push(`${total}s of footage planned (> ${brand.limits.maxFootageSeconds}s budget): keep it for threat / real-event beats`);
   const plan = existsSync(join(dir, "beats.json")) ? readJSON(join(dir, "beats.json")) : null;
-  if (plan) for (const b of plan.beats.filter((b) => b.register === "footage")) if (!(flow.shots ?? []).some((s) => cutsOf(s).some((c) => c.beat === b.id))) errors.push(`beat ${b.id} is register "footage" but no Flow cut serves it`);
+  if (plan) for (const b of plan.beats.filter((b) => b.register === "footage")) if (!(flow.shots ?? []).some((s) => cutsOf(s).some((c) => c.beat === b.id))) errors.push(`beat ${b.id} is register "footage" but no footage cut serves it`);
   return { errors, warns, flow, approval: ap, total };
 }
 
@@ -151,7 +158,9 @@ if (process.argv[1]?.endsWith("flow.mjs")) {
   if (cmd === "approve") { const a = approve(dir, "chat"); console.log(`\u2714 script approved (${a.hash}) at ${a.at}`); }
   else if (cmd === "cut") {
     const [, , shotId, clipId] = process.argv.slice(2);
-    const r = await cutClip(dir, shotId, clipId);
+    const hi = process.argv.indexOf("--head");
+    const r = await cutClip(dir, shotId, clipId, hi > 0 ? +process.argv[hi + 1] : null);
+    if (r.head) console.log(`awal ${r.head}s dibuang (morphing Muse)`);
     console.log(`scene changes found: ${r.changes.map((c) => c.toFixed(2)).join(", ") || "none"}`);
     for (const o of r.out) console.log(`  ${o.asset}.mp4  <- ${o.start.toFixed(2)}s +${o.dur.toFixed(2)}s  (beat ${o.beat})`);
   }
